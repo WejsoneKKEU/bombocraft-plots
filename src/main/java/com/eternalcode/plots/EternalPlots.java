@@ -279,7 +279,7 @@ public class EternalPlots extends JavaPlugin {
 
         /* End */
 
-        Metrics metrics = new Metrics(this, 15091);
+        Metrics metrics = new Metrics(this, 19792);
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
 
