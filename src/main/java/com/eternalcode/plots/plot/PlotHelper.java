@@ -1,7 +1,7 @@
 package com.eternalcode.plots.plot;
 
 import com.eternalcode.plots.user.User;
-import com.eternalcode.plots.utils.LegacyUtils;
+import com.eternalcode.plots.adventure.LegacyUtils;
 import com.eternalcode.plots.utils.VariablesUtils;
 import org.bukkit.entity.Player;
 import panda.std.Option;

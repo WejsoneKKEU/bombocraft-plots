@@ -55,6 +55,7 @@ import com.eternalcode.plots.listener.protection.PlayerInteractEntityListener;
 import com.eternalcode.plots.listener.protection.PlayerInteractListener;
 import com.eternalcode.plots.listener.protection.PotionSplashListener;
 import com.eternalcode.plots.listener.protection.VehicleDamageListener;
+import com.eternalcode.plots.notification.NotificationAnnouncer;
 import com.eternalcode.plots.plot.MemberFactory;
 import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotFactory;
@@ -70,7 +71,7 @@ import com.eternalcode.plots.scheduler.Scheduler;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.user.UserFactory;
 import com.eternalcode.plots.user.UserManager;
-import com.eternalcode.plots.utils.LegacyColorProcessor;
+import com.eternalcode.plots.adventure.LegacyColorProcessor;
 import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
@@ -91,11 +92,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 public class EternalPlots extends JavaPlugin {
-
-    /**
-     * Plugin Instance
-     **/
-    private static EternalPlots instance;
 
     /**
      * Managers/Services
@@ -124,7 +120,7 @@ public class EternalPlots extends JavaPlugin {
     /**
      * Adventure
      **/
-    private BukkitAudiences adventureAudiences;
+    private BukkitAudiences audienceProvider;
     private MiniMessage miniMessage;
 
     /**
@@ -137,15 +133,9 @@ public class EternalPlots extends JavaPlugin {
      **/
     private VaultProvider vaultProvider;
 
-    public static EternalPlots getInstance() {
-        return EternalPlots.instance;
-    }
-
     @Override
     public void onEnable() {
         Stopwatch started = Stopwatch.createStarted();
-
-        instance = this;
         Server server = this.getServer();
 
         /* Hooks */
@@ -154,10 +144,12 @@ public class EternalPlots extends JavaPlugin {
 
         /* Managers/Services */
         this.scheduler = new BukkitSchedulerImpl(this);
-        this.adventureAudiences = BukkitAudiences.create(this);
+        this.audienceProvider = BukkitAudiences.create(this);
         this.miniMessage = MiniMessage.builder()
             .postProcessor(new LegacyColorProcessor())
             .build();
+
+        NotificationAnnouncer notificationAnnouncer = new NotificationAnnouncer(this.audienceProvider, miniMessage);
 
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
 
@@ -191,7 +183,7 @@ public class EternalPlots extends JavaPlugin {
         this.protectionManager = new ProtectionManager(protectionFactory, ormliteRepository, protectionConfig, this.userManager, this.plotManager);
         this.plotDelete = new PlotDelete(this.plotManager);
         this.plotsLimit = new PlotsLimit(this.userManager, this.plotManager, pluginConfig);
-        this.guiFactory = new GuiFactory(this.vaultProvider, this.configurationManager, plotSelectorConfig, protectionConfig, plotFlagsConfig, plotPanelConfig, languageConfig, pluginConfig, plotExtendConfig, this.protectionManager, plotPlayersConfig, userManager, this.plotManager, this.miniMessage);
+        this.guiFactory = new GuiFactory(this.vaultProvider, this.configurationManager, plotSelectorConfig, protectionConfig, plotFlagsConfig, plotPanelConfig, languageConfig, pluginConfig, plotExtendConfig, this.protectionManager, plotPlayersConfig, userManager, this.plotManager, this.miniMessage, this);
 
 
         this.plotBlockService = new PlotBlockService(blocksConfig, pluginConfig, this.plotManager);
@@ -214,12 +206,12 @@ public class EternalPlots extends JavaPlugin {
             // contextual binds
             .contextualBind(User.class, new UserContextual(this.userManager))
             .contextualBind(Player.class, new PlayerContextual())
-            .contextualBind(Audience.class, new AudienceContextual(this.adventureAudiences))
+            .contextualBind(Audience.class, new AudienceContextual(this.audienceProvider))
 
             // type binds
             .typeBind(GuiFactory.class, () -> this.guiFactory)
             .typeBind(InviteManager.class, () -> this.inviteManager)
-            .typeBind(BukkitAudiences.class, () -> this.adventureAudiences)
+            .typeBind(BukkitAudiences.class, () -> this.audienceProvider)
             .typeBind(PlotManager.class, () -> this.plotManager)
             .typeBind(InviteManager.class, () -> this.inviteManager)
             .typeBind(MiniMessage.class, () -> this.miniMessage)
@@ -231,7 +223,7 @@ public class EternalPlots extends JavaPlugin {
             // commands
             .command(PlotCommand.class)
 
-            .invalidUsageHandler(new InvalidUsageMessage(commandsConfig))
+            .invalidUsageHandler(new InvalidUsageMessage(commandsConfig, notificationAnnouncer))
 
             // commands configuration
             .commandEditor(PlotCommand.class, editor -> {
@@ -258,7 +250,7 @@ public class EternalPlots extends JavaPlugin {
 
         /* Listeners */
         Stream.of(
-            new PlotBlockListener(pluginConfig, languageConfig, this.plotBlockService, this.userManager, this.plotManager, this.regionManager, this.plotsLimit, plugin),
+            new PlotBlockListener(pluginConfig, languageConfig, this.plotBlockService, this.userManager, this.plotManager, this.regionManager, this.plotsLimit, this),
             new PlayerJoinListener(this.userManager),
             new BlockBreakListener(this.protectionManager, protectionConfig),
             new BlockDispenseListener(protectionConfig, this.plotManager),
@@ -354,8 +346,8 @@ public class EternalPlots extends JavaPlugin {
         return this.databaseManager;
     }
 
-    public BukkitAudiences getAdventureAudiences() {
-        return this.adventureAudiences;
+    public BukkitAudiences getAudienceProvider() {
+        return this.audienceProvider;
     }
 
     public MiniMessage getMiniMessage() {

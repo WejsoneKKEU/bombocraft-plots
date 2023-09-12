@@ -1,10 +1,9 @@
 package com.eternalcode.plots.features.name;
 
-import com.eternalcode.plots.EternalPlots;
 import com.eternalcode.plots.configuration.implementations.LanguageConfiguration;
 import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.utils.LegacyUtils;
+import com.eternalcode.plots.adventure.LegacyUtils;
 import com.eternalcode.plots.utils.StringUtils;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.entity.Player;

@@ -9,7 +9,7 @@ import com.eternalcode.plots.region.Region;
 import com.eternalcode.plots.region.RegionManager;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.user.UserManager;
-import com.eternalcode.plots.utils.LegacyUtils;
+import com.eternalcode.plots.adventure.LegacyUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

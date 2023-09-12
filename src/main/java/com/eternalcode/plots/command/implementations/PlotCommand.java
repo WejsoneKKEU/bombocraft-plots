@@ -11,7 +11,7 @@ import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotHelper;
 import com.eternalcode.plots.plot.PlotManager;
 import com.eternalcode.plots.user.User;
-import com.eternalcode.plots.utils.LegacyUtils;
+import com.eternalcode.plots.adventure.LegacyUtils;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.argument.option.Opt;

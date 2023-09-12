@@ -1,6 +1,6 @@
 package com.eternalcode.plots.configuration.implementations;
 
-import com.eternalcode.plots.utils.LegacyUtils;
+import com.eternalcode.plots.adventure.LegacyUtils;
 import com.google.common.collect.ImmutableMap;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import eu.okaeri.configs.OkaeriConfig;

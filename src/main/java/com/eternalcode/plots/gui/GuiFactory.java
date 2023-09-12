@@ -16,6 +16,7 @@ import com.eternalcode.plots.plot.protection.ProtectionManager;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.user.UserManager;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.plugin.Plugin;
 
 public class GuiFactory {
 
@@ -33,8 +34,9 @@ public class GuiFactory {
     private final UserManager userManager;
     private final PlotManager plotManager;
     private final MiniMessage miniMessage;
+    private final Plugin plugin;
 
-    public GuiFactory(VaultProvider vaultProvider, ConfigurationManager configurationManager, PlotMenuConfiguration plotSelectorConfig, ProtectionConfiguration protectionConfig, PlotFlagsConfiguration plotFlagsConfig, PlotPanelConfiguration plotPanelConfig, LanguageConfiguration languageConfig, PluginConfiguration pluginConfiguration, PlotExtendConfiguration plotExtendConfig, ProtectionManager protectionManager, PlotPlayersConfiguration plotPlayersConfiguration, UserManager userManager, PlotManager plotManager, MiniMessage miniMessage) {
+    public GuiFactory(VaultProvider vaultProvider, ConfigurationManager configurationManager, PlotMenuConfiguration plotSelectorConfig, ProtectionConfiguration protectionConfig, PlotFlagsConfiguration plotFlagsConfig, PlotPanelConfiguration plotPanelConfig, LanguageConfiguration languageConfig, PluginConfiguration pluginConfiguration, PlotExtendConfiguration plotExtendConfig, ProtectionManager protectionManager, PlotPlayersConfiguration plotPlayersConfiguration, UserManager userManager, PlotManager plotManager, MiniMessage miniMessage, Plugin plugin) {
         this.vaultProvider = vaultProvider;
         this.plotSelectorConfig = plotSelectorConfig;
         this.protectionConfig = protectionConfig;
@@ -48,7 +50,8 @@ public class GuiFactory {
         this.userManager = userManager;
         this.plotManager = plotManager;
         this.miniMessage = miniMessage;
-        this.guiActions = new GuiActions(this, this.vaultProvider, this.plotManager, userManager, configurationManager, plugin);
+        this.plugin = plugin;
+        this.guiActions = new GuiActions(this, this.vaultProvider, this.plotManager, userManager, configurationManager, this.plugin);
     }
 
     public GuiProvider createSelectorGui(User user) {

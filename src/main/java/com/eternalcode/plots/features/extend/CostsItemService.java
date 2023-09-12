@@ -3,7 +3,7 @@ package com.eternalcode.plots.features.extend;
 import com.eternalcode.plots.configuration.implementations.PluginConfiguration;
 import com.eternalcode.plots.configuration.implementations.gui.models.ConfigExtend;
 import com.eternalcode.plots.utils.ItemUtils;
-import com.eternalcode.plots.utils.LegacyUtils;
+import com.eternalcode.plots.adventure.LegacyUtils;
 import com.eternalcode.plots.utils.TranslateUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

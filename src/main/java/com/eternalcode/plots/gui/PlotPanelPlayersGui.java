@@ -10,7 +10,7 @@ import com.eternalcode.plots.plot.PlotHelper;
 import com.eternalcode.plots.plot.PlotManager;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.user.UserManager;
-import com.eternalcode.plots.utils.LegacyUtils;
+import com.eternalcode.plots.adventure.LegacyUtils;
 import com.eternalcode.plots.utils.VariablesUtils;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;

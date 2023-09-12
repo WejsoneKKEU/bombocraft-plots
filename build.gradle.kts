@@ -46,8 +46,9 @@ dependencies {
     implementation("dev.rollczi.litecommands:bukkit:2.0.6")
     implementation("dev.rollczi.litecommands:core:2.5.0")
 
-    // expressible
+    // panda-dzikoysk crafted libs
     implementation("org.panda-lang:expressible:1.2.0")
+    implementation("org.panda-lang:panda-utilities:0.5.3-alpha")
 
     // TriumphGui
     implementation("dev.triumphteam:triumph-gui:3.1.3")

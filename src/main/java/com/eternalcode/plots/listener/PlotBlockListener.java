@@ -9,7 +9,7 @@ import com.eternalcode.plots.plotblock.PlotBlockService;
 import com.eternalcode.plots.region.Region;
 import com.eternalcode.plots.region.RegionManager;
 import com.eternalcode.plots.user.UserManager;
-import com.eternalcode.plots.utils.LegacyUtils;
+import com.eternalcode.plots.adventure.LegacyUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

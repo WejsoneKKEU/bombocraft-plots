@@ -1,4 +1,4 @@
-package com.eternalcode.plots.utils;
+package com.eternalcode.plots.adventure;
 
 import net.kyori.adventure.text.Component;
 

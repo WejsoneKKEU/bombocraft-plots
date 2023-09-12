@@ -15,8 +15,7 @@ import java.util.Map;
 public class CommandsConfiguration extends OkaeriConfig {
 
     @Comment({ "DO NOT REMOVE ANY COMMAND! ONLY EDIT!", "", "Main name command available in variable {PLOT_CMD}" })
-    public String usagePrefix = "&7Usage: ";
-    public String usageCommand = "&c{COMMAND}";
+    public String commandUsage = "&c{USAGE}";
 
     public ConfigCommand plotCommand = new ConfigCommand(true, "plot", Arrays.asList("p", "plots"));
 

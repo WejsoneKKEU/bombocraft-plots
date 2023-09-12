@@ -1,6 +1,5 @@
-package com.eternalcode.plots.utils;
+package com.eternalcode.plots.adventure;
 
-import com.eternalcode.plots.EternalPlots;
 import dev.triumphteam.gui.components.util.Legacy;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
