@@ -18,31 +18,21 @@ import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.postprocessor.SectionSeparator;
 import eu.okaeri.configs.serdes.SerdesRegistry;
 import eu.okaeri.configs.yaml.snakeyaml.YamlSnakeYamlConfigurer;
-import lombok.Getter;
 
 import java.io.File;
 
+// TODO: Refactor configuration, and configuration files, for less use on inner classes in configuration classes.
 public class ConfigurationManager {
 
-    @Getter
     private final PluginConfiguration pluginConfiguration;
-    @Getter
     private final PlotPanelConfiguration plotPanelConfiguration;
-    @Getter
     private final PlotMenuConfiguration plotMenuConfiguration;
-    @Getter
     private final BlocksConfiguration blocksConfiguration;
-    @Getter
     private final LanguageConfiguration languageConfiguration;
-    @Getter
     private final ProtectionConfiguration protectionConfiguration;
-    @Getter
     private final PlotFlagsConfiguration plotFlagsConfiguration;
-    @Getter
     private final CommandsConfiguration commandsConfiguration;
-    @Getter
     private final PlotExtendConfiguration plotExtendConfiguration;
-    @Getter
     private final PlotPlayersConfiguration plotPlayersConfiguration;
 
     public ConfigurationManager(File dataFolder) {
@@ -71,5 +61,45 @@ public class ConfigurationManager {
             .withBindFile(dataFolder + "/" + filePath)
             .saveDefaults()
             .load(true);
+    }
+
+    public PluginConfiguration getPluginConfiguration() {
+        return this.pluginConfiguration;
+    }
+
+    public PlotPanelConfiguration getPlotPanelConfiguration() {
+        return this.plotPanelConfiguration;
+    }
+
+    public PlotMenuConfiguration getPlotMenuConfiguration() {
+        return this.plotMenuConfiguration;
+    }
+
+    public BlocksConfiguration getBlocksConfiguration() {
+        return this.blocksConfiguration;
+    }
+
+    public LanguageConfiguration getLanguageConfiguration() {
+        return this.languageConfiguration;
+    }
+
+    public ProtectionConfiguration getProtectionConfiguration() {
+        return this.protectionConfiguration;
+    }
+
+    public PlotFlagsConfiguration getPlotFlagsConfiguration() {
+        return this.plotFlagsConfiguration;
+    }
+
+    public CommandsConfiguration getCommandsConfiguration() {
+        return this.commandsConfiguration;
+    }
+
+    public PlotExtendConfiguration getPlotExtendConfiguration() {
+        return this.plotExtendConfiguration;
+    }
+
+    public PlotPlayersConfiguration getPlotPlayersConfiguration() {
+        return this.plotPlayersConfiguration;
     }
 }

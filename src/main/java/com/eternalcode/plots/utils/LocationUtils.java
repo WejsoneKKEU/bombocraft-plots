@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import java.util.HashSet;
 import java.util.Set;
 
+// TODO: refactor
 public final class LocationUtils {
 
     private LocationUtils() {
@@ -89,6 +90,8 @@ public final class LocationUtils {
         return false;
     }
 
+
+    // TODO: ???, this method is copied from spigotmc forums, but stupid author replaced Optional with Option from panda SDK, why this method is commented?
 
     /* OTHERS
 

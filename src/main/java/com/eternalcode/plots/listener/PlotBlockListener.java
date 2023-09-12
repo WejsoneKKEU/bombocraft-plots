@@ -36,7 +36,7 @@ public class PlotBlockListener implements Listener {
         this.plotsLimit = plotsLimit;
         this.regionManager = regionManager;
         this.plugin = plugin;
-        this.plotCreation = new PlotCreation(pluginConfiguration, this.lang, userManager, plotManager, regionManager, this.plugin);
+        this.plotCreation = new PlotCreation(pluginConfiguration, this.lang, userManager, plotManager, regionManager, this.plugin, notificationAnnouncer);
         this.plotManager = plotManager;
     }
 

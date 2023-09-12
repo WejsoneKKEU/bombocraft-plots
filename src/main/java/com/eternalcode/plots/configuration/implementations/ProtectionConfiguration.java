@@ -8,7 +8,6 @@ import eu.okaeri.configs.annotation.CustomKey;
 import eu.okaeri.configs.annotation.NameModifier;
 import eu.okaeri.configs.annotation.NameStrategy;
 import eu.okaeri.configs.annotation.Names;
-import lombok.Getter;
 import org.bukkit.Material;
 
 import java.util.Map;
@@ -17,7 +16,6 @@ import java.util.Map;
 public class ProtectionConfiguration extends OkaeriConfig {
 
     @Comment({ "ConfigProtection flags for plots (not plot members)", "enabled - is protection enabled", "displayInGui - is protection visible in flags plot gui" })
-    @Getter
     Map<String, ConfigProtection> protections = new ImmutableMap.Builder<String, ConfigProtection>()
         .put("pvp", new ConfigProtection(FlagType.PVP, true, true, Material.DIAMOND_SWORD, "Players PVP", "PVP between players on plot"))
         .put("block-place", new ConfigProtection(FlagType.BLOCK_PLACE, true, true, Material.DIAMOND_SHOVEL, "Placing Blocks", "Placing blocks on plot"))
@@ -31,72 +29,106 @@ public class ProtectionConfiguration extends OkaeriConfig {
         .build();
 
     @Comment({ "", "Griefing protection flags for plots (not plot members)", "enabled - is protection enabled", "displayInGui - is protection visible in flags plot gui" })
-    @Getter
     SectionGriefing griefing = new SectionGriefing();
+
+    public Map<String, ConfigProtection> getProtections() {
+        return this.protections;
+    }
+
+    public SectionGriefing getGriefing() {
+        return this.griefing;
+    }
 
     public static class SectionGriefing extends OkaeriConfig {
 
         @Comment({ "", "Can friendly mobs + nametag mobs get damage by explosion, freezing, potions etc. on plot?" })
-        @Getter
         Griefing friendlyMobs = new Griefing(true);
 
         @Comment({ "", "Can monsters get damage by explosion, freezing, potions etc. on plot?" })
-        @Getter
         Griefing monsters = new Griefing(false);
 
         @Comment({ "", "Can water/lava spill over to plot?" })
-        @Getter
         Griefing waterLavaFlow = new Griefing(true);
 
         @Comment({ "", "Can guests spawn chickens by egg throwing on plot?" })
-        @Getter
         Griefing eggThrow = new Griefing(true);
 
         @Comment({ "", "Can guests fish other entities by fishing rod on plot?" })
-        @Getter
         Griefing fishingRod = new Griefing(true);
 
         @Comment({ "", "Can tnt, creeper etc. explode on plot?" })
-        @Getter
         Griefing explosion = new Griefing(true);
 
         @Comment({ "", "Can guests destroy farm by jumping on plot?" })
-        @Getter
         Griefing farm = new Griefing(true);
 
         @Comment({ "", "Can guests move blocks from/to plot using pistons?" })
-        @Getter
         Griefing piston = new Griefing(true);
 
         @Comment({ "", "Can guests use dispensers behind plot border?" })
-        @Getter
         Griefing dispenser = new Griefing(true);
 
         @Comment({ "", "Can guests use bone meal etc. behind plot border?" })
-        @Getter
         Griefing fertilize = new Griefing(true);
 
         @Comment({ "", "Can all players receive negative effects on plot?" })
-        @Getter
         Griefing negativeEffects = new Griefing(true);
 
 
+        public Griefing getFriendlyMobs() {
+            return this.friendlyMobs;
+        }
+
+        public Griefing getMonsters() {
+            return this.monsters;
+        }
+
+        public Griefing getWaterLavaFlow() {
+            return this.waterLavaFlow;
+        }
+
+        public Griefing getEggThrow() {
+            return this.eggThrow;
+        }
+
+        public Griefing getFishingRod() {
+            return this.fishingRod;
+        }
+
+        public Griefing getExplosion() {
+            return this.explosion;
+        }
+
+        public Griefing getFarm() {
+            return this.farm;
+        }
+
+        public Griefing getPiston() {
+            return this.piston;
+        }
+
+        public Griefing getDispenser() {
+            return this.dispenser;
+        }
+
+        public Griefing getFertilize() {
+            return this.fertilize;
+        }
+
+        public Griefing getNegativeEffects() {
+            return this.negativeEffects;
+        }
     }
 
     public static class ConfigProtection extends OkaeriConfig {
 
-        @Getter
         private FlagType type;
 
         @CustomKey("default-protection")
         private boolean defaultProtection = true;
-        @Getter
         private boolean editInGui = true;
-        @Getter
         private Material guiMaterial = Material.STONE;
-        @Getter
         private String guiName = "flag name in gui";
-        @Getter
         private String guiDescription = "flag description in gui";
 
         private ConfigProtection() {
@@ -114,11 +146,30 @@ public class ProtectionConfiguration extends OkaeriConfig {
         public boolean getDefaultProtection() {
             return defaultProtection;
         }
+
+        public FlagType getType() {
+            return this.type;
+        }
+
+        public boolean isEditInGui() {
+            return this.editInGui;
+        }
+
+        public Material getGuiMaterial() {
+            return this.guiMaterial;
+        }
+
+        public String getGuiName() {
+            return this.guiName;
+        }
+
+        public String getGuiDescription() {
+            return this.guiDescription;
+        }
     }
 
     public static class Griefing extends OkaeriConfig {
 
-        @Getter
         @CustomKey("protected")
         private boolean protection = true;
 
@@ -128,6 +179,10 @@ public class ProtectionConfiguration extends OkaeriConfig {
 
         private Griefing(boolean protection) {
             this.protection = protection;
+        }
+
+        public boolean isProtection() {
+            return this.protection;
         }
     }
 

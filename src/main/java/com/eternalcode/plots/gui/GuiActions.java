@@ -7,6 +7,7 @@ import com.eternalcode.plots.features.extend.CostsService;
 import com.eternalcode.plots.features.extend.PlotExtend;
 import com.eternalcode.plots.features.name.PlotChangeName;
 import com.eternalcode.plots.hook.VaultProvider;
+import com.eternalcode.plots.notification.NotificationAnnouncer;
 import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotManager;
 import com.eternalcode.plots.position.PositionAdapter;
@@ -28,14 +29,16 @@ class GuiActions {
     private final GuiFactory guiFactory;
     private final ConfigurationManager configurationManager;
     private final Plugin plugin;
+    private final NotificationAnnouncer notificationAnnouncer;
 
-    GuiActions(GuiFactory guiFactory, VaultProvider vaultProvider, PlotManager plotManager, UserManager userManager, ConfigurationManager configurationManager, Plugin plugin) {
+    GuiActions(GuiFactory guiFactory, VaultProvider vaultProvider, PlotManager plotManager, UserManager userManager, ConfigurationManager configurationManager, Plugin plugin, NotificationAnnouncer notificationAnnouncer) {
         this.vaultProvider = vaultProvider;
         this.plotManager = plotManager;
         this.userManager = userManager;
         this.guiFactory = guiFactory;
         this.configurationManager = configurationManager;
         this.plugin = plugin;
+        this.notificationAnnouncer = notificationAnnouncer;
     }
 
     void setupAction(ConfigAction action, GuiItem guiItem, Plot plot) {
@@ -188,7 +191,7 @@ class GuiActions {
                 return;
             }
 
-            new PlotChangeName(plot, this.configurationManager.getLanguageConfiguration(), this.plotManager, this.plugin)
+            new PlotChangeName(plot, this.configurationManager.getLanguageConfiguration(), this.plotManager, this.plugin, this.notificationAnnouncer)
                 .sendGui((Player) event.getWhoClicked());
         };
     }

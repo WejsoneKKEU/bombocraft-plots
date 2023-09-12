@@ -5,10 +5,13 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.jetbrains.annotations.ApiStatus;
 import panda.std.stream.PandaStream;
 
 import java.util.List;
 
+// TODO: Remove use of this class.
+@ApiStatus.ScheduledForRemoval
 public class LegacyUtils {
 
     public static final MiniMessage MINIMESSAGE = MiniMessage.miniMessage();

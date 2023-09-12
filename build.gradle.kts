@@ -31,16 +31,12 @@ dependencies {
     api("io.papermc:paperlib:1.0.7")
 
 
-    // anvil gui (From eternalcode repository)
-    implementation("net.wesjd:anvilgui:1.5.3-SNAPSHOT")
+    // anvil gui
+    implementation("net.wesjd:anvilgui:1.9.0-SNAPSHOT")
 
     // adventure
     compileOnly("net.kyori:adventure-platform-bukkit:4.1.2")
     compileOnly("net.kyori:adventure-text-minimessage:4.11.0")
-
-    // lombok
-    compileOnly("org.projectlombok:lombok:1.18.24")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
 
     // LiteCommands
     implementation("dev.rollczi.litecommands:bukkit:2.0.6")
@@ -112,9 +108,6 @@ tasks {
         archiveFileName.set("EternalPlots v${project.version}.jar")
 
         exclude("org/intellij/lang/annotations/**","org/jetbrains/annotations/**","org/checkerframework/**","META-INF/**","javax/**")
-
-        mergeServiceFiles()
-        minimize()
 
         val prefix = "com.eternalcode.plots.libs"
         listOf(

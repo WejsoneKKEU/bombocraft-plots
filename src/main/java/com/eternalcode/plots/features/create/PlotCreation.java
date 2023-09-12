@@ -3,6 +3,7 @@ package com.eternalcode.plots.features.create;
 import com.eternalcode.plots.configuration.implementations.LanguageConfiguration;
 import com.eternalcode.plots.configuration.implementations.PluginConfiguration;
 import com.eternalcode.plots.features.name.PlotChangeName;
+import com.eternalcode.plots.notification.NotificationAnnouncer;
 import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotManager;
 import com.eternalcode.plots.region.Region;
@@ -28,14 +29,16 @@ public class PlotCreation {
     private final PlotManager plotManager;
     private final RegionManager regionManager;
     private final Plugin plugin;
+    private final NotificationAnnouncer notificationAnnouncer;
 
-    public PlotCreation(PluginConfiguration pluginConfiguration, LanguageConfiguration languageConfiguration, UserManager userManager, PlotManager plotManager, RegionManager regionManager, Plugin plugin) {
+    public PlotCreation(PluginConfiguration pluginConfiguration, LanguageConfiguration languageConfiguration, UserManager userManager, PlotManager plotManager, RegionManager regionManager, Plugin plugin, NotificationAnnouncer notificationAnnouncer) {
         this.pluginConfiguration = pluginConfiguration;
         this.lang = languageConfiguration;
         this.userManager = userManager;
         this.plotManager = plotManager;
         this.regionManager = regionManager;
         this.plugin = plugin;
+        this.notificationAnnouncer = notificationAnnouncer;
     }
 
     public void createPlot(Player player, Location center, int startSize) {
@@ -97,7 +100,7 @@ public class PlotCreation {
         Plot plot = plotOpt.get();
 
         // create anvil (name change)
-        new PlotChangeName(plot, this.lang, this.plotManager, this.plugin).sendGui(player);
+        new PlotChangeName(plot, this.lang, this.plotManager, this.plugin, this.notificationAnnouncer).sendGui(player);
 
         player.sendMessage(LegacyUtils.color(this.lang.plotCreation.plotCreated.replace("{NAME}", plot.getName())));
     }

@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+// TODO: Refactor this class
 public class PlotBlockService {
 
     private final BlocksConfiguration blocksConfiguration;

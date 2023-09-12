@@ -7,7 +7,6 @@ import com.google.common.collect.ImmutableMap;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
-import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -45,11 +44,8 @@ public class PlotFlagsConfiguration extends OkaeriConfig {
 
     public static class FlagItem extends OkaeriConfig {
 
-        @Getter
         private String material = "{FLAG_MATERIAL}";
-        @Getter
         private String name = "<gradient:#FBA600:#FFF500>{FLAG_NAME}</gradient>";
-        @Getter
         private List<String> lore = Arrays.asList(
             "&7{FLAG_DESCRIPTION}",
             "",
@@ -105,6 +101,18 @@ public class PlotFlagsConfiguration extends OkaeriConfig {
             flagItem.lore = lore;
 
             return flagItem;
+        }
+
+        public String getMaterial() {
+            return this.material;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public List<String> getLore() {
+            return this.lore;
         }
     }
 }

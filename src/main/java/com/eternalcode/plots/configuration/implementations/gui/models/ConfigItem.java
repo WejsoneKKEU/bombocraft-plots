@@ -3,7 +3,6 @@ package com.eternalcode.plots.configuration.implementations.gui.models;
 import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.utils.VariablesUtils;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
-import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -15,15 +14,10 @@ import java.util.List;
 
 public class ConfigItem {
 
-    @Getter
     public int slot;
-    @Getter
     public ConfigAction action;
-    @Getter
     public Material material;
-    @Getter
     public String name;
-    @Getter
     public List<String> lore;
 
     public ConfigItem(int slot, Material material, String name, List<String> lore, ConfigAction configAction) {
@@ -63,5 +57,25 @@ public class ConfigItem {
             .name(miniMessage.deserialize(name).decoration(TextDecoration.ITALIC, false))
             .lore(loreComponent)
             .build();
+    }
+
+    public int getSlot() {
+        return this.slot;
+    }
+
+    public ConfigAction getAction() {
+        return this.action;
+    }
+
+    public Material getMaterial() {
+        return this.material;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public List<String> getLore() {
+        return this.lore;
     }
 }

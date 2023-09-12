@@ -19,14 +19,17 @@ public class LanguageConfiguration extends OkaeriConfig {
         public String hasLimit = "&cOsiągnięto limit działek";
         public String unknownError = "&cWystąpił błąd podczas tworzenia działki, skontaktuj się z administratorem";
 
-        public AnvilGui anvilGui = new AnvilGui();
+        public changeNameInventory changeNameInventory = new changeNameInventory();
 
-        public static class AnvilGui extends OkaeriConfig {
+        public static class changeNameInventory extends OkaeriConfig {
             public Material guiItem = Material.NAME_TAG;
             public String guiTitle = "&aNazwij swoją działkę";
             public String nameExists = "&cNazwa w użyciu";
             public String nameChanged = "&aZmieniono nazwę działki na {NAME}";
             public String illegalCharacters = "&cNieprawidłowe znaki";
+            public String nameTooLongOrShort = "&cNazwa jest za długa bądź za krótka";
+            public String closed = "&cZamknięto okno zmiany nazwy działki, nazwa zostaje taka sama.";
+
         }
     }
 

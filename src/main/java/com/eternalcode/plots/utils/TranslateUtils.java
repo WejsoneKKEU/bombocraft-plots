@@ -4,6 +4,7 @@ import org.bukkit.Material;
 
 import java.util.Map;
 
+// TODO: Remove feature for Translate item names.
 public final class TranslateUtils {
 
     private TranslateUtils() {

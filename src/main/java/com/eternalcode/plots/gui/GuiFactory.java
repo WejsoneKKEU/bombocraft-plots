@@ -51,7 +51,7 @@ public class GuiFactory {
         this.plotManager = plotManager;
         this.miniMessage = miniMessage;
         this.plugin = plugin;
-        this.guiActions = new GuiActions(this, this.vaultProvider, this.plotManager, userManager, configurationManager, this.plugin);
+        this.guiActions = new GuiActions(this, this.vaultProvider, this.plotManager, userManager, configurationManager, this.plugin, notificationAnnouncer);
     }
 
     public GuiProvider createSelectorGui(User user) {

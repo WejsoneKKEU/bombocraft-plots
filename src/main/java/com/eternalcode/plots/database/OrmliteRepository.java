@@ -35,6 +35,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+// TODO: Separate this class into multiple classes
 public class OrmliteRepository implements PlotRepository, UserRepository, RegionRepository, MembersRepository, ProtectionRepository {
 
     private final DatabaseManager manager;
