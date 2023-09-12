@@ -11,17 +11,17 @@ public class Protection {
 
     private Set<Flag> flags = new HashSet<>();
 
-    Protection(ProtectionConfiguration protectionConfiguration) {
+    public Protection(ProtectionConfiguration protectionConfiguration) {
         for (ProtectionConfiguration.ConfigProtection configProtection : protectionConfiguration.getProtections().values()) {
             this.flags.add(new Flag(UUID.randomUUID(), configProtection.getType(), configProtection.getDefaultProtection()));
         }
     }
 
-    Protection(Set<Flag> flags) {
+    public Protection(Set<Flag> flags) {
         this.flags = flags;
     }
 
-    void setProtection(FlagType flagType, boolean status) {
+    public  void setProtection(FlagType flagType, boolean status) {
         for (Flag flag : this.flags) {
             if (flag.getFlagType() == flagType) {
                 flag.setStatus(status);

@@ -17,7 +17,7 @@ public class Region {
     private Position posMin;
     private Position center;
 
-    Region(UUID regionUUID, int size, int extendLevel, Location posMax, Location posMin, Location center) {
+    public Region(UUID regionUUID, int size, int extendLevel, Location posMax, Location posMin, Location center) {
         this.regionUUID = regionUUID;
         this.posMax = PositionAdapter.convert(posMax);
         this.posMin = PositionAdapter.convert(posMin);
@@ -25,33 +25,6 @@ public class Region {
         this.size = size;
         this.extendLevel = extendLevel;
         this.range = size / 2;
-    }
-
-    void setExtendLevel(int level) {
-        this.extendLevel = level;
-    }
-
-    void setSize(int size) {
-        this.size = size;
-        this.range = size / 2;
-        this.posMin = new Position(this.center.getWorld(), this.center.getX() - this.range, this.center.getY(), this.center.getZ() - this.range);
-        this.posMax = new Position(this.center.getWorld(), this.center.getX() + this.range, this.center.getY(), this.center.getZ() + this.range);
-    }
-
-    void setPosMax(Location posMax) {
-        this.posMax = PositionAdapter.convert(posMax);
-    }
-
-    void setPosMin(Location posMin) {
-        this.posMin = PositionAdapter.convert(posMin);
-    }
-
-    void setCenter(Location center) {
-        this.center = PositionAdapter.convert(center);
-    }
-
-    void setRange(int range) {
-        this.range = range;
     }
 
     @Override
@@ -75,23 +48,50 @@ public class Region {
         return this.size;
     }
 
+    void setSize(int size) {
+        this.size = size;
+        this.range = size / 2;
+        this.posMin = new Position(this.center.getX() - this.range, this.center.getY(), this.center.getZ() - this.range, 0.0f, 0.0f, this.center.getWorld());
+        this.posMax = new Position(this.center.getX() + this.range, this.center.getY(), this.center.getZ() + this.range, 0.0f, 0.0f, this.center.getWorld());
+    }
+
     public int getRange() {
         return this.range;
+    }
+
+    void setRange(int range) {
+        this.range = range;
     }
 
     public int getExtendLevel() {
         return this.extendLevel;
     }
 
+    void setExtendLevel(int level) {
+        this.extendLevel = level;
+    }
+
     public Position getPosMax() {
         return this.posMax;
+    }
+
+    void setPosMax(Location posMax) {
+        this.posMax = PositionAdapter.convert(posMax);
     }
 
     public Position getPosMin() {
         return this.posMin;
     }
 
+    void setPosMin(Location posMin) {
+        this.posMin = PositionAdapter.convert(posMin);
+    }
+
     public Position getCenter() {
         return this.center;
+    }
+
+    void setCenter(Location center) {
+        this.center = PositionAdapter.convert(center);
     }
 }

@@ -1,5 +1,7 @@
 package com.eternalcode.plots.plot;
 
+import com.eternalcode.plots.configuration.implementations.ProtectionConfiguration;
+import com.eternalcode.plots.plot.protection.Protection;
 import com.eternalcode.plots.region.Region;
 import com.eternalcode.plots.region.RegionManager;
 import com.eternalcode.plots.user.User;
@@ -7,7 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import panda.std.Option;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
@@ -18,30 +19,22 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PlotManager {
 
     private final Map<UUID, Plot> plots = new ConcurrentHashMap<>();
-    private final PlotFactory plotFactory;
     private final MembersRepository membersRepository;
     private final PlotRepository plotRepository;
     private final RegionManager regionManager;
-    private final MemberFactory memberFactory;
+    private final ProtectionConfiguration protectionConfiguration;
 
-    public PlotManager(PlotFactory plotFactory, MembersRepository membersRepository, PlotRepository plotRepository, RegionManager regionManager, MemberFactory memberFactory) {
-        this.plotFactory = plotFactory;
+    public PlotManager(MembersRepository membersRepository, PlotRepository plotRepository, RegionManager regionManager, ProtectionConfiguration protectionConfiguration) {
         this.membersRepository = membersRepository;
+        this.protectionConfiguration = protectionConfiguration;
         this.plotRepository = plotRepository;
         this.regionManager = regionManager;
-        this.memberFactory = memberFactory;
 
         this.plotRepository.loadAllPlot().thenAccept(plotsFromRepo -> {
             for (Plot plot : plotsFromRepo) {
                 this.plots.put(plot.getUuid(), plot);
 
-                Bukkit.getLogger().info("Wczytano działkę: " + plot.getName());
-                Bukkit.getLogger().info("Członkowie: " +
-                    Arrays.toString(plot.getMembers()
-                        .stream()
-                        .map(Member::getUser)
-                        .map(User::getName)
-                        .toArray()));
+                Bukkit.getLogger().info("Successfully loaded " + this.plots.size() + " plots");
             }
         });
     }
@@ -51,10 +44,22 @@ public class PlotManager {
             return Option.none();
         }
 
-        Plot plot = this.plotFactory.createNew(plotUUID, name, owner, region, creation, validity);
+        Member memberOwner = new Member(UUID.randomUUID(), owner);
+
+        Plot plot = new Plot(
+            plotUUID,
+            name,
+            memberOwner,
+            region,
+            creation,
+            validity,
+            new HashSet<>()
+        );
+
+        Protection protection = new Protection(this.protectionConfiguration);
+        plot.setProtection(protection);
 
         this.plots.put(plotUUID, plot);
-
         this.plotRepository.savePlot(plot);
 
         return Option.of(plot);
@@ -66,7 +71,7 @@ public class PlotManager {
     }
 
     public void addMember(Plot plot, User user) {
-        Member member = this.memberFactory.createNew(user);
+        Member member = new Member(UUID.randomUUID(), user);
 
         plot.addMember(member);
 

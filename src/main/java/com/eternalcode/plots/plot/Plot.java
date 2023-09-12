@@ -25,7 +25,7 @@ public class Plot {
     private Date expires;
     private Protection protection;
 
-    Plot(UUID uuid, String name, Member owner, Region region, Date created, Date expires, Set<Member> members) {
+    public Plot(UUID uuid, String name, Member owner, Region region, Date created, Date expires, Set<Member> members) {
         this.uuid = uuid;
         this.name = name;
         this.owner = owner;
@@ -40,12 +40,12 @@ public class Plot {
         }
     }
 
-    void addMember(Member member) {
+    public void addMember(Member member) {
         this.members.add(member);
         this.membersByUserUUID.put(member.getUser().getUuid(), member);
     }
 
-    void removeMember(Member member) {
+    public void removeMember(Member member) {
         this.members.remove(member);
         this.membersByUserUUID.remove(member.getUser().getUuid(), member);
     }
@@ -130,7 +130,7 @@ public class Plot {
         return this.protection;
     }
 
-    void setProtection(Protection protection) {
+    public void setProtection(Protection protection) {
         this.protection = protection;
     }
 }

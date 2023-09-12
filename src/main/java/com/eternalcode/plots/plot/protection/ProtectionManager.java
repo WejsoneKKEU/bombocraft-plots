@@ -22,21 +22,19 @@ public class ProtectionManager {
 
     private final Cache<Block, UUID> placed = CacheBuilder.newBuilder().expireAfterWrite(60, TimeUnit.SECONDS).build();
     private final ProtectionRepository protectionRepository;
-    private final ProtectionFactory protectionFactory;
     private final ProtectionConfiguration protectionConfiguration;
     private final UserManager userManager;
     private final PlotManager plotManager;
 
-    public ProtectionManager(ProtectionFactory protectionFactory, ProtectionRepository protectionRepository, ProtectionConfiguration protectionConfiguration, UserManager userManager, PlotManager plotManager) {
+    public ProtectionManager(ProtectionRepository protectionRepository, ProtectionConfiguration protectionConfiguration, UserManager userManager, PlotManager plotManager) {
         this.protectionRepository = protectionRepository;
-        this.protectionFactory = protectionFactory;
         this.protectionConfiguration = protectionConfiguration;
         this.userManager = userManager;
         this.plotManager = plotManager;
     }
 
     public Protection create(Plot plot) {
-        Protection protection = this.protectionFactory.createNew();
+        Protection protection = new Protection(this.protectionConfiguration);
 
         this.protectionRepository.saveProtection(plot, protection);
 

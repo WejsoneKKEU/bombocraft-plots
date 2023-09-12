@@ -2,102 +2,75 @@ package com.eternalcode.plots.plotblock;
 
 import com.eternalcode.plots.configuration.implementations.BlocksConfiguration;
 import com.eternalcode.plots.configuration.implementations.PluginConfiguration;
-import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotManager;
+import com.eternalcode.plots.position.Position;
 import com.eternalcode.plots.position.PositionAdapter;
 import com.eternalcode.plots.utils.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
-import panda.std.Option;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-// TODO: Refactor this class
+
 public class PlotBlockService {
 
     private final BlocksConfiguration blocksConfiguration;
-    private final PluginConfiguration pluginConfiguration;
     private final PlotManager plotManager;
+    private final PluginConfiguration pluginConfiguration;
+    private final PlotBlockMatcher plotBlockMatcher;
 
     private HashMap<BlocksConfiguration.PlotBlock, Integer> plotBlocks = new HashMap<>();
 
-    public PlotBlockService(BlocksConfiguration blocksConfiguration, PluginConfiguration pluginConfiguration, PlotManager plotManager) {
+    public PlotBlockService(BlocksConfiguration blocksConfiguration, PluginConfiguration pluginConfiguration,
+                            PlotManager plotManager, PlotBlockMatcher plotBlockMatcher) {
         this.blocksConfiguration = blocksConfiguration;
         this.pluginConfiguration = pluginConfiguration;
         this.plotManager = plotManager;
+        this.plotBlockMatcher = plotBlockMatcher;
     }
 
     public boolean isPlotBlock(ItemStack itemStack) {
-        return getPlotBlock(itemStack).isPresent();
-    }
-
-    private Option<BlocksConfiguration.PlotBlock> getPlotBlock(ItemStack itemStack) {
-        for (BlocksConfiguration.PlotBlock plotBlock : this.plotBlocks.keySet()) {
-
-            ItemStack block = BlocksConfiguration.getItemStack(plotBlock);
-
-            if (itemStack.getType() != block.getType()) {
-                continue; // nie zgadza sie
-            }
-            ItemMeta itemMeta = itemStack.getItemMeta();
-
-            if (itemMeta == null || block.getItemMeta() == null) {
-
-                if (itemMeta == null && block.getItemMeta() == null) {
-                    return Option.of(plotBlock);
-                }
-                continue; // nie zgadza sie
-            }
-
-            if (!itemMeta.getDisplayName().equalsIgnoreCase(block.getItemMeta().getDisplayName())) {
-                continue; // nie zgadza sie
-            }
-
-            if (!Objects.equals(itemMeta.getLore(), block.getItemMeta().getLore())) {
-                continue; // nie zgadza sie
-            }
-            return Option.of(plotBlock);
-
-        }
-
-        return Option.none();
-
+        return plotBlockMatcher.isBlockMatching(itemStack);
     }
 
     public int getPlotBlockStartSize(ItemStack itemStack) {
-        return this.plotBlocks.get(getPlotBlock(itemStack).get());
+        return this.plotBlocks.get(plotBlockMatcher.getMatchingBlock(itemStack).get());
     }
 
     public void setupPlotBlocks(Plugin plugin) {
-
-        this.plotBlocks = new HashMap<>();
-
-        int id = 0;
-        for (BlocksConfiguration.PlotBlock plotBlock : this.blocksConfiguration.plotBlocks.values()) {
-
-            BlocksConfiguration.addRecipe(plotBlock, "EternalPlotsCuboid" + id, plugin);
-            this.plotBlocks.put(plotBlock, plotBlock.startSize);
-
-            id++;
-        }
+        this.plotBlocks = blocksConfiguration.plotBlocks.values().stream()
+            .peek(plotBlock -> BlocksConfiguration.addRecipe(plotBlock, "eternalplots-plot-recipe", plugin))
+            .collect(Collectors.toMap(Function.identity(), plotBlock -> plotBlock.startSize, (a, b) -> b, HashMap::new));
     }
 
-    public boolean canSetupPlot(Location loc, int startSize) {
-
-        if (this.plotManager.getRegion(loc).isPresent()) {
+    public boolean canSetupPlot(Location location) {
+        if (plotManager.getRegion(location).isPresent()) {
             return false;
         }
 
-        int maxSize = this.pluginConfiguration.plot.maxSize;
-        int addonSize = this.pluginConfiguration.spaceBlocks;
-        int size = (maxSize / 2) + addonSize; // range i dodatkowe bloki
+        int maxSize = pluginConfiguration.plot.maxSize;
+        int addonSize = pluginConfiguration.spaceBlocks;
+        int size = (maxSize / 2) + addonSize;
 
-        List<Location> locations = Arrays.asList(
+        List<Location> locations = generateCheckLocations(location, size);
+
+        return plotManager.getPlots().stream()
+            .noneMatch(plot -> locations.stream()
+                .anyMatch(plotLocation -> {
+                    Position center = plot.getRegion().getCenter();
+                    Location convert = PositionAdapter.convert(center);
+
+                    return isInPlotRange(convert, location, size);
+                }));
+    }
+
+    private List<Location> generateCheckLocations(Location loc, int size) {
+        return Stream.of(
             new Location(loc.getWorld(), loc.getX() + size, loc.getY(), loc.getZ() + size),
             new Location(loc.getWorld(), loc.getX() - size, loc.getY(), loc.getZ() - size),
             new Location(loc.getWorld(), loc.getX() - size, loc.getY(), loc.getZ() + size),
@@ -107,29 +80,17 @@ public class PlotBlockService {
             new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() + size),
             new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() - size),
             new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ())
-        );
+        ).toList();
+    }
 
-        for (Plot plot : this.plotManager.getPlots()) {
+    private boolean isInPlotRange(Location plotCenter, Location locationToCheck, int size) {
+        Location plotPos1 = new Location(plotCenter.getWorld(), plotCenter.getX() + size, plotCenter.getY(), plotCenter.getZ() + size);
+        Location plotPos2 = new Location(plotCenter.getWorld(), plotCenter.getX() - size, plotCenter.getY(), plotCenter.getZ() - size);
 
-            Location center = PositionAdapter.convert(plot.getRegion().getCenter());
-
-            Location plotPos1 = new Location(center.getWorld(), center.getX() + size, loc.getY(), center.getZ() + size);
-            Location plotPos2 = new Location(center.getWorld(), center.getX() - size, loc.getY(), center.getZ() - size);
-
-            for (Location location : locations) {
-
-                if (LocationUtils.isIn(plotPos1, plotPos2, location)) {
-                    return false;
-                }
-
-            }
-        }
-
-        return true;
+        return LocationUtils.isIn(plotPos1, plotPos2, locationToCheck);
     }
 
     public boolean isSafeRegion(Location location) {
-
         return !((location.getX() < 250 && location.getX() > -250) && (location.getZ() < 250 && location.getZ() > -250));
     }
 }

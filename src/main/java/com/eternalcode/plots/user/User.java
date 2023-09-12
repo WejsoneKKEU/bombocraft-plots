@@ -8,7 +8,7 @@ public class User {
     private final UUID uuid;
     private String name;
 
-    User(UUID uuid, String name) {
+    public User(UUID uuid, String name) {
         this.name = name;
         this.uuid = uuid;
     }
@@ -34,7 +34,7 @@ public class User {
         return this.name;
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 }

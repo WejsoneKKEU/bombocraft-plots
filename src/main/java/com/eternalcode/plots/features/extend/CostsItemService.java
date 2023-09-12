@@ -4,7 +4,6 @@ import com.eternalcode.plots.configuration.implementations.PluginConfiguration;
 import com.eternalcode.plots.configuration.implementations.gui.models.ConfigExtend;
 import com.eternalcode.plots.utils.ItemUtils;
 import com.eternalcode.plots.adventure.LegacyUtils;
-import com.eternalcode.plots.utils.TranslateUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +15,6 @@ import java.util.Map;
 class CostsItemService implements CostsService {
 
     private final ConfigExtend configExtend;
-    private final Map<String, String> translations;
     private final String lineOfNeededItem;
     private final String lineOfNeededItemDeclaimer;
     private final String noCostsMessage;
@@ -24,7 +22,6 @@ class CostsItemService implements CostsService {
     public CostsItemService(ConfigExtend configExtend, PluginConfiguration pluginConfiguration) {
         this.configExtend = configExtend;
         this.noCostsMessage = pluginConfiguration.plot.extend.noItemsMessage;
-        this.translations = pluginConfiguration.plot.extend.translatedItems;
         this.lineOfNeededItem = pluginConfiguration.plot.extend.itemFormat;
         this.lineOfNeededItemDeclaimer = pluginConfiguration.plot.extend.joinerFormat;
     }
@@ -58,7 +55,7 @@ class CostsItemService implements CostsService {
 
             String line = this.lineOfNeededItem
                 .replace("{AMOUNT}", String.valueOf(entry.getValue()))
-                .replace("{ITEM}", TranslateUtils.getTranslate(entry.getKey(), this.translations));
+                .replace("{ITEM}", String.valueOf(entry.getKey()));
 
             items.add(line);
         }

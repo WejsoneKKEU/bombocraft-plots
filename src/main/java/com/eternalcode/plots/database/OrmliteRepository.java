@@ -6,22 +6,16 @@ import com.eternalcode.plots.database.warp.PlotWarp;
 import com.eternalcode.plots.database.warp.RegionWarp;
 import com.eternalcode.plots.database.warp.UserWarp;
 import com.eternalcode.plots.plot.Member;
-import com.eternalcode.plots.plot.MemberFactory;
 import com.eternalcode.plots.plot.MembersRepository;
 import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotFactory;
 import com.eternalcode.plots.plot.PlotRepository;
 import com.eternalcode.plots.plot.protection.Flag;
-import com.eternalcode.plots.plot.protection.FlagFactory;
 import com.eternalcode.plots.plot.protection.Protection;
-import com.eternalcode.plots.plot.protection.ProtectionFactory;
 import com.eternalcode.plots.plot.protection.ProtectionRepository;
 import com.eternalcode.plots.region.Region;
-import com.eternalcode.plots.region.RegionFactory;
 import com.eternalcode.plots.region.RegionRepository;
 import com.eternalcode.plots.scheduler.Scheduler;
 import com.eternalcode.plots.user.User;
-import com.eternalcode.plots.user.UserFactory;
 import com.eternalcode.plots.user.UserRepository;
 import com.j256.ormlite.dao.Dao;
 import panda.std.function.ThrowingFunction;
@@ -39,22 +33,10 @@ import java.util.concurrent.CompletableFuture;
 public class OrmliteRepository implements PlotRepository, UserRepository, RegionRepository, MembersRepository, ProtectionRepository {
 
     private final DatabaseManager manager;
-    private final RegionFactory regionFactory;
-    private final PlotFactory plotFactory;
-    private final UserFactory userFactory;
-    private final ProtectionFactory protectionFactory;
-    private final MemberFactory memberFactory;
-    private final FlagFactory flagFactory;
     private final Scheduler scheduler;
 
-    public OrmliteRepository(DatabaseManager manager, RegionFactory regionFactory, PlotFactory plotFactory, UserFactory userFactory, ProtectionFactory protectionFactory, MemberFactory memberFactory, FlagFactory flagFactory, Scheduler scheduler) {
+    public OrmliteRepository(DatabaseManager manager,  Scheduler scheduler) {
         this.manager = manager;
-        this.regionFactory = regionFactory;
-        this.plotFactory = plotFactory;
-        this.userFactory = userFactory;
-        this.protectionFactory = protectionFactory;
-        this.memberFactory = memberFactory;
-        this.flagFactory = flagFactory;
         this.scheduler = scheduler;
     }
 
@@ -209,39 +191,49 @@ public class OrmliteRepository implements PlotRepository, UserRepository, Region
      **/
 
     private Plot adaptPlot(PlotWarp plotWarp) {
-        return this.plotFactory.create(
+        Member owner = adaptMember(plotWarp.getOwner());
+        Region region = adaptRegion(plotWarp.getRegion());
+        Protection protection = adaptProtection(plotWarp);
+        Set<Member> members = adaptMembers(plotWarp);
+
+        Plot plot = new Plot(
             plotWarp.getUuid(),
             plotWarp.getName(),
-            adaptMember(plotWarp.getOwner()),
-            adaptRegion(plotWarp.getRegion()),
-            adaptProtection(plotWarp),
+            owner,
+            region,
             plotWarp.getCreated(),
             plotWarp.getExpires(),
-            adaptMembers(plotWarp)
+            members
         );
+
+        plot.setProtection(protection);
+
+        return plot;
     }
 
     private Member adaptMember(MemberWarp memberWarp) {
-        return this.memberFactory.create(memberWarp.getUuid(), this.adaptUser(memberWarp.getUserWarp()));
+        User user = adaptUser(memberWarp.getUserWarp());
+        return new Member(memberWarp.getUuid(), user);
     }
 
     private Region adaptRegion(RegionWarp regionWarp) {
-        return this.regionFactory.create(regionWarp.getUuid(), regionWarp.getSize(), regionWarp.getExtendLevel(), regionWarp.getPosMax(), regionWarp.getPosMin(), regionWarp.getCenter());
+        return new Region(regionWarp.getUuid(), regionWarp.getSize(), regionWarp.getExtendLevel(), regionWarp.getPosMax(), regionWarp.getPosMin(), regionWarp.getCenter());
     }
 
     private User adaptUser(UserWarp userWarp) {
-        return this.userFactory.create(userWarp.getUUID(), userWarp.getName());
+        return new User(userWarp.getUUID(), userWarp.getName());
     }
 
     private Protection adaptProtection(PlotWarp plotWarp) {
-        return this.protectionFactory.create(this.adaptFlags(plotWarp));
+        Set<Flag> flags = adaptFlags(plotWarp);
+        return new Protection(flags);
     }
 
     private Set<Flag> adaptFlags(PlotWarp plotWarp) {
         Set<Flag> flags = new HashSet<>();
 
         for (FlagWarp flagWarp : plotWarp.getFlags()) {
-            flags.add(this.flagFactory.create(flagWarp.getUuid(), flagWarp.getFlagType(), flagWarp.isStatus()));
+            flags.add(new Flag(flagWarp.getUuid(), flagWarp.getFlagType(), flagWarp.isStatus()));
         }
 
         return flags;

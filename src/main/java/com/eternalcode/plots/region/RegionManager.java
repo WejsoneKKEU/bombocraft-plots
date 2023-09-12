@@ -3,16 +3,12 @@ package com.eternalcode.plots.region;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import java.util.UUID;
+
 public class RegionManager {
 
-    private final RegionFactory regionFactory;
-
-    public RegionManager(RegionFactory regionFactory) {
-        this.regionFactory = regionFactory;
-    }
-
     public Region create(int size, Location posMax, Location posMin, Location center) {
-        return this.regionFactory.createNew(size, posMax, posMin, center);
+        return new Region(UUID.randomUUID(), size, 0, posMax, posMin, center);
     }
 
     public void setSize(Region region, int size) {

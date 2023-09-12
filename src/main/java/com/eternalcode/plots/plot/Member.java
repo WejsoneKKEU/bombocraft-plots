@@ -10,7 +10,7 @@ public class Member {
     private final UUID uuid;
     private final User user;
 
-    Member(UUID uuid, User user) {
+    public Member(UUID uuid, User user) {
         this.uuid = uuid;
         this.user = user;
     }

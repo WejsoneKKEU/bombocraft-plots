@@ -10,6 +10,7 @@ import com.eternalcode.plots.configuration.implementations.gui.PlotMenuConfigura
 import com.eternalcode.plots.configuration.implementations.gui.PlotPanelConfiguration;
 import com.eternalcode.plots.configuration.implementations.gui.PlotPlayersConfiguration;
 import com.eternalcode.plots.hook.VaultProvider;
+import com.eternalcode.plots.notification.NotificationAnnouncer;
 import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotManager;
 import com.eternalcode.plots.plot.protection.ProtectionManager;
@@ -30,13 +31,14 @@ public class GuiFactory {
     private final PlotExtendConfiguration plotExtendConfig;
     private final ProtectionManager protectionManager;
     private final PlotPlayersConfiguration plotPlayersConfiguration;
+    private final NotificationAnnouncer notificationAnnouncer;
     private final GuiActions guiActions;
     private final UserManager userManager;
     private final PlotManager plotManager;
     private final MiniMessage miniMessage;
     private final Plugin plugin;
 
-    public GuiFactory(VaultProvider vaultProvider, ConfigurationManager configurationManager, PlotMenuConfiguration plotSelectorConfig, ProtectionConfiguration protectionConfig, PlotFlagsConfiguration plotFlagsConfig, PlotPanelConfiguration plotPanelConfig, LanguageConfiguration languageConfig, PluginConfiguration pluginConfiguration, PlotExtendConfiguration plotExtendConfig, ProtectionManager protectionManager, PlotPlayersConfiguration plotPlayersConfiguration, UserManager userManager, PlotManager plotManager, MiniMessage miniMessage, Plugin plugin) {
+    public GuiFactory(VaultProvider vaultProvider, ConfigurationManager configurationManager, PlotMenuConfiguration plotSelectorConfig, ProtectionConfiguration protectionConfig, PlotFlagsConfiguration plotFlagsConfig, PlotPanelConfiguration plotPanelConfig, LanguageConfiguration languageConfig, PluginConfiguration pluginConfiguration, PlotExtendConfiguration plotExtendConfig, ProtectionManager protectionManager, PlotPlayersConfiguration plotPlayersConfiguration, NotificationAnnouncer notificationAnnouncer, UserManager userManager, PlotManager plotManager, MiniMessage miniMessage, Plugin plugin) {
         this.vaultProvider = vaultProvider;
         this.plotSelectorConfig = plotSelectorConfig;
         this.protectionConfig = protectionConfig;
@@ -47,11 +49,12 @@ public class GuiFactory {
         this.plotExtendConfig = plotExtendConfig;
         this.protectionManager = protectionManager;
         this.plotPlayersConfiguration = plotPlayersConfiguration;
+        this.notificationAnnouncer = notificationAnnouncer;
         this.userManager = userManager;
         this.plotManager = plotManager;
         this.miniMessage = miniMessage;
         this.plugin = plugin;
-        this.guiActions = new GuiActions(this, this.vaultProvider, this.plotManager, userManager, configurationManager, this.plugin, notificationAnnouncer);
+        this.guiActions = new GuiActions(this, this.vaultProvider, this.plotManager, userManager, configurationManager, this.plugin, this.notificationAnnouncer);
     }
 
     public GuiProvider createSelectorGui(User user) {

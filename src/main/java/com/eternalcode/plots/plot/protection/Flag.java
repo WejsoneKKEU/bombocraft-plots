@@ -8,7 +8,7 @@ public class Flag {
     private final FlagType flagType;
     private boolean status;
 
-    Flag(UUID uuid, FlagType flagType, boolean status) {
+    public Flag(UUID uuid, FlagType flagType, boolean status) {
         this.uuid = uuid;
         this.flagType = flagType;
         this.status = status;
@@ -26,7 +26,7 @@ public class Flag {
         return this.status;
     }
 
-    void setStatus(boolean status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 }

@@ -4,6 +4,7 @@ import com.eternalcode.plots.configuration.implementations.LanguageConfiguration
 import com.eternalcode.plots.configuration.implementations.PluginConfiguration;
 import com.eternalcode.plots.features.create.PlotCreation;
 import com.eternalcode.plots.features.limit.PlotsLimit;
+import com.eternalcode.plots.notification.NotificationAnnouncer;
 import com.eternalcode.plots.plot.PlotManager;
 import com.eternalcode.plots.plotblock.PlotBlockService;
 import com.eternalcode.plots.region.Region;
@@ -28,15 +29,17 @@ public class PlotBlockListener implements Listener {
     private final PlotsLimit plotsLimit;
     private final RegionManager regionManager;
     private final PlotManager plotManager;
+    private final NotificationAnnouncer notificationAnnouncer;
     private final Plugin plugin;
 
-    public PlotBlockListener(PluginConfiguration pluginConfiguration, LanguageConfiguration languageConfiguration, PlotBlockService plotBlockService, UserManager userManager, PlotManager plotManager, RegionManager regionManager, PlotsLimit plotsLimit, Plugin plugin) {
+    public PlotBlockListener(PluginConfiguration pluginConfiguration, LanguageConfiguration languageConfiguration, PlotBlockService plotBlockService, UserManager userManager, PlotManager plotManager, RegionManager regionManager, PlotsLimit plotsLimit, NotificationAnnouncer notificationAnnouncer, Plugin plugin) {
         this.lang = languageConfiguration;
         this.plotBlockService = plotBlockService;
         this.plotsLimit = plotsLimit;
         this.regionManager = regionManager;
+        this.notificationAnnouncer = notificationAnnouncer;
         this.plugin = plugin;
-        this.plotCreation = new PlotCreation(pluginConfiguration, this.lang, userManager, plotManager, regionManager, this.plugin, notificationAnnouncer);
+        this.plotCreation = new PlotCreation(pluginConfiguration, this.lang, userManager, plotManager, regionManager, this.plugin, this.notificationAnnouncer);
         this.plotManager = plotManager;
     }
 
@@ -52,7 +55,7 @@ public class PlotBlockListener implements Listener {
 
         int startSize = this.plotBlockService.getPlotBlockStartSize(event.getItemInHand());
 
-        if (!this.plotBlockService.canSetupPlot(location, startSize)) {
+        if (!this.plotBlockService.canSetupPlot(location)) {
             event.setCancelled(true);
             player.sendMessage(LegacyUtils.color(this.lang.plotCreation.plotDetected));
             return;

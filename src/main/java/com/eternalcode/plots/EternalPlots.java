@@ -1,5 +1,6 @@
 package com.eternalcode.plots;
 
+import com.eternalcode.plots.adventure.LegacyColorProcessor;
 import com.eternalcode.plots.command.InvalidUsageMessage;
 import com.eternalcode.plots.command.arguments.InvitePlotArg;
 import com.eternalcode.plots.command.arguments.PlayerArg;
@@ -56,22 +57,16 @@ import com.eternalcode.plots.listener.protection.PlayerInteractListener;
 import com.eternalcode.plots.listener.protection.PotionSplashListener;
 import com.eternalcode.plots.listener.protection.VehicleDamageListener;
 import com.eternalcode.plots.notification.NotificationAnnouncer;
-import com.eternalcode.plots.plot.MemberFactory;
 import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotFactory;
 import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.plot.protection.FlagFactory;
-import com.eternalcode.plots.plot.protection.ProtectionFactory;
 import com.eternalcode.plots.plot.protection.ProtectionManager;
+import com.eternalcode.plots.plotblock.PlotBlockMatcher;
 import com.eternalcode.plots.plotblock.PlotBlockService;
-import com.eternalcode.plots.region.RegionFactory;
 import com.eternalcode.plots.region.RegionManager;
 import com.eternalcode.plots.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.plots.scheduler.Scheduler;
 import com.eternalcode.plots.user.User;
-import com.eternalcode.plots.user.UserFactory;
 import com.eternalcode.plots.user.UserManager;
-import com.eternalcode.plots.adventure.LegacyColorProcessor;
 import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
@@ -167,26 +162,21 @@ public class EternalPlots extends JavaPlugin {
         this.databaseManager = new DatabaseManager(pluginConfig, this.getDataFolder());
         this.databaseManager.connect();
 
-        ProtectionFactory protectionFactory = new ProtectionFactory(protectionConfig);
-        MemberFactory memberFactory = new MemberFactory();
-        FlagFactory flagFactory = new FlagFactory();
-        PlotFactory plotFactory = new PlotFactory(memberFactory, protectionFactory);
-        RegionFactory regionFactory = new RegionFactory();
-        UserFactory userFactory = new UserFactory();
 
-        OrmliteRepository ormliteRepository = new OrmliteRepository(this.databaseManager, regionFactory, plotFactory, userFactory, protectionFactory, memberFactory, flagFactory, this.scheduler);
+        OrmliteRepository ormliteRepository = new OrmliteRepository(this.databaseManager, this.scheduler);
 
-        this.regionManager = new RegionManager(regionFactory);
-        this.userManager = new UserManager(ormliteRepository, userFactory);
-        this.plotManager = new PlotManager(plotFactory, ormliteRepository, ormliteRepository, this.regionManager, memberFactory);
+        this.regionManager = new RegionManager();
+        this.userManager = new UserManager(ormliteRepository);
+        this.plotManager = new PlotManager(ormliteRepository, ormliteRepository, this.regionManager, protectionConfig);
         this.inviteManager = new InviteManager(this.plotManager);
-        this.protectionManager = new ProtectionManager(protectionFactory, ormliteRepository, protectionConfig, this.userManager, this.plotManager);
+        this.protectionManager = new ProtectionManager(ormliteRepository, protectionConfig, this.userManager, this.plotManager);
         this.plotDelete = new PlotDelete(this.plotManager);
         this.plotsLimit = new PlotsLimit(this.userManager, this.plotManager, pluginConfig);
-        this.guiFactory = new GuiFactory(this.vaultProvider, this.configurationManager, plotSelectorConfig, protectionConfig, plotFlagsConfig, plotPanelConfig, languageConfig, pluginConfig, plotExtendConfig, this.protectionManager, plotPlayersConfig, userManager, this.plotManager, this.miniMessage, this);
+        this.guiFactory = new GuiFactory(this.vaultProvider, this.configurationManager, plotSelectorConfig, protectionConfig, plotFlagsConfig, plotPanelConfig, languageConfig, pluginConfig, plotExtendConfig, this.protectionManager, plotPlayersConfig, notificationAnnouncer, userManager, this.plotManager, this.miniMessage, this);
 
 
-        this.plotBlockService = new PlotBlockService(blocksConfig, pluginConfig, this.plotManager);
+        PlotBlockMatcher plotBlockMatcher = new PlotBlockMatcher(blocksConfig);
+        this.plotBlockService = new PlotBlockService(blocksConfig, pluginConfig, this.plotManager, plotBlockMatcher);
         this.plotBlockService.setupPlotBlocks(this);
 
         BorderTask borderTask = new BorderTask(this.plotManager, server);
@@ -194,6 +184,7 @@ public class EternalPlots extends JavaPlugin {
 
         /* Commands */
 
+        // TODO: Fully re-code this command, but recode after release of litecommands v3.0
         this.liteCommands = LiteBukkitFactory.builder(this.getServer(), "eternalplots")
 
             // arguments
@@ -250,7 +241,7 @@ public class EternalPlots extends JavaPlugin {
 
         /* Listeners */
         Stream.of(
-            new PlotBlockListener(pluginConfig, languageConfig, this.plotBlockService, this.userManager, this.plotManager, this.regionManager, this.plotsLimit, this),
+            new PlotBlockListener(pluginConfig, languageConfig, this.plotBlockService, this.userManager, this.plotManager, this.regionManager, this.plotsLimit, notificationAnnouncer, this),
             new PlayerJoinListener(this.userManager),
             new BlockBreakListener(this.protectionManager, protectionConfig),
             new BlockDispenseListener(protectionConfig, this.plotManager),
