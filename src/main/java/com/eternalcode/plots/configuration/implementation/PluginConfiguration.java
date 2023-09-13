@@ -1,7 +1,7 @@
 package com.eternalcode.plots.configuration.implementation;
 
 import com.eternalcode.plots.configuration.implementation.gui.model.ConfigExtend;
-import com.eternalcode.plots.database.DatabaseType;
+import com.eternalcode.plots.database.recoded.DatabaseType;
 import com.google.common.collect.ImmutableMap;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;

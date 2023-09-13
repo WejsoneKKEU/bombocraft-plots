@@ -8,6 +8,7 @@ import eu.okaeri.configs.serdes.ObjectSerializer;
 import eu.okaeri.configs.serdes.SerializationData;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,8 +59,8 @@ public class ConfigItemSerializer implements ObjectSerializer<ConfigItem> {
             configAction = ConfigAction.valueOf(actionName);
         }
         int slot =  // contains
-        data.containsKey("slot") ? data.get("slot", Integer.class) // yes
-         : 0; // no
+            data.containsKey("slot") ? data.get("slot", Integer.class) // yes
+                : 0; // no
         String name = data.containsKey("name") ? data.get("name", String.class) : "";
         List<String> lore = data.containsKey("lore") ? data.getAsList("lore", String.class) : new ArrayList<>();
         return new ConfigItem(slot, material, name, lore, configAction);

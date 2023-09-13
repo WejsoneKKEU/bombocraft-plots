@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * Disclaimer - Bukkit {@link org.bukkit.Location} storage may cause a memory leak, because it is a wrapper for
  * coordinates and {@link org.bukkit.World} reference. If you need to store location use {@link Position} and
  * {@link PositionAdapter}.
- * */
+ */
 public final class Position {
 
     public static final String NONE_WORLD = "__NONE__";
@@ -30,6 +30,23 @@ public final class Position {
         this.yaw = yaw;
         this.pitch = pitch;
         this.world = world;
+    }
+
+    public static Position parse(String parse) {
+        Matcher matcher = PARSE_FORMAT.matcher(parse);
+
+        if (!matcher.find()) {
+            throw new IllegalArgumentException("Invalid position format: " + parse);
+        }
+
+        return new Position(
+            Double.parseDouble(matcher.group("x")),
+            Double.parseDouble(matcher.group("y")),
+            Double.parseDouble(matcher.group("z")),
+            Float.parseFloat(matcher.group("yaw")),
+            Float.parseFloat(matcher.group("pitch")),
+            matcher.group("world")
+        );
     }
 
     public String getWorld() {
@@ -95,22 +112,5 @@ public final class Position {
             ", pitch=" + this.pitch +
             ", world='" + this.world + '\'' +
             '}';
-    }
-
-    public static Position parse(String parse) {
-        Matcher matcher = PARSE_FORMAT.matcher(parse);
-
-        if (!matcher.find()) {
-            throw new IllegalArgumentException("Invalid position format: " + parse);
-        }
-
-        return new Position(
-            Double.parseDouble(matcher.group("x")),
-            Double.parseDouble(matcher.group("y")),
-            Double.parseDouble(matcher.group("z")),
-            Float.parseFloat(matcher.group("yaw")),
-            Float.parseFloat(matcher.group("pitch")),
-            matcher.group("world")
-        );
     }
 }

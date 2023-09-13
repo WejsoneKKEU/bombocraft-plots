@@ -2,14 +2,11 @@ package com.eternalcode.plots.plot.old;
 
 import com.eternalcode.plots.adventure.LegacyUtils;
 import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotManager;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.util.old.VariablesUtils;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
 import panda.std.Option;
-
-import java.util.Set;
 
 @Deprecated
 @ApiStatus.ScheduledForRemoval

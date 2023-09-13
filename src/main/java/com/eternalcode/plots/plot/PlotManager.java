@@ -8,14 +8,17 @@ import com.eternalcode.plots.plot.region.Region;
 import com.eternalcode.plots.plot.region.RegionManager;
 import com.eternalcode.plots.user.User;
 import org.bukkit.Location;
+import org.bukkit.World;
 import panda.std.Option;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 public class PlotManager {
 
@@ -36,6 +39,23 @@ public class PlotManager {
                 this.plots.put(plot.getUuid(), plot);
             }
         });
+    }
+
+    public static boolean isLocationInsideRectangle(Location topLeft, Location bottomRight, Location location) {
+        if (topLeft.getWorld() != null && location.getWorld() != null && (topLeft.getWorld().equals(location.getWorld()))) {
+            double x = location.getX();
+            double z = location.getZ();
+
+            double minX = Math.min(topLeft.getX(), bottomRight.getX());
+            double minZ = Math.min(topLeft.getZ(), bottomRight.getZ());
+
+            double maxX = Math.max(topLeft.getX(), bottomRight.getX());
+            double maxZ = Math.max(topLeft.getZ(), bottomRight.getZ());
+
+            return (x >= minX && x <= maxX) && (z >= minZ && z <= maxZ);
+
+        }
+        return false;
     }
 
     public Option<Plot> create(UUID plotUUID, String name, User owner, Region region, Date creation, Date validity) {
@@ -202,6 +222,42 @@ public class PlotManager {
         }
 
         return plots;
+    }
+
+    public List<Location> generateCheckLocations(Location loc, int size) {
+        return Stream.of(
+            new Location(loc.getWorld(), loc.getX() + size, loc.getY(), loc.getZ() + size),
+            new Location(loc.getWorld(), loc.getX() - size, loc.getY(), loc.getZ() - size),
+            new Location(loc.getWorld(), loc.getX() - size, loc.getY(), loc.getZ() + size),
+            new Location(loc.getWorld(), loc.getX() + size, loc.getY(), loc.getZ() - size),
+            new Location(loc.getWorld(), loc.getX() + size, loc.getY(), loc.getZ()),
+            new Location(loc.getWorld(), loc.getX() - size, loc.getY(), loc.getZ()),
+            new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() + size),
+            new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() - size),
+            new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ())
+        ).toList();
+    }
+
+    public boolean isInPlotRange(Location plotCenter, Location locationToCheck, int size) {
+        Location plotPos1 = new Location(plotCenter.getWorld(), plotCenter.getX() + size, plotCenter.getY(), plotCenter.getZ() + size);
+        Location plotPos2 = new Location(plotCenter.getWorld(), plotCenter.getX() - size, plotCenter.getY(), plotCenter.getZ() - size);
+
+        return isLocationInsideRectangle(plotPos1, plotPos2, locationToCheck);
+    }
+
+    public boolean isSafeRegion(Location location) {
+        World world = location.getWorld();
+        if (world == null) {
+            return false;
+        }
+
+        Location worldSpawn = world.getSpawnLocation();
+        double spawnX = worldSpawn.getX();
+        double spawnZ = worldSpawn.getZ();
+        double locX = location.getX();
+        double locZ = location.getZ();
+
+        return !((locX < spawnX + 250 && locX > spawnX - 250) && (locZ < spawnZ + 250 && locZ > spawnZ - 250));
     }
 
 }

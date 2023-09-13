@@ -1,5 +1,6 @@
 package com.eternalcode.plots.feature.create;
 
+import com.eternalcode.plots.adventure.LegacyUtils;
 import com.eternalcode.plots.configuration.implementation.LanguageConfiguration;
 import com.eternalcode.plots.configuration.implementation.PluginConfiguration;
 import com.eternalcode.plots.feature.name.PlotChangeName;
@@ -10,7 +11,6 @@ import com.eternalcode.plots.plot.region.Region;
 import com.eternalcode.plots.plot.region.RegionManager;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.user.UserManager;
-import com.eternalcode.plots.adventure.LegacyUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

@@ -1,4 +1,4 @@
-package com.eternalcode.plots.listener;
+package com.eternalcode.plots.plot.plotblock.recoded;
 
 import com.eternalcode.plots.configuration.implementation.LanguageConfiguration;
 import com.eternalcode.plots.configuration.implementation.PluginConfiguration;
@@ -6,11 +6,10 @@ import com.eternalcode.plots.feature.create.PlotCreation;
 import com.eternalcode.plots.feature.limit.PlotsLimit;
 import com.eternalcode.plots.notification.NotificationAnnouncer;
 import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.plot.plotblock.PlotBlockService;
+import com.eternalcode.plots.plot.plotblock.old.PlotBlockService;
 import com.eternalcode.plots.plot.region.Region;
 import com.eternalcode.plots.plot.region.RegionManager;
 import com.eternalcode.plots.user.UserManager;
-import com.eternalcode.plots.adventure.LegacyUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -20,26 +19,23 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.Plugin;
 import panda.std.Option;
+import panda.utilities.text.Formatter;
 
-public class PlotBlockListener implements Listener {
+public class PlotBlockController implements Listener {
 
     private final LanguageConfiguration lang;
     private final PlotBlockService plotBlockService;
     private final PlotCreation plotCreation;
     private final PlotsLimit plotsLimit;
-    private final RegionManager regionManager;
     private final PlotManager plotManager;
     private final NotificationAnnouncer notificationAnnouncer;
-    private final Plugin plugin;
 
-    public PlotBlockListener(PluginConfiguration pluginConfiguration, LanguageConfiguration languageConfiguration, PlotBlockService plotBlockService, UserManager userManager, PlotManager plotManager, RegionManager regionManager, PlotsLimit plotsLimit, NotificationAnnouncer notificationAnnouncer, Plugin plugin) {
+    public PlotBlockController(PluginConfiguration pluginConfiguration, LanguageConfiguration languageConfiguration, PlotBlockService plotBlockService, UserManager userManager, PlotManager plotManager, RegionManager regionManager, PlotsLimit plotsLimit, NotificationAnnouncer notificationAnnouncer, Plugin plugin) {
         this.lang = languageConfiguration;
         this.plotBlockService = plotBlockService;
         this.plotsLimit = plotsLimit;
-        this.regionManager = regionManager;
         this.notificationAnnouncer = notificationAnnouncer;
-        this.plugin = plugin;
-        this.plotCreation = new PlotCreation(pluginConfiguration, this.lang, userManager, plotManager, regionManager, this.plugin, this.notificationAnnouncer);
+        this.plotCreation = new PlotCreation(pluginConfiguration, this.lang, userManager, plotManager, regionManager, plugin, notificationAnnouncer);
         this.plotManager = plotManager;
     }
 
@@ -57,19 +53,22 @@ public class PlotBlockListener implements Listener {
 
         if (!this.plotBlockService.canSetupPlot(location)) {
             event.setCancelled(true);
-            player.sendMessage(LegacyUtils.color(this.lang.plotCreation.plotDetected));
+            this.notificationAnnouncer.sendMessage(player, this.lang.plotCreation.plotDetected);
             return;
         }
 
-        if (!this.plotBlockService.isSafeRegion(location)) {
+        if (!this.plotManager.isSafeRegion(location)) {
             event.setCancelled(true);
             player.sendMessage(ChatColor.RED + "Działkę możesz stworzyć 250m od spawna");
             return;
         }
 
+        Formatter formatter = new Formatter()
+            .register("{LIMIT}", this.plotsLimit.getLimit(player) + "");
+
         if (this.plotsLimit.hasLimit(player)) {
             event.setCancelled(true);
-            player.sendMessage(LegacyUtils.color(this.lang.plotCreation.hasLimit.replace("{LIMIT}", this.plotsLimit.getLimit(player) + "")));
+            this.notificationAnnouncer.sendMessage(player, formatter.format(this.lang.plotCreation.hasLimit));
             return;
         }
 

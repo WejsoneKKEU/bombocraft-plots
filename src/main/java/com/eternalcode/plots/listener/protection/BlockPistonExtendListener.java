@@ -45,7 +45,7 @@ public class BlockPistonExtendListener implements Listener {
             }
 
             if (pistonRegionOpt.isPresent() && (blockRegionOpt.get() == pistonRegionOpt.get())) {
-                    continue;
+                continue;
             }
 
             event.setCancelled(true);

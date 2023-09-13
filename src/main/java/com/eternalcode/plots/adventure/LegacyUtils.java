@@ -33,5 +33,4 @@ public class LegacyUtils {
     public static List<Component> legacyToComponent(Iterable<String> texts) {
         return PandaStream.of(texts).map(LegacyUtils::legacyToComponent).toList();
     }
-
 }

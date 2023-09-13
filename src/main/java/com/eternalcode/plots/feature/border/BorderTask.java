@@ -1,8 +1,6 @@
 package com.eternalcode.plots.feature.border;
 
-import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.util.old.LocationUtils;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -19,16 +17,17 @@ public class BorderTask implements Runnable {
     private final Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(0, 255, 0), 0.8F);
     private final PlotManager plotManager;
     private final Server server;
+    private final BorderService borderService;
 
-    public BorderTask(PlotManager plotManager, Server server) {
+    public BorderTask(PlotManager plotManager, Server server, BorderService borderService) {
         this.plotManager = plotManager;
         this.server = server;
+        this.borderService = borderService;
     }
 
     @Override
     public void run() {
-        for (Player player : this.server.getOnlinePlayers()) {
-
+        for (Player player : server.getOnlinePlayers()) {
             if (player == null || !player.isOnline()) {
                 continue;
             }
@@ -37,38 +36,27 @@ public class BorderTask implements Runnable {
                 continue;
             }
 
-            for (Plot plot : this.plotManager.getPlots()) {
-
-                if (!player.getLocation().getWorld().getName().equalsIgnoreCase(plot.getRegion().getCenter().getWorld())) {
-                    continue;
-                }
-
-                if (LocationUtils.getDistance(player, plot) > 100) {
-                    continue;
-                }
-
-                Set<Location> locations = LocationUtils.getBorder(plot);
-
-                for (Location loc : locations) {
-                    if (player.getLocation().distance(new Location(loc.getWorld(), loc.getX(), player.getLocation().getY(), loc.getZ())) < 100) {
-                        player.spawnParticle(Particle.REDSTONE, new Location(loc.getWorld(), loc.getX(), player.getLocation().getBlockY(), loc.getZ()), 5, dustOptions);
-                    }
-                }
-            }
-
+            plotManager.getPlots().stream()
+                .filter(plot -> player.getLocation().getWorld().getName().equalsIgnoreCase(plot.getRegion().getCenter().getWorld()))
+                .filter(plot -> borderService.getDistance(player, plot) <= 100)
+                .forEach(plot -> {
+                    Set<Location> locations = borderService.getBorder(plot);
+                    locations.stream()
+                        .filter(loc -> player.getLocation().distance(new Location(loc.getWorld(), loc.getX(), player.getLocation().getY(), loc.getZ())) < 100)
+                        .forEach(loc -> player.spawnParticle(Particle.REDSTONE, new Location(loc.getWorld(), loc.getX(), player.getLocation().getBlockY(), loc.getZ()), 5, dustOptions));
+                });
         }
     }
 
     public boolean hasShowed(Player player) {
-        return this.showed.contains(player.getUniqueId());
+        return showed.contains(player.getUniqueId());
     }
 
     public void hide(Player player) {
-        this.showed.remove(player.getUniqueId());
+        showed.remove(player.getUniqueId());
     }
 
     public void show(Player player) {
-        this.showed.add(player.getUniqueId());
+        showed.add(player.getUniqueId());
     }
-
 }

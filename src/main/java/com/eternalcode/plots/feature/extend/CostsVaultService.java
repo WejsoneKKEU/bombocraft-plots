@@ -1,9 +1,9 @@
 package com.eternalcode.plots.feature.extend;
 
+import com.eternalcode.plots.adventure.LegacyUtils;
 import com.eternalcode.plots.configuration.implementation.PluginConfiguration;
 import com.eternalcode.plots.configuration.implementation.gui.model.ConfigExtend;
 import com.eternalcode.plots.hook.VaultProvider;
-import com.eternalcode.plots.adventure.LegacyUtils;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Player;
 

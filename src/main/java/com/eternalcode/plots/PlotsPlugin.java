@@ -1,8 +1,6 @@
 package com.eternalcode.plots;
 
 import com.eternalcode.plots.adventure.LegacyColorProcessor;
-import com.eternalcode.plots.command.oldcode.implementations.PlotCommand;
-import com.eternalcode.plots.command.recoded.InvalidUsageMessage;
 import com.eternalcode.plots.command.oldcode.arguments.InvitePlotArg;
 import com.eternalcode.plots.command.oldcode.arguments.PlayerArg;
 import com.eternalcode.plots.command.oldcode.arguments.PlotArg;
@@ -11,6 +9,8 @@ import com.eternalcode.plots.command.oldcode.arguments.UserArg;
 import com.eternalcode.plots.command.oldcode.contextual.AudienceContextual;
 import com.eternalcode.plots.command.oldcode.contextual.PlayerContextual;
 import com.eternalcode.plots.command.oldcode.contextual.UserContextual;
+import com.eternalcode.plots.command.oldcode.implementations.PlotCommand;
+import com.eternalcode.plots.command.recoded.InvalidUsageMessage;
 import com.eternalcode.plots.configuration.ConfigurationManager;
 import com.eternalcode.plots.configuration.implementation.BlocksConfiguration;
 import com.eternalcode.plots.configuration.implementation.LanguageConfiguration;
@@ -23,15 +23,19 @@ import com.eternalcode.plots.configuration.implementation.gui.PlotFlagsConfigura
 import com.eternalcode.plots.configuration.implementation.gui.PlotMenuConfiguration;
 import com.eternalcode.plots.configuration.implementation.gui.PlotPanelConfiguration;
 import com.eternalcode.plots.configuration.implementation.gui.PlotPlayersConfiguration;
-import com.eternalcode.plots.database.DatabaseManager;
-import com.eternalcode.plots.database.OrmliteRepositoryPlot;
+import com.eternalcode.plots.database.recoded.DatabaseManager;
+import com.eternalcode.plots.database.recoded.wrapper.PlotFlagRepositoryOrmLite;
+import com.eternalcode.plots.database.recoded.wrapper.PlotMemberRepositoryOrmLite;
+import com.eternalcode.plots.database.recoded.wrapper.PlotRepositoryOrmLite;
+import com.eternalcode.plots.database.recoded.wrapper.RegionRepositoryOrmLite;
+import com.eternalcode.plots.database.recoded.wrapper.UserRepositoryOrmLite;
+import com.eternalcode.plots.feature.border.BorderService;
 import com.eternalcode.plots.feature.border.BorderTask;
 import com.eternalcode.plots.feature.delete.PlotDelete;
 import com.eternalcode.plots.feature.invite.InviteManager;
 import com.eternalcode.plots.feature.limit.PlotsLimit;
 import com.eternalcode.plots.hook.VaultProvider;
 import com.eternalcode.plots.listener.PlayerJoinListener;
-import com.eternalcode.plots.listener.PlotBlockListener;
 import com.eternalcode.plots.listener.PlotMoveListener;
 import com.eternalcode.plots.listener.protection.BlockBreakListener;
 import com.eternalcode.plots.listener.protection.BlockDispenseListener;
@@ -58,14 +62,20 @@ import com.eternalcode.plots.listener.protection.VehicleDamageListener;
 import com.eternalcode.plots.notification.NotificationAnnouncer;
 import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotManager;
+import com.eternalcode.plots.plot.PlotRepository;
+import com.eternalcode.plots.plot.member.PlotMembersRepository;
+import com.eternalcode.plots.plot.plotblock.old.PlotBlockMatcher;
+import com.eternalcode.plots.plot.plotblock.old.PlotBlockService;
+import com.eternalcode.plots.plot.plotblock.recoded.PlotBlockController;
 import com.eternalcode.plots.plot.protection.ProtectionManager;
-import com.eternalcode.plots.plot.plotblock.PlotBlockMatcher;
-import com.eternalcode.plots.plot.plotblock.PlotBlockService;
+import com.eternalcode.plots.plot.protection.ProtectionRepository;
 import com.eternalcode.plots.plot.region.RegionManager;
+import com.eternalcode.plots.plot.region.RegionRepository;
 import com.eternalcode.plots.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.plots.scheduler.Scheduler;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.user.UserManager;
+import com.eternalcode.plots.user.UserRepository;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
@@ -155,8 +165,25 @@ public class PlotsPlugin extends JavaPlugin {
         PlotPlayersConfiguration plotPlayersConfig = this.configurationManager.getPlotPlayersConfiguration();
         CommandsConfiguration commandsConfig = this.configurationManager.getCommandsConfiguration();
 
-        this.databaseManager = new DatabaseManager(pluginConfig, this.getDataFolder());
-        this.databaseManager.connect();
+        ProtectionRepository protectionRepository;
+        PlotMembersRepository plotMembersRepository;
+        PlotRepository plotRepository;
+        RegionRepository regionRepository;
+        UserRepository userRepository;
+
+        try {
+            this.databaseManager = new DatabaseManager(pluginConfig, this.getLogger(), this.getDataFolder());
+            this.databaseManager.connect();
+
+            protectionRepository = PlotFlagRepositoryOrmLite.create(this.databaseManager, this.scheduler);
+            plotMembersRepository = PlotMemberRepositoryOrmLite.create(this.databaseManager, this.scheduler);
+            plotRepository = PlotRepositoryOrmLite.create(this.databaseManager, this.scheduler);
+            regionRepository = RegionRepositoryOrmLite.create(this.databaseManager, this.scheduler);
+            userRepository = UserRepositoryOrmLite.create(this.databaseManager, this.scheduler);
+        }
+
+        this.databaseManager = new DatabaseManager(pluginConfig, this.getLogger(), this.getDataFolder());
+        this.databaseManager.c();
 
 
         OrmliteRepositoryPlot ormliteRepository = new OrmliteRepositoryPlot(this.databaseManager, this.scheduler);
@@ -170,11 +197,13 @@ public class PlotsPlugin extends JavaPlugin {
         this.plotsLimit = new PlotsLimit(this.userManager, this.plotManager, pluginConfig);
 
 
+        BorderService borderService = new BorderService();
+
         PlotBlockMatcher plotBlockMatcher = new PlotBlockMatcher(blocksConfig);
         this.plotBlockService = new PlotBlockService(blocksConfig, pluginConfig, this.plotManager, plotBlockMatcher);
         this.plotBlockService.setupPlotBlocks(this);
 
-        BorderTask borderTask = new BorderTask(this.plotManager, server);
+        BorderTask borderTask = new BorderTask(this.plotManager, server, borderService);
         this.scheduler.runTaskTimerAsynchronously(borderTask, 0L, 10L);
 
         /* Commands */
@@ -235,7 +264,13 @@ public class PlotsPlugin extends JavaPlugin {
 
         /* Listeners */
         Stream.of(
-            new PlotBlockListener(pluginConfig, languageConfig, this.plotBlockService, this.userManager, this.plotManager, this.regionManager, this.plotsLimit, notificationAnnouncer, this),
+            // Recoded
+
+            // almost-recoded
+            new PlotBlockController(pluginConfig, languageConfig, this.plotBlockService, this.userManager, this.plotManager, this.regionManager, this.plotsLimit, notificationAnnouncer, this),
+
+
+            // old
             new PlayerJoinListener(this.userManager),
             new BlockBreakListener(this.protectionManager, protectionConfig),
             new BlockDispenseListener(protectionConfig, this.plotManager),

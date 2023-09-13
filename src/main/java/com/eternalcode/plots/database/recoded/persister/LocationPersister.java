@@ -1,4 +1,4 @@
-package com.eternalcode.plots.database.persister;
+package com.eternalcode.plots.database.recoded.persister;
 
 import com.j256.ormlite.field.FieldType;
 import com.j256.ormlite.field.SqlType;
@@ -14,11 +14,7 @@ public class LocationPersister extends BaseDataType {
     private static final LocationPersister instance = new LocationPersister();
 
     private LocationPersister() {
-        super(SqlType.LONG_STRING, new Class<?>[]{ LocationPersister.class });
-    }
-
-    public static LocationPersister getSingleton() {
-        return instance;
+        super(SqlType.LONG_STRING, new Class<?>[] { LocationPersister.class });
     }
 
     @Override
@@ -66,4 +62,9 @@ public class LocationPersister extends BaseDataType {
             Float.parseFloat(params[5])
         );
     }
+
+    public static LocationPersister getSingleton() {
+        return instance;
+    }
+
 }

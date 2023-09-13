@@ -6,8 +6,8 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class VaultProvider {
 
-    private Economy economy;
     private final Plugin plugin;
+    private Economy economy;
 
     public VaultProvider(Plugin plugin) {
         this.plugin = plugin;

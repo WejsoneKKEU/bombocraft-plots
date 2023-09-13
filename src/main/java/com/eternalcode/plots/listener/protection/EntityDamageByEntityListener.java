@@ -33,7 +33,7 @@ public class EntityDamageByEntityListener implements Listener {
         Option<Plot> plot = this.protectionManager.getPlot(event.getEntity().getLocation().getBlock().getLocation());
 
         if (plot.isPresent() && (!protectionManager.isProtection(plot.get(), FlagType.PVP))) {
-                return;
+            return;
 
         }
 
@@ -60,7 +60,7 @@ public class EntityDamageByEntityListener implements Listener {
         Option<Plot> plot = this.protectionManager.getPlot(event.getEntity().getLocation().getBlock().getLocation());
 
         if (plot.isPresent() && (!protectionManager.isProtection(plot.get(), FlagType.FRIENDLY_MOBS))) {
-                return;
+            return;
 
         }
 
@@ -94,7 +94,7 @@ public class EntityDamageByEntityListener implements Listener {
         Option<Plot> plot = this.protectionManager.getPlot(event.getEntity().getLocation().getBlock().getLocation());
 
         if (plot.isPresent() && (!protectionManager.isProtection(plot.get(), FlagType.MONSTERS))) {
-                return;
+            return;
 
         }
 
@@ -127,7 +127,7 @@ public class EntityDamageByEntityListener implements Listener {
         Option<Plot> plot = this.protectionManager.getPlot(event.getEntity().getLocation().getBlock().getLocation());
 
         if (plot.isPresent() && (!protectionManager.isProtection(plot.get(), FlagType.PVP))) {
-                return;
+            return;
 
         }
 
@@ -156,7 +156,7 @@ public class EntityDamageByEntityListener implements Listener {
 
         Option<Plot> plot = this.protectionManager.getPlot(event.getEntity().getLocation().getBlock().getLocation());
         if (plot.isPresent() && (!protectionManager.isProtection(plot.get(), FlagType.FRIENDLY_MOBS))) {
-                return;
+            return;
 
         }
 
@@ -189,7 +189,7 @@ public class EntityDamageByEntityListener implements Listener {
 
         Option<Plot> plot = this.protectionManager.getPlot(event.getEntity().getLocation().getBlock().getLocation());
         if (plot.isPresent() && (!protectionManager.isProtection(plot.get(), FlagType.MONSTERS))) {
-                return;
+            return;
 
         }
 

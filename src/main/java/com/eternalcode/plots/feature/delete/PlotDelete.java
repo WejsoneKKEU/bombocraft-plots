@@ -1,9 +1,9 @@
 package com.eternalcode.plots.feature.delete;
 
+import com.eternalcode.plots.adventure.LegacyUtils;
 import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotManager;
 import com.eternalcode.plots.position.PositionAdapter;
-import com.eternalcode.plots.adventure.LegacyUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

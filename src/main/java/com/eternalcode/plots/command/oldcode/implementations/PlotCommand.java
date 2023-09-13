@@ -1,5 +1,6 @@
 package com.eternalcode.plots.command.oldcode.implementations;
 
+import com.eternalcode.plots.adventure.LegacyUtils;
 import com.eternalcode.plots.configuration.implementation.LanguageConfiguration;
 import com.eternalcode.plots.configuration.implementation.command.CommandsConfiguration;
 import com.eternalcode.plots.feature.border.BorderTask;
@@ -7,12 +8,11 @@ import com.eternalcode.plots.feature.delete.PlotDelete;
 import com.eternalcode.plots.feature.invite.InviteManager;
 import com.eternalcode.plots.gui.PlotListInventory;
 import com.eternalcode.plots.gui.PlotPanelInventory;
-import com.eternalcode.plots.plot.member.PlotMember;
 import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.old.PlotHelper;
 import com.eternalcode.plots.plot.PlotManager;
+import com.eternalcode.plots.plot.member.PlotMember;
+import com.eternalcode.plots.plot.old.PlotHelper;
 import com.eternalcode.plots.user.User;
-import com.eternalcode.plots.adventure.LegacyUtils;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.argument.option.Opt;

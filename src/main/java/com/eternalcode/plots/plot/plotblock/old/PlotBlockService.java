@@ -1,11 +1,10 @@
-package com.eternalcode.plots.plot.plotblock;
+package com.eternalcode.plots.plot.plotblock.old;
 
 import com.eternalcode.plots.configuration.implementation.BlocksConfiguration;
 import com.eternalcode.plots.configuration.implementation.PluginConfiguration;
 import com.eternalcode.plots.plot.PlotManager;
 import com.eternalcode.plots.position.Position;
 import com.eternalcode.plots.position.PositionAdapter;
-import com.eternalcode.plots.util.old.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -14,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 // Use Piotrulla CraftingLib maybe?
 public class PlotBlockService {
@@ -57,7 +55,7 @@ public class PlotBlockService {
         int addonSize = pluginConfiguration.spaceBlocks;
         int size = (maxSize / 2) + addonSize;
 
-        List<Location> locations = generateCheckLocations(location, size);
+        List<Location> locations = this.plotManager.generateCheckLocations(location, size);
 
         return plotManager.getPlots().stream()
             .noneMatch(plot -> locations.stream()
@@ -65,32 +63,7 @@ public class PlotBlockService {
                     Position center = plot.getRegion().getCenter();
                     Location convert = PositionAdapter.convert(center);
 
-                    return isInPlotRange(convert, location, size);
+                    return this.plotManager.isInPlotRange(convert, location, size);
                 }));
-    }
-
-    private List<Location> generateCheckLocations(Location loc, int size) {
-        return Stream.of(
-            new Location(loc.getWorld(), loc.getX() + size, loc.getY(), loc.getZ() + size),
-            new Location(loc.getWorld(), loc.getX() - size, loc.getY(), loc.getZ() - size),
-            new Location(loc.getWorld(), loc.getX() - size, loc.getY(), loc.getZ() + size),
-            new Location(loc.getWorld(), loc.getX() + size, loc.getY(), loc.getZ() - size),
-            new Location(loc.getWorld(), loc.getX() + size, loc.getY(), loc.getZ()),
-            new Location(loc.getWorld(), loc.getX() - size, loc.getY(), loc.getZ()),
-            new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() + size),
-            new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() - size),
-            new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ())
-        ).toList();
-    }
-
-    private boolean isInPlotRange(Location plotCenter, Location locationToCheck, int size) {
-        Location plotPos1 = new Location(plotCenter.getWorld(), plotCenter.getX() + size, plotCenter.getY(), plotCenter.getZ() + size);
-        Location plotPos2 = new Location(plotCenter.getWorld(), plotCenter.getX() - size, plotCenter.getY(), plotCenter.getZ() - size);
-
-        return LocationUtils.isIn(plotPos1, plotPos2, locationToCheck);
-    }
-
-    public boolean isSafeRegion(Location location) {
-        return !((location.getX() < 250 && location.getX() > -250) && (location.getZ() < 250 && location.getZ() > -250));
     }
 }

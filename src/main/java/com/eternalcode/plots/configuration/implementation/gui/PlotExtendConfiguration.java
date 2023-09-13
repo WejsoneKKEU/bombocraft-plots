@@ -7,11 +7,15 @@ import com.eternalcode.plots.configuration.implementation.gui.model.ConfigItem;
 import com.google.common.collect.ImmutableMap;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import eu.okaeri.configs.annotation.NameModifier;
+import eu.okaeri.configs.annotation.NameStrategy;
+import eu.okaeri.configs.annotation.Names;
 import org.bukkit.Material;
 
 import java.util.Arrays;
 import java.util.Map;
 
+@Names(strategy = NameStrategy.HYPHEN_CASE, modifier = NameModifier.TO_LOWER_CASE)
 public class PlotExtendConfiguration extends OkaeriConfig {
 
     // TODO: system powiekszania dzialki

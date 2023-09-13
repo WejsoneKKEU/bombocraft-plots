@@ -1,9 +1,9 @@
 package com.eternalcode.plots.feature.extend;
 
+import com.eternalcode.plots.adventure.LegacyUtils;
 import com.eternalcode.plots.configuration.implementation.PluginConfiguration;
 import com.eternalcode.plots.configuration.implementation.gui.model.ConfigExtend;
 import com.eternalcode.plots.util.recoded.ItemUtil;
-import com.eternalcode.plots.adventure.LegacyUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

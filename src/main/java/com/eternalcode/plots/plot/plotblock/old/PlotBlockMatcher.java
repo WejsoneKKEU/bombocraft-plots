@@ -1,4 +1,4 @@
-package com.eternalcode.plots.plot.plotblock;
+package com.eternalcode.plots.plot.plotblock.old;
 
 import com.eternalcode.plots.configuration.implementation.BlocksConfiguration;
 import org.bukkit.inventory.ItemStack;

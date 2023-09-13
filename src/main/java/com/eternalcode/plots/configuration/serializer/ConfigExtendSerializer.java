@@ -6,6 +6,7 @@ import eu.okaeri.configs.serdes.DeserializationData;
 import eu.okaeri.configs.serdes.ObjectSerializer;
 import eu.okaeri.configs.serdes.SerializationData;
 import org.bukkit.Material;
+
 import java.util.HashMap;
 import java.util.Map;
 
