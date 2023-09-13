@@ -2,4 +2,3 @@
 
 ---
 The original author of this code is @Vetther. Due to the project's potential, EternalCode has decided to continue maintaining the project.
-

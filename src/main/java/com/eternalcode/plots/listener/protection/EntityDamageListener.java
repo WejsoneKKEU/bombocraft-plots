@@ -6,7 +6,7 @@ import com.eternalcode.plots.plot.PlotManager;
 import com.eternalcode.plots.plot.protection.FlagType;
 import com.eternalcode.plots.plot.protection.ProtectionManager;
 import com.eternalcode.plots.position.PositionAdapter;
-import com.eternalcode.plots.region.Region;
+import com.eternalcode.plots.plot.region.Region;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.user.UserManager;
 import org.bukkit.Location;
@@ -57,7 +57,7 @@ public class EntityDamageListener implements Listener {
             return;
         }
 
-        Option<Region> regionOpt = this.plotManager.getRegion(entity.getLocation());
+        Option<Region> regionOpt = this.plotManager.getPlotRegionByLocation(entity.getLocation());
 
         if (regionOpt.isEmpty()) {
             return;
@@ -79,7 +79,7 @@ public class EntityDamageListener implements Listener {
             return;
         }
 
-        Option<Region> regionOpt = this.plotManager.getRegion(entity.getLocation());
+        Option<Region> regionOpt = this.plotManager.getPlotRegionByLocation(entity.getLocation());
 
         if (regionOpt.isEmpty()) {
             return;
@@ -128,7 +128,7 @@ public class EntityDamageListener implements Listener {
             return;
         }
 
-        Option<Region> regionOpt = this.plotManager.getRegion(entity.getLocation());
+        Option<Region> regionOpt = this.plotManager.getPlotRegionByLocation(entity.getLocation());
 
         if (regionOpt.isEmpty()) {
             return;
@@ -158,7 +158,7 @@ public class EntityDamageListener implements Listener {
             return;
         }
 
-        Option<Region> regionOpt = this.plotManager.getRegion(entity.getLocation());
+        Option<Region> regionOpt = this.plotManager.getPlotRegionByLocation(entity.getLocation());
 
         if (regionOpt.isEmpty()) {
             return;

@@ -28,7 +28,7 @@ public class ExplosionPrimeListener implements Listener {
         for (Entity e : event.getEntity().getWorld().getNearbyEntities(
             event.getEntity().getLocation(), event.getRadius(), event.getRadius(), event.getRadius())) {
             if ((e instanceof Vehicle) || e instanceof Hanging) {
-                if (plotManager.getRegion(e.getLocation()).isPresent()) {
+                if (plotManager.getPlotRegionByLocation(e.getLocation()).isPresent()) {
                     event.setRadius(0);
                     return;
                 }

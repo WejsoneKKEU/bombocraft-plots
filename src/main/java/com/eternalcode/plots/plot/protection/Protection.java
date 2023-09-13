@@ -21,7 +21,7 @@ public class Protection {
         this.flags = flags;
     }
 
-    public  void setProtection(FlagType flagType, boolean status) {
+    public void setProtection(FlagType flagType, boolean status) {
         for (Flag flag : this.flags) {
             if (flag.getFlagType() == flagType) {
                 flag.setStatus(status);

@@ -1,11 +1,12 @@
 package com.eternalcode.plots.plot;
 
 import com.eternalcode.plots.configuration.implementations.ProtectionConfiguration;
+import com.eternalcode.plots.plot.member.PlotMember;
+import com.eternalcode.plots.plot.member.PlotMembersRepository;
 import com.eternalcode.plots.plot.protection.Protection;
-import com.eternalcode.plots.region.Region;
-import com.eternalcode.plots.region.RegionManager;
+import com.eternalcode.plots.plot.region.Region;
+import com.eternalcode.plots.plot.region.RegionManager;
 import com.eternalcode.plots.user.User;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import panda.std.Option;
 
@@ -19,13 +20,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PlotManager {
 
     private final Map<UUID, Plot> plots = new ConcurrentHashMap<>();
-    private final MembersRepository membersRepository;
+    private final PlotMembersRepository plotMembersRepository;
     private final PlotRepository plotRepository;
     private final RegionManager regionManager;
     private final ProtectionConfiguration protectionConfiguration;
 
-    public PlotManager(MembersRepository membersRepository, PlotRepository plotRepository, RegionManager regionManager, ProtectionConfiguration protectionConfiguration) {
-        this.membersRepository = membersRepository;
+    public PlotManager(PlotMembersRepository plotMembersRepository, PlotRepository plotRepository, RegionManager regionManager, ProtectionConfiguration protectionConfiguration) {
+        this.plotMembersRepository = plotMembersRepository;
         this.protectionConfiguration = protectionConfiguration;
         this.plotRepository = plotRepository;
         this.regionManager = regionManager;
@@ -33,8 +34,6 @@ public class PlotManager {
         this.plotRepository.loadAllPlot().thenAccept(plotsFromRepo -> {
             for (Plot plot : plotsFromRepo) {
                 this.plots.put(plot.getUuid(), plot);
-
-                Bukkit.getLogger().info("Successfully loaded " + this.plots.size() + " plots");
             }
         });
     }
@@ -44,12 +43,12 @@ public class PlotManager {
             return Option.none();
         }
 
-        Member memberOwner = new Member(UUID.randomUUID(), owner);
+        PlotMember plotMemberOwner = new PlotMember(UUID.randomUUID(), owner);
 
         Plot plot = new Plot(
             plotUUID,
             name,
-            memberOwner,
+            plotMemberOwner,
             region,
             creation,
             validity,
@@ -71,21 +70,19 @@ public class PlotManager {
     }
 
     public void addMember(Plot plot, User user) {
-        Member member = new Member(UUID.randomUUID(), user);
+        PlotMember plotMember = new PlotMember(UUID.randomUUID(), user);
 
-        plot.addMember(member);
+        plot.addMember(plotMember);
 
-        this.membersRepository.saveMembers(plot, plot.getMembers());
-        //this.membersRepository.addMember(plot, member);
+        this.plotMembersRepository.saveMembers(plot, plot.getMembers());
     }
 
     public void removeMember(Plot plot, User user) {
-        Member member = plot.getMember(user).get();
+        PlotMember plotMember = plot.getMember(user).get();
 
-        plot.removeMember(member);
+        plot.removeMember(plotMember);
 
-        this.membersRepository.removeMember(plot, member);
-        //this.membersRepository.removeMember(plot, member);
+        this.plotMembersRepository.removeMember(plot, plotMember);
     }
 
     public void setName(Plot plot, String name) {
@@ -147,7 +144,23 @@ public class PlotManager {
         throw new NullPointerException("Region (UUID: " + region.getRegionUUID() + ") exists without plot!");
     }
 
-    public Option<Region> getRegion(Location location) {
+    public Option<Plot> getPlot(PlotManager plotManager, User user, Option<Plot> plotOpt) {
+        if (plotOpt.isEmpty()) {
+
+            Set<Plot> userPlots = plotManager.getPlots(user);
+
+            if (userPlots.size() != 1) {
+                return Option.none();
+            }
+
+            return Option.of(userPlots.iterator().next());
+
+        }
+
+        return Option.of(plotOpt.get());
+    }
+
+    public Option<Region> getPlotRegionByLocation(Location location) {
         double x = location.getX();
         double z = location.getZ();
 

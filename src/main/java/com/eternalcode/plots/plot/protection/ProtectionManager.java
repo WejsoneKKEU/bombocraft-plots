@@ -3,7 +3,7 @@ package com.eternalcode.plots.plot.protection;
 import com.eternalcode.plots.configuration.implementations.ProtectionConfiguration;
 import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.region.Region;
+import com.eternalcode.plots.plot.region.Region;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.user.UserManager;
 import com.google.common.cache.Cache;
@@ -11,10 +11,8 @@ import com.google.common.cache.CacheBuilder;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
 import panda.std.Option;
 
-import java.util.Collection;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -78,8 +76,8 @@ public class ProtectionManager {
             throw new Exception("Tried to get flag '" + flagType + "' default state from config but found null");
 
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        catch (Exception exception) {
+            exception.printStackTrace();
             return false;
         }
     }
@@ -94,7 +92,7 @@ public class ProtectionManager {
 
     public boolean isAllowed(Player player, Location location) {
         User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
-        Option<Region> regionOpt = this.plotManager.getRegion(location);
+        Option<Region> regionOpt = this.plotManager.getPlotRegionByLocation(location);
 
         if (regionOpt.isEmpty()) {
             return true;
@@ -111,7 +109,7 @@ public class ProtectionManager {
     }
 
     public Option<Plot> getPlot(Location location) {
-        Option<Region> regionOpt = this.plotManager.getRegion(location);
+        Option<Region> regionOpt = this.plotManager.getPlotRegionByLocation(location);
 
         if (regionOpt.isEmpty()) {
             return Option.none();
@@ -128,19 +126,4 @@ public class ProtectionManager {
         return this.placed;
     }
 
-    public boolean isBadPotion(Collection<PotionEffect> effects) {
-        for (NegativeEffects effect : NegativeEffects.values()) {
-            for (PotionEffect potionEffect : effects) {
-                if (effect.name().equalsIgnoreCase(potionEffect.getType().getName())) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public enum NegativeEffects {
-        BAD_OMEN, BLINDNESS, CONFUSION, HARM, HUNGER, INCREASE_DAMAGE, POISON, SLOW, SLOW_DIGGING, UNLUCK, WEAKNESS, WITHER
-    }
 }

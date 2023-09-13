@@ -4,7 +4,7 @@ import com.eternalcode.plots.configuration.implementations.ProtectionConfigurati
 import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotManager;
 import com.eternalcode.plots.plot.protection.ProtectionManager;
-import com.eternalcode.plots.region.Region;
+import com.eternalcode.plots.plot.region.Region;
 import org.bukkit.Server;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -58,8 +58,8 @@ public class BlockFromToListener implements Listener {
             }
         }
 
-        Option<Region> regionFromOpt = this.plotManager.getRegion(block.getLocation());
-        Option<Region> regionToOpt = this.plotManager.getRegion(blockTo.getLocation());
+        Option<Region> regionFromOpt = this.plotManager.getPlotRegionByLocation(block.getLocation());
+        Option<Region> regionToOpt = this.plotManager.getPlotRegionByLocation(blockTo.getLocation());
 
         if (regionToOpt.isEmpty()) {
             return;

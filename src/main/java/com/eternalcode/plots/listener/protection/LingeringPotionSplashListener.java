@@ -2,8 +2,8 @@ package com.eternalcode.plots.listener.protection;
 
 import com.eternalcode.plots.configuration.implementations.ProtectionConfiguration;
 import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.plot.protection.ProtectionManager;
-import com.eternalcode.plots.region.Region;
+import com.eternalcode.plots.plot.region.Region;
+import com.eternalcode.plots.util.recoded.PotionUtil;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,12 +12,10 @@ import panda.std.Option;
 
 public class LingeringPotionSplashListener implements Listener {
 
-    private final ProtectionManager protectionManager;
     private final ProtectionConfiguration config;
     private final PlotManager plotManager;
 
-    public LingeringPotionSplashListener(ProtectionManager protectionManager, ProtectionConfiguration config, PlotManager plotManager) {
-        this.protectionManager = protectionManager;
+    public LingeringPotionSplashListener(ProtectionConfiguration config, PlotManager plotManager) {
         this.config = config;
         this.plotManager = plotManager;
     }
@@ -30,11 +28,11 @@ public class LingeringPotionSplashListener implements Listener {
 
         ThrownPotion entity = event.getEntity();
 
-        if (!this.protectionManager.isBadPotion(entity.getEffects())) {
+        if (PotionUtil.isBadPotion(entity.getEffects())) {
             return;
         }
 
-        Option<Region> regionOpt = this.plotManager.getRegion(entity.getLocation());
+        Option<Region> regionOpt = this.plotManager.getPlotRegionByLocation(entity.getLocation());
 
         if (regionOpt.isEmpty()) {
             return;

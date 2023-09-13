@@ -2,13 +2,13 @@ package com.eternalcode.plots.listener;
 
 import com.eternalcode.plots.configuration.implementations.LanguageConfiguration;
 import com.eternalcode.plots.configuration.implementations.PluginConfiguration;
-import com.eternalcode.plots.features.create.PlotCreation;
-import com.eternalcode.plots.features.limit.PlotsLimit;
+import com.eternalcode.plots.feature.create.PlotCreation;
+import com.eternalcode.plots.feature.limit.PlotsLimit;
 import com.eternalcode.plots.notification.NotificationAnnouncer;
 import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.plotblock.PlotBlockService;
-import com.eternalcode.plots.region.Region;
-import com.eternalcode.plots.region.RegionManager;
+import com.eternalcode.plots.plot.plotblock.PlotBlockService;
+import com.eternalcode.plots.plot.region.Region;
+import com.eternalcode.plots.plot.region.RegionManager;
 import com.eternalcode.plots.user.UserManager;
 import com.eternalcode.plots.adventure.LegacyUtils;
 import org.bukkit.ChatColor;
@@ -80,7 +80,7 @@ public class PlotBlockListener implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
 
         Location location = event.getBlock().getLocation();
-        Option<Region> regionOpt = this.plotManager.getRegion(location);
+        Option<Region> regionOpt = this.plotManager.getPlotRegionByLocation(location);
 
         if (regionOpt.isEmpty()) {
             return;

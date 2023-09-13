@@ -5,7 +5,7 @@ import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotManager;
 import com.eternalcode.plots.plot.protection.FlagType;
 import com.eternalcode.plots.plot.protection.ProtectionManager;
-import com.eternalcode.plots.region.Region;
+import com.eternalcode.plots.plot.region.Region;
 import com.eternalcode.plots.user.UserManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,7 +38,7 @@ public class HangingBreakByEntityListener implements Listener {
             }
         }
 
-        Option<Region> region = plotManager.getRegion(event.getEntity().getLocation());
+        Option<Region> region = plotManager.getPlotRegionByLocation(event.getEntity().getLocation());
         if (!region.isPresent()) {
             return;
         }
@@ -68,7 +68,7 @@ public class HangingBreakByEntityListener implements Listener {
         if (event.getCause() != HangingBreakEvent.RemoveCause.EXPLOSION) {
             return;
         }
-        Option<Region> region = plotManager.getRegion(event.getEntity().getLocation());
+        Option<Region> region = plotManager.getPlotRegionByLocation(event.getEntity().getLocation());
         if (!region.isPresent()) {
             return;
         }

@@ -2,7 +2,7 @@ package com.eternalcode.plots.listener;
 
 import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.region.Region;
+import com.eternalcode.plots.plot.region.Region;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,8 +27,8 @@ public class PlotMoveListener implements Listener {
         }
         Location to = event.getTo().getBlock().getLocation();
 
-        Option<Region> optRegFrom = this.plotManager.getRegion(from);
-        Option<Region> optRegTo = this.plotManager.getRegion(to);
+        Option<Region> optRegFrom = this.plotManager.getPlotRegionByLocation(from);
+        Option<Region> optRegTo = this.plotManager.getPlotRegionByLocation(to);
 
         // nie wchodzi i nie wychodzi
         if (optRegTo.isEmpty() && optRegFrom.isEmpty()) {

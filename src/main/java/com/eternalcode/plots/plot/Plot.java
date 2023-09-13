@@ -1,7 +1,8 @@
 package com.eternalcode.plots.plot;
 
+import com.eternalcode.plots.plot.member.PlotMember;
 import com.eternalcode.plots.plot.protection.Protection;
-import com.eternalcode.plots.region.Region;
+import com.eternalcode.plots.plot.region.Region;
 import com.eternalcode.plots.user.User;
 import panda.std.Option;
 
@@ -17,15 +18,15 @@ public class Plot {
 
     private final UUID uuid;
     private final Date created;
-    private final Member owner;
+    private final PlotMember owner;
     private final Region region;
-    private final Set<Member> members = new HashSet<>();
-    private final HashMap<UUID, Member> membersByUserUUID = new HashMap<>();
+    private final Set<PlotMember> plotMembers = new HashSet<>();
+    private final HashMap<UUID, PlotMember> membersByUserUUID = new HashMap<>();
     private String name;
     private Date expires;
     private Protection protection;
 
-    public Plot(UUID uuid, String name, Member owner, Region region, Date created, Date expires, Set<Member> members) {
+    public Plot(UUID uuid, String name, PlotMember owner, Region region, Date created, Date expires, Set<PlotMember> plotMembers) {
         this.uuid = uuid;
         this.name = name;
         this.owner = owner;
@@ -35,42 +36,42 @@ public class Plot {
 
         this.addMember(owner);
 
-        for (Member member : members) {
-            this.addMember(member);
+        for (PlotMember plotMember : plotMembers) {
+            this.addMember(plotMember);
         }
     }
 
-    public void addMember(Member member) {
-        this.members.add(member);
-        this.membersByUserUUID.put(member.getUser().getUuid(), member);
+    public void addMember(PlotMember plotMember) {
+        this.plotMembers.add(plotMember);
+        this.membersByUserUUID.put(plotMember.getUser().getUuid(), plotMember);
     }
 
-    public void removeMember(Member member) {
-        this.members.remove(member);
-        this.membersByUserUUID.remove(member.getUser().getUuid(), member);
+    public void removeMember(PlotMember plotMember) {
+        this.plotMembers.remove(plotMember);
+        this.membersByUserUUID.remove(plotMember.getUser().getUuid(), plotMember);
     }
 
-    public Set<Member> getMembers() {
-        return Collections.unmodifiableSet(this.members);
+    public Set<PlotMember> getMembers() {
+        return Collections.unmodifiableSet(this.plotMembers);
     }
 
-    public Option<Member> getMember(User user) {
+    public Option<PlotMember> getMember(User user) {
         if (this.membersByUserUUID.containsKey(user.getUuid())) {
             return Option.of(this.membersByUserUUID.get(user.getUuid()));
         }
         return Option.none();
     }
 
-    public boolean isMember(Member member) {
-        return this.members.contains(member);
+    public boolean isMember(PlotMember plotMember) {
+        return this.plotMembers.contains(plotMember);
     }
 
     public boolean isMember(User user) {
         return this.membersByUserUUID.containsKey(user.getUuid());
     }
 
-    public boolean isOwner(Member member) {
-        return this.owner.equals(member);
+    public boolean isOwner(PlotMember plotMember) {
+        return this.owner.equals(plotMember);
     }
 
     public boolean isOwner(User user) {
@@ -102,7 +103,7 @@ public class Plot {
         return this.created;
     }
 
-    public Member getOwner() {
+    public PlotMember getOwner() {
         return this.owner;
     }
 

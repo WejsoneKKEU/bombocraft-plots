@@ -25,7 +25,7 @@ public class LanguageConfiguration extends OkaeriConfig {
             public Material guiItem = Material.NAME_TAG;
             public String guiTitle = "&aNazwij swoją działkę";
             public String nameExists = "&cNazwa w użyciu";
-            public String nameChanged = "&aZmieniono nazwę działki na {NAME}";
+            public String nameChanged = "&aZmieniono nazwę działki na {NEW_NAME}";
             public String illegalCharacters = "&cNieprawidłowe znaki";
             public String nameTooLongOrShort = "&cNazwa jest za długa bądź za krótka";
             public String closed = "&cZamknięto okno zmiany nazwy działki, nazwa zostaje taka sama.";

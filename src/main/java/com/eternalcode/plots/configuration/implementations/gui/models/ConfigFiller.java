@@ -5,7 +5,6 @@ import dev.triumphteam.gui.guis.GuiItem;
 import eu.okaeri.configs.OkaeriConfig;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import panda.std.Option;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +22,7 @@ public class ConfigFiller extends OkaeriConfig {
 
     }
 
-    public Option<List<GuiItem>> getFiller() {
+    public List<GuiItem> getFiller() {
         List<GuiItem> guiItems = new ArrayList<>();
 
         for (Material material : materials) {
@@ -38,9 +37,6 @@ public class ConfigFiller extends OkaeriConfig {
                     .asGuiItem()
             );
         }
-        if (guiItems.isEmpty()) {
-            return Option.none();
-        }
-        return Option.of(guiItems);
+        return guiItems;
     }
 }

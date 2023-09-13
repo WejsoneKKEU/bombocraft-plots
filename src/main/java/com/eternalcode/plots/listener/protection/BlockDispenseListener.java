@@ -2,7 +2,7 @@ package com.eternalcode.plots.listener.protection;
 
 import com.eternalcode.plots.configuration.implementations.ProtectionConfiguration;
 import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.region.Region;
+import com.eternalcode.plots.plot.region.Region;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
 import org.bukkit.event.EventHandler;
@@ -31,7 +31,7 @@ public class BlockDispenseListener implements Listener {
         Directional directional = (Directional) dispenser.getBlockData();
         Block target = dispenser.getRelative(directional.getFacing(), 1);
 
-        Option<Region> targetRegionOpt = this.plotManager.getRegion(target.getLocation());
+        Option<Region> targetRegionOpt = this.plotManager.getPlotRegionByLocation(target.getLocation());
 
         if (targetRegionOpt.isEmpty()) {
             return;
@@ -40,7 +40,7 @@ public class BlockDispenseListener implements Listener {
         Region targetRegion = targetRegionOpt.get();
 
 
-        Option<Region> dispenserRegionOpt = this.plotManager.getRegion(dispenser.getLocation());
+        Option<Region> dispenserRegionOpt = this.plotManager.getPlotRegionByLocation(dispenser.getLocation());
 
         if (dispenserRegionOpt.isEmpty()) {
             return;

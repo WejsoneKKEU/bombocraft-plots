@@ -22,6 +22,6 @@ public class EntityExplodeListener implements Listener {
             return;
         }
 
-        event.blockList().removeIf(block -> plotManager.getRegion(block.getLocation()).isPresent());
+        event.blockList().removeIf(block -> plotManager.getPlotRegionByLocation(block.getLocation()).isPresent());
     }
 }

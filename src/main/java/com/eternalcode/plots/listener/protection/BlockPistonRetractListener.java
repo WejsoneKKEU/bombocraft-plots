@@ -2,7 +2,7 @@ package com.eternalcode.plots.listener.protection;
 
 import com.eternalcode.plots.configuration.implementations.ProtectionConfiguration;
 import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.region.Region;
+import com.eternalcode.plots.plot.region.Region;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,10 +27,10 @@ public class BlockPistonRetractListener implements Listener {
 
         Block piston = event.getBlock();
 
-        Option<Region> pistonRegionOpt = this.plotManager.getRegion(piston.getLocation());
+        Option<Region> pistonRegionOpt = this.plotManager.getPlotRegionByLocation(piston.getLocation());
 
         for (Block block : event.getBlocks()) {
-            Option<Region> blockRegion = plotManager.getRegion(block.getLocation());
+            Option<Region> blockRegion = plotManager.getPlotRegionByLocation(block.getLocation());
             if (!blockRegion.isPresent()) {
                 continue;
             }

@@ -28,7 +28,7 @@ public class BlockExplodeListener implements Listener {
         Iterator<Block> it = event.blockList().iterator();
         while (it.hasNext()) {
             Block block = it.next();
-            if (!this.plotManager.getRegion(block.getLocation()).isPresent()) {
+            if (!this.plotManager.getPlotRegionByLocation(block.getLocation()).isPresent()) {
                 continue;
             }
             it.remove();

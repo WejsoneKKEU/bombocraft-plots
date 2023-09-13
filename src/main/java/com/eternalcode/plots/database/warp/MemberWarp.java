@@ -1,6 +1,6 @@
 package com.eternalcode.plots.database.warp;
 
-import com.eternalcode.plots.plot.Member;
+import com.eternalcode.plots.plot.member.PlotMember;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.UUID;
@@ -23,8 +23,8 @@ public class MemberWarp {
         this.plotWarp = plotWarp;
     }
 
-    public static MemberWarp from(PlotWarp plotWarp, Member member) {
-        return new MemberWarp(member.getUuid(), UserWarp.from(member.getUser()), plotWarp);
+    public static MemberWarp from(PlotWarp plotWarp, PlotMember plotMember) {
+        return new MemberWarp(plotMember.getUuid(), UserWarp.from(plotMember.getUser()), plotWarp);
     }
 
     @java.lang.SuppressWarnings("all")

@@ -1,7 +1,7 @@
 package com.eternalcode.plots.configuration.implementations.gui.models;
 
 import com.eternalcode.plots.configuration.implementations.PluginConfiguration;
-import com.eternalcode.plots.features.extend.ExtendType;
+import com.eternalcode.plots.feature.extend.ExtendType;
 import com.eternalcode.plots.plot.Plot;
 import eu.okaeri.configs.OkaeriConfig;
 import org.bukkit.Material;

@@ -5,7 +5,7 @@ import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.PlotManager;
 import com.eternalcode.plots.plot.protection.FlagType;
 import com.eternalcode.plots.plot.protection.ProtectionManager;
-import com.eternalcode.plots.region.Region;
+import com.eternalcode.plots.plot.region.Region;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -43,7 +43,7 @@ public class EntityDamageByEntityListener implements Listener {
 
         if (protectionManager.hasBypass(damager)) return;
 
-        Option<Region> region = plotManager.getRegion(event.getEntity().getLocation().getBlock().getLocation());
+        Option<Region> region = plotManager.getPlotRegionByLocation(event.getEntity().getLocation().getBlock().getLocation());
         if (!region.isPresent()) {
             return;
         }
@@ -73,7 +73,7 @@ public class EntityDamageByEntityListener implements Listener {
 
         if (protectionManager.hasBypass(player)) return;
 
-        Option<Region> region = plotManager.getRegion(event.getEntity().getLocation().getBlock().getLocation());
+        Option<Region> region = plotManager.getPlotRegionByLocation(event.getEntity().getLocation().getBlock().getLocation());
         if (!region.isPresent()) {
             return;
         }
@@ -106,7 +106,7 @@ public class EntityDamageByEntityListener implements Listener {
 
         if (protectionManager.hasBypass(player)) return;
 
-        Option<Region> region = plotManager.getRegion(event.getEntity().getLocation().getBlock().getLocation());
+        Option<Region> region = plotManager.getPlotRegionByLocation(event.getEntity().getLocation().getBlock().getLocation());
         if (!region.isPresent()) {
             return;
         }
@@ -139,7 +139,7 @@ public class EntityDamageByEntityListener implements Listener {
 
         if (protectionManager.hasBypass(player)) return;
 
-        Option<Region> region = plotManager.getRegion(event.getEntity().getLocation().getBlock().getLocation());
+        Option<Region> region = plotManager.getPlotRegionByLocation(event.getEntity().getLocation().getBlock().getLocation());
         if (!region.isPresent()) {
             return;
         }
@@ -169,7 +169,7 @@ public class EntityDamageByEntityListener implements Listener {
 
         if (protectionManager.hasBypass(player)) return;
 
-        Option<Region> region = plotManager.getRegion(event.getEntity().getLocation().getBlock().getLocation());
+        Option<Region> region = plotManager.getPlotRegionByLocation(event.getEntity().getLocation().getBlock().getLocation());
         if (!region.isPresent()) {
             return;
         }
@@ -202,7 +202,7 @@ public class EntityDamageByEntityListener implements Listener {
 
         if (protectionManager.hasBypass(player)) return;
 
-        Option<Region> region = plotManager.getRegion(event.getEntity().getLocation().getBlock().getLocation());
+        Option<Region> region = plotManager.getPlotRegionByLocation(event.getEntity().getLocation().getBlock().getLocation());
         if (!region.isPresent()) {
             return;
         }

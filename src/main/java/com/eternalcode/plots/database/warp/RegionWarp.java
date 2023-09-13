@@ -3,7 +3,7 @@ package com.eternalcode.plots.database.warp;
 
 import com.eternalcode.plots.database.persister.LocationPersister;
 import com.eternalcode.plots.position.PositionAdapter;
-import com.eternalcode.plots.region.Region;
+import com.eternalcode.plots.plot.region.Region;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import org.bukkit.Location;
