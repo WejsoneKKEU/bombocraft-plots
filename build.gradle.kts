@@ -41,7 +41,7 @@ dependencies {
 
     // LiteCommands
     implementation("dev.rollczi.litecommands:bukkit:2.8.9")
-
+    
     // panda-dzikoysk crafted libs
     implementation("org.panda-lang:expressible:1.3.6")
     implementation("org.panda-lang:panda-utilities:0.5.3-alpha")
