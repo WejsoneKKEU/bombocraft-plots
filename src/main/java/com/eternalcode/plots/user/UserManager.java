@@ -19,10 +19,6 @@ public class UserManager {
         this.userRepository = userRepository;
     }
 
-    public Set<User> getUsers() {
-        return new HashSet<>(this.usersByUUID.values());
-    }
-
     public User getOrCreate(UUID uuid, String name) {
         return create(uuid, name).orElseGet(() -> this.usersByUUID.get(uuid));
     }

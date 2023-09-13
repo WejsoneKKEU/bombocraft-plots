@@ -1,15 +1,15 @@
 package com.eternalcode.plots.configuration;
 
-import com.eternalcode.plots.configuration.implementations.BlocksConfiguration;
-import com.eternalcode.plots.configuration.implementations.LanguageConfiguration;
-import com.eternalcode.plots.configuration.implementations.PluginConfiguration;
-import com.eternalcode.plots.configuration.implementations.ProtectionConfiguration;
-import com.eternalcode.plots.configuration.implementations.commands.CommandsConfiguration;
-import com.eternalcode.plots.configuration.implementations.gui.PlotExtendConfiguration;
-import com.eternalcode.plots.configuration.implementations.gui.PlotFlagsConfiguration;
-import com.eternalcode.plots.configuration.implementations.gui.PlotMenuConfiguration;
-import com.eternalcode.plots.configuration.implementations.gui.PlotPanelConfiguration;
-import com.eternalcode.plots.configuration.implementations.gui.PlotPlayersConfiguration;
+import com.eternalcode.plots.configuration.implementation.BlocksConfiguration;
+import com.eternalcode.plots.configuration.implementation.LanguageConfiguration;
+import com.eternalcode.plots.configuration.implementation.PluginConfiguration;
+import com.eternalcode.plots.configuration.implementation.ProtectionConfiguration;
+import com.eternalcode.plots.configuration.implementation.command.CommandsConfiguration;
+import com.eternalcode.plots.configuration.implementation.gui.PlotExtendConfiguration;
+import com.eternalcode.plots.configuration.implementation.gui.PlotFlagsConfiguration;
+import com.eternalcode.plots.configuration.implementation.gui.PlotMenuConfiguration;
+import com.eternalcode.plots.configuration.implementation.gui.PlotPanelConfiguration;
+import com.eternalcode.plots.configuration.implementation.gui.PlotPlayersConfiguration;
 import com.eternalcode.plots.configuration.serializer.ConfigExtendSerializer;
 import com.eternalcode.plots.configuration.serializer.ConfigItemSerializer;
 import com.eternalcode.plots.configuration.serializer.PlotSectionSerializer;

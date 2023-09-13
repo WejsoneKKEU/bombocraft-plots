@@ -1,4 +1,4 @@
-package com.eternalcode.plots.configuration.implementations;
+package com.eternalcode.plots.configuration.implementation;
 
 import com.eternalcode.plots.adventure.LegacyUtils;
 import com.google.common.collect.ImmutableMap;

@@ -1,6 +1,6 @@
 package com.eternalcode.plots.plot.protection;
 
-import com.eternalcode.plots.configuration.implementations.ProtectionConfiguration;
+import com.eternalcode.plots.configuration.implementation.ProtectionConfiguration;
 import panda.std.Option;
 
 import java.util.HashSet;

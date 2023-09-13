@@ -1,4 +1,4 @@
-package com.eternalcode.plots.configuration.implementations;
+package com.eternalcode.plots.configuration.implementation;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.NameModifier;

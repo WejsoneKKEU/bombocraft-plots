@@ -1,6 +1,6 @@
 package com.eternalcode.plots.command.recoded;
 
-import com.eternalcode.plots.configuration.implementations.commands.CommandsConfiguration;
+import com.eternalcode.plots.configuration.implementation.command.CommandsConfiguration;
 import com.eternalcode.plots.notification.NotificationAnnouncer;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.handle.InvalidUsageHandler;

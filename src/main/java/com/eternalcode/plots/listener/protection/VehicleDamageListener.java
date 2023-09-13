@@ -1,6 +1,6 @@
 package com.eternalcode.plots.listener.protection;
 
-import com.eternalcode.plots.configuration.implementations.ProtectionConfiguration;
+import com.eternalcode.plots.configuration.implementation.ProtectionConfiguration;
 import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.plot.protection.FlagType;
 import com.eternalcode.plots.plot.protection.ProtectionManager;

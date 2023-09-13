@@ -1,4 +1,4 @@
-package com.eternalcode.plots.configuration.implementations.gui.models;
+package com.eternalcode.plots.configuration.implementation.gui.model;
 
 import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.util.old.VariablesUtils;

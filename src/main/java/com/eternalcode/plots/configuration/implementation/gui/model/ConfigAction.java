@@ -1,4 +1,4 @@
-package com.eternalcode.plots.configuration.implementations.gui.models;
+package com.eternalcode.plots.configuration.implementation.gui.model;
 
 public enum ConfigAction {
 

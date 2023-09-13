@@ -1,4 +1,4 @@
-package com.eternalcode.plots.configuration.implementations.gui.models;
+package com.eternalcode.plots.configuration.implementation.gui.model;
 
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.GuiItem;
@@ -10,19 +10,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ConfigFiller extends OkaeriConfig {
+public class ConfigBorder extends OkaeriConfig {
 
     public List<Material> materials = new ArrayList<>();
 
-    public ConfigFiller(Material... materials) {
+    public ConfigBorder(Material... materials) {
         this.materials = Arrays.asList(materials);
     }
 
-    public ConfigFiller() {
+    public ConfigBorder() {
 
     }
 
-    public List<GuiItem> getFiller() {
+    public List<GuiItem> getBorder() {
         List<GuiItem> guiItems = new ArrayList<>();
 
         for (Material material : materials) {

@@ -1,6 +1,6 @@
 package com.eternalcode.plots.database;
 
-import com.eternalcode.plots.configuration.implementations.PluginConfiguration;
+import com.eternalcode.plots.configuration.implementation.PluginConfiguration;
 import com.eternalcode.plots.database.warp.FlagWarp;
 import com.eternalcode.plots.database.warp.MemberWarp;
 import com.eternalcode.plots.database.warp.PlotWarp;

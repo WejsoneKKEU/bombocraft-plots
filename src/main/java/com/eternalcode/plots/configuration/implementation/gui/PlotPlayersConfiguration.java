@@ -1,15 +1,14 @@
-package com.eternalcode.plots.configuration.implementations.gui;
+package com.eternalcode.plots.configuration.implementation.gui;
 
-import com.eternalcode.plots.configuration.implementations.gui.models.ConfigAction;
-import com.eternalcode.plots.configuration.implementations.gui.models.ConfigBorder;
-import com.eternalcode.plots.configuration.implementations.gui.models.ConfigFiller;
-import com.eternalcode.plots.configuration.implementations.gui.models.ConfigItem;
+import com.eternalcode.plots.configuration.implementation.gui.model.ConfigAction;
+import com.eternalcode.plots.configuration.implementation.gui.model.ConfigBorder;
+import com.eternalcode.plots.configuration.implementation.gui.model.ConfigFiller;
+import com.eternalcode.plots.configuration.implementation.gui.model.ConfigItem;
 import com.google.common.collect.ImmutableMap;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import org.bukkit.Material;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.eternalcode.plots.configuration.implementations.commands;
+package com.eternalcode.plots.configuration.implementation.command;
 
 import com.google.common.collect.ImmutableMap;
 import eu.okaeri.configs.OkaeriConfig;

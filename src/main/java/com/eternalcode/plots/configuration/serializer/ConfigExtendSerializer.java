@@ -1,6 +1,6 @@
 package com.eternalcode.plots.configuration.serializer;
 
-import com.eternalcode.plots.configuration.implementations.gui.models.ConfigExtend;
+import com.eternalcode.plots.configuration.implementation.gui.model.ConfigExtend;
 import eu.okaeri.configs.schema.GenericsDeclaration;
 import eu.okaeri.configs.serdes.DeserializationData;
 import eu.okaeri.configs.serdes.ObjectSerializer;
