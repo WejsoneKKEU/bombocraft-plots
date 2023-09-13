@@ -37,7 +37,7 @@ public final class PotionUtil {
         WEAKNESS(PotionEffectType.WEAKNESS),
         WITHER(PotionEffectType.WITHER);
 
-        private final PotionEffectType effectType;
+        final PotionEffectType effectType;
 
         NegativeEffects(PotionEffectType effectType) {
             this.effectType = effectType;

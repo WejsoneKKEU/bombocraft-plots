@@ -1,6 +1,6 @@
 package com.eternalcode.plots.plot;
 
-import com.eternalcode.plots.configuration.implementations.ProtectionConfiguration;
+import com.eternalcode.plots.configuration.implementation.ProtectionConfiguration;
 import com.eternalcode.plots.plot.member.PlotMember;
 import com.eternalcode.plots.plot.member.PlotMembersRepository;
 import com.eternalcode.plots.plot.protection.Protection;

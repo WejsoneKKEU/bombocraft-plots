@@ -1,7 +1,7 @@
 package com.eternalcode.plots.listener;
 
-import com.eternalcode.plots.configuration.implementations.LanguageConfiguration;
-import com.eternalcode.plots.configuration.implementations.PluginConfiguration;
+import com.eternalcode.plots.configuration.implementation.LanguageConfiguration;
+import com.eternalcode.plots.configuration.implementation.PluginConfiguration;
 import com.eternalcode.plots.feature.create.PlotCreation;
 import com.eternalcode.plots.feature.limit.PlotsLimit;
 import com.eternalcode.plots.notification.NotificationAnnouncer;

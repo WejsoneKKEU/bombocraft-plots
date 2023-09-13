@@ -12,6 +12,7 @@ import java.util.List;
 
 // TODO: Remove use of this class.
 @ApiStatus.ScheduledForRemoval
+@Deprecated
 public class LegacyUtils {
 
     public static final MiniMessage MINIMESSAGE = MiniMessage.miniMessage();

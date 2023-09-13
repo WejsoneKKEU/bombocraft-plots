@@ -1,7 +1,7 @@
 package com.eternalcode.plots.command.oldcode.implementations;
 
-import com.eternalcode.plots.configuration.implementations.LanguageConfiguration;
-import com.eternalcode.plots.configuration.implementations.commands.CommandsConfiguration;
+import com.eternalcode.plots.configuration.implementation.LanguageConfiguration;
+import com.eternalcode.plots.configuration.implementation.command.CommandsConfiguration;
 import com.eternalcode.plots.feature.border.BorderTask;
 import com.eternalcode.plots.feature.delete.PlotDelete;
 import com.eternalcode.plots.feature.invite.InviteManager;
