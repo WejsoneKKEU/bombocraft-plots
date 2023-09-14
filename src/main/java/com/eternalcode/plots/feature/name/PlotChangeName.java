@@ -1,9 +1,8 @@
 package com.eternalcode.plots.feature.name;
 
-import com.eternalcode.plots.configuration.implementation.LanguageConfiguration;
-import com.eternalcode.plots.notification.NotificationAnnouncer;
-import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotManager;
+import com.eternalcode.plots.configuration.implementation.MessageConfiguration;
+import com.eternalcode.plots.notification.NotificationBroadcaster;
+import com.eternalcode.plots.plot.old.PlotManager;
 import com.eternalcode.plots.util.recoded.TextUtil;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.entity.Player;
@@ -16,17 +15,17 @@ import java.util.Collections;
 public class PlotChangeName {
 
     private final Plot plot;
-    private final LanguageConfiguration lang;
+    private final MessageConfiguration lang;
     private final PlotManager plotManager;
     private final Plugin plugin;
-    private final NotificationAnnouncer notificationAnnouncer;
+    private final NotificationBroadcaster notificationBroadcaster;
 
-    public PlotChangeName(Plot plot, LanguageConfiguration lang, PlotManager plotManager, Plugin plugin, NotificationAnnouncer notificationAnnouncer) {
+    public PlotChangeName(Plot plot, MessageConfiguration lang, PlotManager plotManager, Plugin plugin, NotificationBroadcaster notificationBroadcaster) {
         this.plot = plot;
         this.lang = lang;
         this.plotManager = plotManager;
         this.plugin = plugin;
-        this.notificationAnnouncer = notificationAnnouncer;
+        this.notificationBroadcaster = notificationBroadcaster;
     }
 
     public void sendGui(Player player) {
@@ -40,17 +39,17 @@ public class PlotChangeName {
                 String inputText = stateSnapshot.getText();
 
                 if (!TextUtil.isLetterOrDigit(inputText)) {
-                    this.notificationAnnouncer.sendMessage(player, this.lang.plotCreation.changeNameInventory.illegalCharacters);
+                    this.notificationBroadcaster.sendMessage(player, this.lang.plotCreation.changeNameInventory.illegalCharacters);
                     return Collections.singletonList(AnvilGUI.ResponseAction.close());
                 }
 
                 if (inputText.length() <= 2 || inputText.length() >= 17) {
-                    this.notificationAnnouncer.sendMessage(player, this.lang.plotCreation.changeNameInventory.nameTooLongOrShort);
+                    this.notificationBroadcaster.sendMessage(player, this.lang.plotCreation.changeNameInventory.nameTooLongOrShort);
                     return Collections.singletonList(AnvilGUI.ResponseAction.close());
                 }
 
                 if (this.plotManager.isNameBusy(inputText)) {
-                    this.notificationAnnouncer.sendMessage(player, this.lang.plotCreation.changeNameInventory.nameExists);
+                    this.notificationBroadcaster.sendMessage(player, this.lang.plotCreation.changeNameInventory.nameExists);
                     return Collections.singletonList(AnvilGUI.ResponseAction.close());
                 }
 
@@ -59,7 +58,7 @@ public class PlotChangeName {
                 Formatter formatter = new Formatter()
                     .register("{NEW_NAME}", this.plot.getName());
 
-                this.notificationAnnouncer.sendMessage(player, formatter.format(this.lang.plotCreation.changeNameInventory.nameChanged));
+                this.notificationBroadcaster.sendMessage(player, formatter.format(this.lang.plotCreation.changeNameInventory.nameChanged));
 
                 return Collections.singletonList(AnvilGUI.ResponseAction.close());
             })

@@ -1,8 +1,7 @@
 package com.eternalcode.plots.command.oldcode.arguments;
 
 import com.eternalcode.plots.feature.invite.InviteManager;
-import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotManager;
+import com.eternalcode.plots.plot.old.PlotManager;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.user.UserManager;
 import dev.rollczi.litecommands.argument.ArgumentName;

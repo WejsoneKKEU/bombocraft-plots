@@ -1,6 +1,6 @@
 package com.eternalcode.plots.feature.border;
 
-import com.eternalcode.plots.plot.PlotManager;
+import com.eternalcode.plots.plot.old.PlotManager;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;

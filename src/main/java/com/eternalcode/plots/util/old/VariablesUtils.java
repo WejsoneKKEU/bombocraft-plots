@@ -1,6 +1,7 @@
 package com.eternalcode.plots.util.old;
 
-import com.eternalcode.plots.plot.Plot;
+import com.eternalcode.plots.util.recoded.InstantFormatUtil;
+import panda.utilities.text.Formatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,27 +23,18 @@ public final class VariablesUtils {
     }
 
     public static String parsePlotVars(Plot plot, String text) {
-        String format = text;
+        Formatter register = new Formatter()
+            .register("{PLOT_NAME}", plot.getName())
+            .register("{PLOT_UUID}", plot.getUuid().toString())
+            .register("{PLOT_OWNER_NAME}", plot.getOwner().getUser().getName())
+            .register("{PLOT_OWNER_UUID}", plot.getOwner().getUser().getUuid().toString())
+            .register("{PLOT_MEMBERS}", String.valueOf(plot.getMembers().size()))
+            .register("{PLOT_CREATED}", InstantFormatUtil.format(plot.getCreated()))
+            .register("{PLOT_EXPIRES}", InstantFormatUtil.format(plot.getExpires()))
+            .register("{PLOT_SIZE}", String.valueOf(plot.getRegion().getSize()))
+            .register("{PLOT_RANGE}", String.valueOf(plot.getRegion().getRange()));
 
-        format = format.replace("{PLOT_NAME}", plot.getName());
-        format = format.replace("{PLOT_UUID}", plot.getUuid().toString());
-        format = format.replace("{PLOT_OWNER_NAME}", plot.getOwner().getUser().getName());
-        format = format.replace("{PLOT_OWNER_UUID}", plot.getOwner().getUser().getUuid().toString());
-        format = format.replace("{PLOT_MEMBERS}", String.valueOf(plot.getMembers().size()));
-        format = format.replace("{PLOT_CREATED}", DateUtils.format(plot.getCreated()));
-        format = format.replace("{PLOT_EXPIRES}", DateUtils.format(plot.getExpires()));
-
-        format = format.replace("{PLOT_SIZE}", String.valueOf(plot.getRegion().getSize()));
-        format = format.replace("{PLOT_RANGE}", String.valueOf(plot.getRegion().getRange()));
-        format = format.replace("{PLOT_MIN-X}", String.valueOf(plot.getRegion().getPosMin().getX()));
-        format = format.replace("{PLOT_MIN-Z}", String.valueOf(plot.getRegion().getPosMin().getZ()));
-        format = format.replace("{PLOT_MAX-X}", String.valueOf(plot.getRegion().getPosMax().getX()));
-        format = format.replace("{PLOT_MAX-Z}", String.valueOf(plot.getRegion().getPosMax().getZ()));
-        format = format.replace("{PLOT_CENTER-X}", String.valueOf(plot.getRegion().getCenter().getX()));
-        format = format.replace("{PLOT_CENTER-Y}", String.valueOf(plot.getRegion().getPosMax().getY()));
-        format = format.replace("{PLOT_CENTER-Z}", String.valueOf(plot.getRegion().getPosMax().getZ()));
-
-        return format;
+        return register.format(text);
     }
 
     public static List<String> parseVariable(List<String> list, String target, String replacement) {

@@ -1,14 +1,13 @@
 package com.eternalcode.plots.feature.create;
 
 import com.eternalcode.plots.adventure.LegacyUtils;
-import com.eternalcode.plots.configuration.implementation.LanguageConfiguration;
+import com.eternalcode.plots.configuration.implementation.MessageConfiguration;
 import com.eternalcode.plots.configuration.implementation.PluginConfiguration;
 import com.eternalcode.plots.feature.name.PlotChangeName;
-import com.eternalcode.plots.notification.NotificationAnnouncer;
-import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.plot.region.Region;
-import com.eternalcode.plots.plot.region.RegionManager;
+import com.eternalcode.plots.notification.NotificationBroadcaster;
+import com.eternalcode.plots.plot.old.PlotManager;
+import com.eternalcode.plots.plot.old.region.Region;
+import com.eternalcode.plots.plot.old.region.RegionManager;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.user.UserManager;
 import org.bukkit.Location;
@@ -17,28 +16,28 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import panda.std.Option;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 public class PlotCreation {
 
     private final PluginConfiguration pluginConfiguration;
-    private final LanguageConfiguration lang;
+    private final MessageConfiguration lang;
     private final UserManager userManager;
     private final PlotManager plotManager;
     private final RegionManager regionManager;
     private final Plugin plugin;
-    private final NotificationAnnouncer notificationAnnouncer;
+    private final NotificationBroadcaster notificationBroadcaster;
 
-    public PlotCreation(PluginConfiguration pluginConfiguration, LanguageConfiguration languageConfiguration, UserManager userManager, PlotManager plotManager, RegionManager regionManager, Plugin plugin, NotificationAnnouncer notificationAnnouncer) {
+    public PlotCreation(PluginConfiguration pluginConfiguration, MessageConfiguration messageConfiguration, UserManager userManager, PlotManager plotManager, RegionManager regionManager, Plugin plugin, NotificationBroadcaster notificationBroadcaster) {
         this.pluginConfiguration = pluginConfiguration;
-        this.lang = languageConfiguration;
+        this.lang = messageConfiguration;
         this.userManager = userManager;
         this.plotManager = plotManager;
         this.regionManager = regionManager;
         this.plugin = plugin;
-        this.notificationAnnouncer = notificationAnnouncer;
+        this.notificationBroadcaster = notificationBroadcaster;
     }
 
     public void createPlot(Player player, Location center, int startSize) {
@@ -76,10 +75,8 @@ public class PlotCreation {
         // setup region
         Region region = this.regionManager.create(startSize, max, min, center);
 
-        // setup expires date
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, this.pluginConfiguration.validityDays);
-        Date validity = calendar.getTime();
+        // setup expires instant
+        Instant validity = Instant.now().plus(this.pluginConfiguration.validityDays, ChronoUnit.DAYS);
 
         // create plot
         Option<Plot> plotOpt = this.plotManager.create(
@@ -87,7 +84,7 @@ public class PlotCreation {
             plotName,
             user,
             region,
-            new Date(),
+            Instant.now(),
             validity
         );
 
@@ -100,7 +97,7 @@ public class PlotCreation {
         Plot plot = plotOpt.get();
 
         // create anvil (name change)
-        new PlotChangeName(plot, this.lang, this.plotManager, this.plugin, this.notificationAnnouncer).sendGui(player);
+        new PlotChangeName(plot, this.lang, this.plotManager, this.plugin, this.notificationBroadcaster).sendGui(player);
 
         player.sendMessage(LegacyUtils.color(this.lang.plotCreation.plotCreated.replace("{NAME}", plot.getName())));
     }

@@ -1,8 +1,7 @@
 package com.eternalcode.plots.feature.limit;
 
 import com.eternalcode.plots.configuration.implementation.PluginConfiguration;
-import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotManager;
+import com.eternalcode.plots.plot.old.PlotManager;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.user.UserManager;
 import org.bukkit.entity.Player;

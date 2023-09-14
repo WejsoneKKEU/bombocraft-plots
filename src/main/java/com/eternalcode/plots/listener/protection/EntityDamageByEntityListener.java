@@ -1,11 +1,10 @@
 package com.eternalcode.plots.listener.protection;
 
 import com.eternalcode.plots.configuration.implementation.ProtectionConfiguration;
-import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.plot.protection.FlagType;
-import com.eternalcode.plots.plot.protection.ProtectionManager;
-import com.eternalcode.plots.plot.region.Region;
+import com.eternalcode.plots.plot.old.PlotManager;
+import com.eternalcode.plots.plot.old.protection.FlagType;
+import com.eternalcode.plots.plot.old.protection.ProtectionManager;
+import com.eternalcode.plots.plot.old.region.Region;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;

@@ -1,7 +1,6 @@
 package com.eternalcode.plots.feature.border;
 
-import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.region.Region;
+import com.eternalcode.plots.plot.old.region.Region;
 import com.eternalcode.plots.position.PositionAdapter;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

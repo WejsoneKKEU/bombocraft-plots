@@ -1,7 +1,7 @@
 package com.eternalcode.plots.command.oldcode.arguments;
 
-import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotManager;
+import com.eternalcode.plots.plot.old.PlotManager;
+import com.eternalcode.plots.plot.recoded.member.PlotMemberService;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.user.UserManager;
 import dev.rollczi.litecommands.argument.ArgumentName;
@@ -18,10 +18,12 @@ import java.util.List;
 public class SenderPlotArg implements OneArgument<Plot> {
 
     private final PlotManager plotManager;
+    private final PlotMemberService plotMemberService;
     private final UserManager userManager;
 
-    public SenderPlotArg(PlotManager plotManager, UserManager userManager) {
+    public SenderPlotArg(PlotManager plotManager, PlotMemberService plotMemberService, UserManager userManager) {
         this.plotManager = plotManager;
+        this.plotMemberService = plotMemberService;
         this.userManager = userManager;
     }
 
@@ -39,7 +41,7 @@ public class SenderPlotArg implements OneArgument<Plot> {
 
         Plot plot = plotOpt.get();
 
-        if (!plot.isMember(user)) {
+        if (!this.plotMemberService.isMember(user)) {
             return Result.error("You are not member of plot '" + plot.getName() + "'");
         }
 
@@ -55,6 +57,8 @@ public class SenderPlotArg implements OneArgument<Plot> {
         return this.plotManager.getPlots(user)
             .stream()
             .map(Plot::getName)
+
+            // TODO: why this is toLowerCase?
             .map(String::toLowerCase)
             .map(Suggestion::of)
             .toList();

@@ -2,7 +2,6 @@ package com.eternalcode.plots.gui;
 
 import com.eternalcode.plots.configuration.implementation.gui.PlotPanelConfiguration;
 import com.eternalcode.plots.configuration.implementation.gui.model.ConfigItem;
-import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.util.old.VariablesUtils;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
@@ -16,20 +15,18 @@ public class PlotPanelInventory {
     private final InventoryActions inventoryActions;
     private final PlotPanelConfiguration plotPanelConfig;
     private final MiniMessage miniMessage;
-    private final Plot plot;
 
-    public PlotPanelInventory(InventoryActions inventoryActions, PlotPanelConfiguration plotPanelConfig, MiniMessage miniMessage, Plot plot) {
+    public PlotPanelInventory(InventoryActions inventoryActions, PlotPanelConfiguration plotPanelConfig, MiniMessage miniMessage) {
         this.inventoryActions = inventoryActions;
         this.plotPanelConfig = plotPanelConfig;
         this.miniMessage = miniMessage;
-        this.plot = plot;
     }
 
-    public Gui createInventory() {
+    public Gui createInventory(Plot plot) {
         String title = this.plotPanelConfig.title;
 
         Gui gui = Gui.gui()
-            .title(this.miniMessage.deserialize(VariablesUtils.parsePlotVars(this.plot, title)))
+            .title(this.miniMessage.deserialize(VariablesUtils.parsePlotVars(plot, title)))
             .rows(this.plotPanelConfig.rows)
             .disableAllInteractions()
             .create();
@@ -62,7 +59,7 @@ public class PlotPanelInventory {
         return gui;
     }
 
-    public void open(Player player) {
-        this.createInventory().open(player);
+    public void open(Player player, Plot plot) {
+        this.createInventory(plot).open(player);
     }
 }

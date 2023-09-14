@@ -1,6 +1,6 @@
 package com.eternalcode.plots.configuration.implementation;
 
-import com.eternalcode.plots.plot.protection.FlagType;
+import com.eternalcode.plots.plot.old.protection.FlagType;
 import com.google.common.collect.ImmutableMap;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;

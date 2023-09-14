@@ -7,9 +7,8 @@ import com.eternalcode.plots.feature.extend.CostsService;
 import com.eternalcode.plots.feature.extend.PlotExtend;
 import com.eternalcode.plots.feature.name.PlotChangeName;
 import com.eternalcode.plots.hook.VaultProvider;
-import com.eternalcode.plots.notification.NotificationAnnouncer;
-import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotManager;
+import com.eternalcode.plots.notification.NotificationBroadcaster;
+import com.eternalcode.plots.plot.old.PlotManager;
 import com.eternalcode.plots.position.PositionAdapter;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.user.UserManager;
@@ -28,19 +27,20 @@ public class InventoryActions {
     private final UserManager userManager;
     private final ConfigurationManager configurationManager;
     private final Plugin plugin;
-    private final NotificationAnnouncer notificationAnnouncer;
+    private final NotificationBroadcaster notificationBroadcaster;
+
     private final PlotMembersInventory plotMembersInventory;
     private final PlotExtendInventory plotExtendInventory;
     private final PlotFlagInventory plotFlagInventory;
     private final PlotPanelInventory plotPanelInventory;
 
-    public InventoryActions(VaultProvider vaultProvider, PlotManager plotManager, UserManager userManager, ConfigurationManager configurationManager, Plugin plugin, NotificationAnnouncer notificationAnnouncer, PlotMembersInventory plotMembersInventory, PlotExtendInventory plotExtendInventory, PlotFlagInventory plotFlagInventory, PlotPanelInventory plotPanelInventory) {
+    public InventoryActions(VaultProvider vaultProvider, PlotManager plotManager, UserManager userManager, ConfigurationManager configurationManager, Plugin plugin, NotificationBroadcaster notificationBroadcaster, PlotMembersInventory plotMembersInventory, PlotExtendInventory plotExtendInventory, PlotFlagInventory plotFlagInventory, PlotPanelInventory plotPanelInventory) {
         this.vaultProvider = vaultProvider;
         this.plotManager = plotManager;
         this.userManager = userManager;
         this.configurationManager = configurationManager;
         this.plugin = plugin;
-        this.notificationAnnouncer = notificationAnnouncer;
+        this.notificationBroadcaster = notificationBroadcaster;
         this.plotMembersInventory = plotMembersInventory;
         this.plotExtendInventory = plotExtendInventory;
         this.plotFlagInventory = plotFlagInventory;
@@ -86,7 +86,7 @@ public class InventoryActions {
                 return;
             }
 
-            this.plotMembersInventory.openInventory(player);
+            this.plotMembersInventory.openInventory(player, plot);
         };
     }
 
@@ -197,13 +197,13 @@ public class InventoryActions {
                 return;
             }
 
-            new PlotChangeName(plot, this.configurationManager.getLanguageConfiguration(), this.plotManager, this.plugin, this.notificationAnnouncer)
+            new PlotChangeName(plot, this.configurationManager.getLanguageConfiguration(), this.plotManager, this.plugin, this.notificationBroadcaster)
                 .sendGui((Player) event.getWhoClicked());
         };
     }
 
     private GuiAction<InventoryClickEvent> openPlotPanel(Plot plot) {
-        return event -> this.plotPanelInventory.open((Player) event.getWhoClicked());
+        return event -> this.plotPanelInventory.open((Player) event.getWhoClicked(), plot);
     }
 
     private GuiAction<InventoryClickEvent> closeGui() {

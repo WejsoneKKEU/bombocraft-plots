@@ -1,8 +1,7 @@
 package com.eternalcode.plots.listener;
 
-import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.plot.region.Region;
+import com.eternalcode.plots.plot.old.PlotManager;
+import com.eternalcode.plots.plot.old.region.Region;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

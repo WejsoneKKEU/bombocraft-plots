@@ -3,8 +3,7 @@ package com.eternalcode.plots.feature.extend;
 import com.eternalcode.plots.configuration.implementation.PluginConfiguration;
 import com.eternalcode.plots.configuration.implementation.gui.model.ConfigExtend;
 import com.eternalcode.plots.hook.VaultProvider;
-import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotManager;
+import com.eternalcode.plots.plot.old.PlotManager;
 
 public class PlotExtend {
 
@@ -18,6 +17,23 @@ public class PlotExtend {
         this.config = pluginConfiguration;
         this.costsService = costsService;
         this.configExtend = configExtend;
+    }
+
+    public int getNewSize(Plot plot) {
+        return plot.getRegion().getSize() + this.configExtend.blocks;
+    }
+
+    public CostsService getCostsService() {
+        return this.costsService;
+    }
+
+    public boolean isLimit(int size) {
+        return this.config.plot.maxSize < size;
+    }
+
+    public void extendPlot(Plot plot) {
+        this.plotManager.setSize(plot, plot.getRegion().getSize() + this.configExtend.blocks);
+        this.plotManager.setExtendLevel(plot, plot.getRegion().getExtendLevel() + 1);
     }
 
     public static PlotExtend create(Plot plot, VaultProvider vaultProvider, PlotManager plotManager, PluginConfiguration pluginConfiguration) {
@@ -43,23 +59,6 @@ public class PlotExtend {
         CostsService both = new CostsBothService(pluginConfiguration.plot.extend.noBothMessage, item, vault);
 
         return new PlotExtend(configExtend, plotManager, pluginConfiguration, both);
-    }
-
-    public int getNewSize(Plot plot) {
-        return plot.getRegion().getSize() + this.configExtend.blocks;
-    }
-
-    public CostsService getCostsService() {
-        return this.costsService;
-    }
-
-    public boolean isLimit(int size) {
-        return this.config.plot.maxSize < size;
-    }
-
-    public void extendPlot(Plot plot) {
-        this.plotManager.setSize(plot, plot.getRegion().getSize() + this.configExtend.blocks);
-        this.plotManager.setExtendLevel(plot, plot.getRegion().getExtendLevel() + 1);
     }
 
 }

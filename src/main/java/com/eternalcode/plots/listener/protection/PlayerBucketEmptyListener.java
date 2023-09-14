@@ -1,7 +1,7 @@
 package com.eternalcode.plots.listener.protection;
 
 import com.eternalcode.plots.configuration.implementation.ProtectionConfiguration;
-import com.eternalcode.plots.plot.protection.ProtectionManager;
+import com.eternalcode.plots.plot.old.protection.ProtectionManager;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

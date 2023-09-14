@@ -1,13 +1,13 @@
 package com.eternalcode.plots.gui;
 
-import com.eternalcode.plots.configuration.implementation.LanguageConfiguration;
+import com.eternalcode.plots.configuration.implementation.MessageConfiguration;
 import com.eternalcode.plots.configuration.implementation.gui.PlotPlayersConfiguration;
 import com.eternalcode.plots.configuration.implementation.gui.model.ConfigAction;
 import com.eternalcode.plots.configuration.implementation.gui.model.ConfigItem;
-import com.eternalcode.plots.notification.NotificationAnnouncer;
-import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.plot.member.PlotMember;
+import com.eternalcode.plots.notification.NotificationBroadcaster;
+import com.eternalcode.plots.plot.old.PlotManager;
+import com.eternalcode.plots.plot.recoded.member.PlotMember;
+import com.eternalcode.plots.plot.recoded.member.PlotMemberService;
 import com.eternalcode.plots.user.User;
 import com.eternalcode.plots.user.UserManager;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
@@ -28,27 +28,27 @@ public class PlotMembersInventory {
     private final PlotManager plotManager;
     private final PlotPlayersConfiguration plotPlayersConfiguration;
     private final MiniMessage miniMessage;
-    private final NotificationAnnouncer notificationAnnouncer;
-    private final Plot plot;
+    private final NotificationBroadcaster notificationBroadcaster;
     private final UserManager userManager;
-    private final LanguageConfiguration langConfig;
+    private final MessageConfiguration langConfig;
+    private final PlotMemberService plotMemberService;
 
-    public PlotMembersInventory(InventoryActions inventoryActions, PlotManager plotManager, PlotPlayersConfiguration plotPlayersConfiguration, MiniMessage miniMessage, NotificationAnnouncer notificationAnnouncer, Plot plot, UserManager userManager, LanguageConfiguration langConfig) {
+    public PlotMembersInventory(InventoryActions inventoryActions, PlotManager plotManager, PlotPlayersConfiguration plotPlayersConfiguration, MiniMessage miniMessage, NotificationBroadcaster notificationBroadcaster, UserManager userManager, MessageConfiguration langConfig, PlotMemberService plotMemberService) {
         this.inventoryActions = inventoryActions;
         this.plotManager = plotManager;
         this.plotPlayersConfiguration = plotPlayersConfiguration;
         this.miniMessage = miniMessage;
-        this.notificationAnnouncer = notificationAnnouncer;
-        this.plot = plot;
+        this.notificationBroadcaster = notificationBroadcaster;
         this.userManager = userManager;
         this.langConfig = langConfig;
+        this.plotMemberService = plotMemberService;
     }
 
-    public Gui createInventory() {
+    public Gui createInventory(Plot plot) {
         String title = this.plotPlayersConfiguration.title;
 
         Formatter titleFormat = new Formatter()
-            .register("{PLOT_NAME}", this.plot.getName());
+            .register("{PLOT_NAME}", plot.getName());
 
         Gui gui = Gui.gui()
             .title(this.miniMessage.deserialize(titleFormat.format(title)))
@@ -75,7 +75,7 @@ public class PlotMembersInventory {
 
         PlotPlayersConfiguration.PlayerTemplate playerTemplate = this.plotPlayersConfiguration.playerTemplate;
 
-        for (PlotMember plotMember : plot.getMembers()) {
+        for (PlotMember plotMember : this.plotMemberService.getMembers()) {
             User memberUser = plotMember.getUser();
 
             Formatter formatter = new Formatter()
@@ -91,7 +91,7 @@ public class PlotMembersInventory {
                 .lore(loreFormat)
                 .build();
 
-            GuiItem playerGui = getGuiItem(plotMember, itemStack, playerTemplate);
+            GuiItem playerGui = getGuiItem(plotMember, itemStack, playerTemplate, plot);
 
             gui.addItem(playerGui);
         }
@@ -107,23 +107,23 @@ public class PlotMembersInventory {
         return gui;
     }
 
-    public void openInventory(Player player) {
-        Gui gui = this.createInventory();
+    public void openInventory(Player player, Plot plot) {
+        Gui gui = this.createInventory(plot);
         gui.open(player);
     }
 
 
-    private GuiItem getGuiItem(PlotMember plotMember, ItemStack itemStack, PlotPlayersConfiguration.PlayerTemplate playerTemplate) {
+    private GuiItem getGuiItem(PlotMember plotMember, ItemStack itemStack, PlotPlayersConfiguration.PlayerTemplate playerTemplate, Plot plot) {
         GuiItem playerGui = new GuiItem(itemStack);
 
         playerGui.setAction(event -> {
 
             if (event.getClick().isLeftClick() && playerTemplate.leftClickAction == ConfigAction.KICK_PLAYER) {
-                kickPlayer((Player) event.getViewers().get(0), this.plot, plotMember);
+                kickPlayer((Player) event.getViewers().get(0), plot, plotMember);
             }
 
             if (event.getClick().isRightClick() && playerTemplate.rightClickAction == ConfigAction.KICK_PLAYER) {
-                kickPlayer((Player) event.getViewers().get(0), this.plot, plotMember);
+                kickPlayer((Player) event.getViewers().get(0), plot, plotMember);
             }
         });
         return playerGui;
@@ -137,21 +137,21 @@ public class PlotMembersInventory {
             .register("{PLOT_NAME}", plot.getName());
 
         if (!plot.isOwner(userSender)) {
-            this.notificationAnnouncer.sendMessage(viewer, formatter.format(this.langConfig.commands.notOwner));
+            this.notificationBroadcaster.sendMessage(viewer, formatter.format(this.langConfig.commands.notOwner));
             return;
         }
 
-        if (!plot.isMember(plotMember)) {
-            this.notificationAnnouncer.sendMessage(viewer, formatter.format(this.langConfig.commands.notMember));
+        if (!this.plotMemberService.isMember(plotMember)) {
+            this.notificationBroadcaster.sendMessage(viewer, formatter.format(this.langConfig.commands.notMember));
             return;
         }
 
         if (plotMember.getUser().equals(userSender)) {
-            this.notificationAnnouncer.sendMessage(viewer, formatter.format(this.langConfig.commands.kickOwner));
+            this.notificationBroadcaster.sendMessage(viewer, formatter.format(this.langConfig.commands.kickOwner));
             return;
         }
 
         this.plotManager.removeMember(plot, plotMember.getUser());
-        this.notificationAnnouncer.sendMessage(viewer, formatter.format(this.langConfig.commands.successKick));
+        this.notificationBroadcaster.sendMessage(viewer, formatter.format(this.langConfig.commands.successKick));
     }
 }

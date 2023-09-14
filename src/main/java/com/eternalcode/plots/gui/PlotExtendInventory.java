@@ -5,8 +5,7 @@ import com.eternalcode.plots.configuration.implementation.gui.PlotExtendConfigur
 import com.eternalcode.plots.configuration.implementation.gui.model.ConfigItem;
 import com.eternalcode.plots.feature.extend.PlotExtend;
 import com.eternalcode.plots.hook.VaultProvider;
-import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotManager;
+import com.eternalcode.plots.plot.old.PlotManager;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import net.kyori.adventure.text.minimessage.MiniMessage;

@@ -1,8 +1,8 @@
 package com.eternalcode.plots.listener.protection;
 
 import com.eternalcode.plots.configuration.implementation.ProtectionConfiguration;
-import com.eternalcode.plots.plot.PlotManager;
-import com.eternalcode.plots.plot.region.Region;
+import com.eternalcode.plots.plot.old.PlotManager;
+import com.eternalcode.plots.plot.old.region.Region;
 import com.eternalcode.plots.util.recoded.PotionUtil;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;

@@ -1,6 +1,5 @@
 package com.eternalcode.plots.configuration.implementation.gui.model;
 
-import com.eternalcode.plots.plot.Plot;
 import com.eternalcode.plots.util.old.VariablesUtils;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import net.kyori.adventure.text.Component;

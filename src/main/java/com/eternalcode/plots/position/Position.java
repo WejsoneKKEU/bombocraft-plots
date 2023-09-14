@@ -92,8 +92,6 @@ public final class Position {
         return Double.compare(position.x, this.x) == 0
             && Double.compare(position.y, this.y) == 0
             && Double.compare(position.z, this.z) == 0
-            && Float.compare(position.yaw, this.yaw) == 0
-            && Float.compare(position.pitch, this.pitch) == 0
             && this.world.equals(position.world);
     }
 

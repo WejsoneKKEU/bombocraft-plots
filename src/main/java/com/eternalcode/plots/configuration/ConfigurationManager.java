@@ -1,7 +1,7 @@
 package com.eternalcode.plots.configuration;
 
 import com.eternalcode.plots.configuration.implementation.BlocksConfiguration;
-import com.eternalcode.plots.configuration.implementation.LanguageConfiguration;
+import com.eternalcode.plots.configuration.implementation.MessageConfiguration;
 import com.eternalcode.plots.configuration.implementation.PluginConfiguration;
 import com.eternalcode.plots.configuration.implementation.ProtectionConfiguration;
 import com.eternalcode.plots.configuration.implementation.command.CommandsConfiguration;
@@ -28,7 +28,7 @@ public class ConfigurationManager {
     private final PlotPanelConfiguration plotPanelConfiguration;
     private final PlotMenuConfiguration plotMenuConfiguration;
     private final BlocksConfiguration blocksConfiguration;
-    private final LanguageConfiguration languageConfiguration;
+    private final MessageConfiguration messageConfiguration;
     private final ProtectionConfiguration protectionConfiguration;
     private final PlotFlagsConfiguration plotFlagsConfiguration;
     private final CommandsConfiguration commandsConfiguration;
@@ -45,7 +45,7 @@ public class ConfigurationManager {
         this.plotFlagsConfiguration = (PlotFlagsConfiguration) loadAndRender(PlotFlagsConfiguration.class, dataFolder, "gui/plot-flags.yml");
         this.plotExtendConfiguration = (PlotExtendConfiguration) loadAndRender(PlotExtendConfiguration.class, dataFolder, "gui/plot-extend.yml");
         this.plotPlayersConfiguration = (PlotPlayersConfiguration) loadAndRender(PlotPlayersConfiguration.class, dataFolder, "gui/plot-players.yml");
-        this.languageConfiguration = (LanguageConfiguration) loadAndRender(LanguageConfiguration.class, dataFolder, "lang/messages.yml");
+        this.messageConfiguration = (MessageConfiguration) loadAndRender(MessageConfiguration.class, dataFolder, "lang/messages.yml");
     }
 
     public <T extends OkaeriConfig> OkaeriConfig loadAndRender(Class<T> config, File dataFolder, String filePath) {
@@ -79,8 +79,8 @@ public class ConfigurationManager {
         return this.blocksConfiguration;
     }
 
-    public LanguageConfiguration getLanguageConfiguration() {
-        return this.languageConfiguration;
+    public MessageConfiguration getLanguageConfiguration() {
+        return this.messageConfiguration;
     }
 
     public ProtectionConfiguration getProtectionConfiguration() {

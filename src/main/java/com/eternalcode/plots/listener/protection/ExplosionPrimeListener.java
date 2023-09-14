@@ -1,7 +1,7 @@
 package com.eternalcode.plots.listener.protection;
 
 import com.eternalcode.plots.configuration.implementation.ProtectionConfiguration;
-import com.eternalcode.plots.plot.PlotManager;
+import com.eternalcode.plots.plot.old.PlotManager;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Hanging;
 import org.bukkit.entity.Vehicle;

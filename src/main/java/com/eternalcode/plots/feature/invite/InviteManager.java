@@ -1,7 +1,6 @@
 package com.eternalcode.plots.feature.invite;
 
-import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.plot.PlotManager;
+import com.eternalcode.plots.plot.old.PlotManager;
 import com.eternalcode.plots.user.User;
 import panda.std.Option;
 
