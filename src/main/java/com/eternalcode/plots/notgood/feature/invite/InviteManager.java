@@ -1,7 +1,7 @@
 package com.eternalcode.plots.notgood.feature.invite;
 
 import com.eternalcode.plots.notgood.plot.old.PlotManager;
-import com.eternalcode.plots.notgood.user.User;
+import com.eternalcode.plots.good.user.User;
 import panda.std.Option;
 
 import java.util.ArrayList;

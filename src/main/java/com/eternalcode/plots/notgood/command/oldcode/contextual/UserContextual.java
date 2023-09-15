@@ -1,7 +1,7 @@
 package com.eternalcode.plots.notgood.command.oldcode.contextual;
 
-import com.eternalcode.plots.notgood.user.User;
-import com.eternalcode.plots.notgood.user.UserManager;
+import com.eternalcode.plots.good.user.User;
+import com.eternalcode.plots.good.user.UserManager;
 import dev.rollczi.litecommands.command.Invocation;
 import dev.rollczi.litecommands.contextual.Contextual;
 import org.bukkit.command.CommandSender;
@@ -22,6 +22,6 @@ public class UserContextual implements Contextual<CommandSender, User> {
             return Result.error("&cCommand sender must be a user!");
         }
 
-        return Result.ok(this.userManager.getOrCreate(player.getUniqueId(), player.getName()));
+        return Result.ok(this.userManager.findOrCreate(player.getUniqueId(), player.getName()));
     }
 }

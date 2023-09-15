@@ -2,8 +2,8 @@ package com.eternalcode.plots.notgood.feature.limit;
 
 import com.eternalcode.plots.notgood.configuration.implementation.PluginConfiguration;
 import com.eternalcode.plots.notgood.plot.old.PlotManager;
-import com.eternalcode.plots.notgood.user.User;
-import com.eternalcode.plots.notgood.user.UserManager;
+import com.eternalcode.plots.good.user.User;
+import com.eternalcode.plots.good.user.UserManager;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -22,13 +22,13 @@ public class PlotsLimit {
 
     public boolean hasLimit(Player player) {
 
-        User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
+        User user = this.userManager.findOrCreate(player.getUniqueId(), player.getName());
 
         int limit = getLimit(player);
         int plots = 0;
 
         for (Plot plot : this.plotManager.getPlots(user)) {
-            if (plot.getOwner().getUser().getUuid().equals(user.getUuid())) {
+            if (plot.getOwner().getUser().getUuid().equals(user.uuid())) {
                 plots++;
             }
         }

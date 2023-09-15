@@ -4,7 +4,7 @@ import com.eternalcode.plots.notgood.configuration.implementation.MessageConfigu
 import com.eternalcode.plots.notgood.feature.invite.InviteManager;
 import com.eternalcode.plots.good.notification.NotificationBroadcaster;
 import com.eternalcode.plots.notgood.plot.recoded.member.PlotMemberService;
-import com.eternalcode.plots.notgood.user.User;
+import com.eternalcode.plots.good.user.User;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.amount.Required;

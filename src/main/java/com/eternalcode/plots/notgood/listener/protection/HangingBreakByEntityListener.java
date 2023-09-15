@@ -5,7 +5,7 @@ import com.eternalcode.plots.notgood.plot.old.PlotManager;
 import com.eternalcode.plots.notgood.plot.old.protection.FlagType;
 import com.eternalcode.plots.notgood.plot.old.protection.ProtectionManager;
 import com.eternalcode.plots.notgood.plot.old.region.Region;
-import com.eternalcode.plots.notgood.user.UserManager;
+import com.eternalcode.plots.good.user.UserManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -46,7 +46,7 @@ public class HangingBreakByEntityListener implements Listener {
             if (this.protectionManager.hasBypass(player)) return;
 
             if (plot.isPresent()) {
-                if (plot.get().isMember(userManager.getOrCreate(event.getRemover().getUniqueId(), event.getRemover().getName()))) {
+                if (plot.get().isMember(userManager.findOrCreate(event.getRemover().getUniqueId(), event.getRemover().getName()))) {
                     return;
                 }
             }

@@ -8,8 +8,8 @@ import com.eternalcode.plots.good.notification.NotificationBroadcaster;
 import com.eternalcode.plots.notgood.plot.old.PlotManager;
 import com.eternalcode.plots.notgood.plot.recoded.member.PlotMember;
 import com.eternalcode.plots.notgood.plot.recoded.member.PlotMemberService;
-import com.eternalcode.plots.notgood.user.User;
-import com.eternalcode.plots.notgood.user.UserManager;
+import com.eternalcode.plots.good.user.User;
+import com.eternalcode.plots.good.user.UserManager;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
@@ -79,14 +79,14 @@ public class PlotMembersInventory {
             User memberUser = plotMember.getUser();
 
             Formatter formatter = new Formatter()
-                .register("{PLAYER}", memberUser.getName());
+                .register("{PLAYER}", memberUser.name());
 
             List<Component> loreFormat = playerTemplate.itemLore.stream()
                 .map(lore -> this.miniMessage.deserialize(formatter.format(lore)))
                 .toList();
 
             ItemStack itemStack = ItemBuilder.skull()
-                .owner(Bukkit.getOfflinePlayer(memberUser.getUuid()))
+                .owner(Bukkit.getOfflinePlayer(memberUser.uuid()))
                 .name(this.miniMessage.deserialize(formatter.format(playerTemplate.itemName)))
                 .lore(loreFormat)
                 .build();
@@ -130,7 +130,7 @@ public class PlotMembersInventory {
     }
 
     private void kickPlayer(Player viewer, Plot plot, PlotMember plotMember) {
-        User userSender = this.userManager.getOrCreate(viewer.getUniqueId(), viewer.getName());
+        User userSender = this.userManager.findOrCreate(viewer.getUniqueId(), viewer.getName());
 
         Formatter formatter = new Formatter()
             .register("{PLAYER}", plotMember.getUser().getName())

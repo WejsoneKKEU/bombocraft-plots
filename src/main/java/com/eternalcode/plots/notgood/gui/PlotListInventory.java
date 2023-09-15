@@ -4,7 +4,7 @@ import com.eternalcode.plots.notgood.configuration.implementation.gui.PlotMenuCo
 import com.eternalcode.plots.notgood.configuration.implementation.gui.model.ConfigAction;
 import com.eternalcode.plots.notgood.configuration.implementation.gui.model.ConfigItem;
 import com.eternalcode.plots.notgood.plot.old.PlotManager;
-import com.eternalcode.plots.notgood.user.User;
+import com.eternalcode.plots.good.user.User;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.components.util.SkullUtil;
 import dev.triumphteam.gui.guis.Gui;

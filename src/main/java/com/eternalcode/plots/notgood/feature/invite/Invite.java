@@ -1,6 +1,6 @@
 package com.eternalcode.plots.notgood.feature.invite;
 
-import com.eternalcode.plots.notgood.user.User;
+import com.eternalcode.plots.good.user.User;
 
 public class Invite {
 

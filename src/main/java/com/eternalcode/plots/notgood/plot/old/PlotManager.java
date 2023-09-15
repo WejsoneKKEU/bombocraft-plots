@@ -1,15 +1,15 @@
 package com.eternalcode.plots.notgood.plot.old;
 
 import com.eternalcode.plots.notgood.configuration.implementation.ProtectionConfiguration;
-import com.eternalcode.plots.notgood.plot.PlotRepository;
-import com.eternalcode.plots.notgood.plot.recoded.member.PlotMember;
-import com.eternalcode.plots.notgood.plot.recoded.member.PlotMemberService;
-import com.eternalcode.plots.notgood.plot.recoded.member.PlotMembersRepository;
+import com.eternalcode.plots.good.plot.PlotRepository;
 import com.eternalcode.plots.notgood.plot.old.protection.Protection;
 import com.eternalcode.plots.notgood.plot.old.region.Region;
 import com.eternalcode.plots.notgood.plot.old.region.RegionManager;
+import com.eternalcode.plots.notgood.plot.recoded.member.PlotMember;
+import com.eternalcode.plots.notgood.plot.recoded.member.PlotMemberService;
+import com.eternalcode.plots.notgood.plot.recoded.member.PlotMembersRepository;
 import com.eternalcode.plots.good.position.PositionAdapter;
-import com.eternalcode.plots.notgood.user.User;
+import com.eternalcode.plots.good.user.User;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -199,11 +199,11 @@ public class PlotManager {
 
             Region region = plot.getRegion();
 
-            String worldName = region.getCenter().getWorld();
-            double minX = region.getPosMin().getX();
-            double minZ = region.getPosMin().getZ();
-            double maxX = region.getPosMax().getX();
-            double maxZ = region.getPosMax().getZ();
+            String worldName = region.getCenter().world();
+            double minX = region.getPosMin().x();
+            double minZ = region.getPosMin().z();
+            double maxX = region.getPosMax().x();
+            double maxZ = region.getPosMax().z();
 
             if ((x <= maxX && x >= minX) && (z <= maxZ && z >= minZ) && worldName.equalsIgnoreCase(locationWorldName)) {
                 return Option.of(region);

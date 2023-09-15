@@ -1,4 +1,4 @@
-package com.eternalcode.plots.notgood.user;
+package com.eternalcode.plots.good.user;
 
 import panda.std.Option;
 
@@ -17,7 +17,7 @@ public class UserManager {
         this.userRepository = userRepository;
     }
 
-    public User getOrCreate(UUID uuid, String name) {
+    public User findOrCreate(UUID uuid, String name) {
         return create(uuid, name).orElseGet(() -> this.usersByUUID.get(uuid));
     }
 
@@ -34,8 +34,8 @@ public class UserManager {
         return Option.of(user);
     }
 
-    public void updateUsername(User user, String name) {
-        user.setName(name);
+    public void updateName(User user, String name) {
+        user.updateName(name);
 
         this.userRepository.saveUser(user);
     }

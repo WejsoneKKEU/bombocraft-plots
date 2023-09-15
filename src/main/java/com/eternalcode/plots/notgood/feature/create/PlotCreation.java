@@ -7,8 +7,8 @@ import com.eternalcode.plots.good.notification.NotificationBroadcaster;
 import com.eternalcode.plots.notgood.plot.old.PlotManager;
 import com.eternalcode.plots.notgood.plot.old.region.Region;
 import com.eternalcode.plots.notgood.plot.old.region.RegionManager;
-import com.eternalcode.plots.notgood.user.User;
-import com.eternalcode.plots.notgood.user.UserManager;
+import com.eternalcode.plots.good.user.User;
+import com.eternalcode.plots.good.user.UserManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -42,7 +42,7 @@ public class PlotCreation {
     public void createPlot(Player player, Location center, int startSize) {
 
         // get user
-        User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
+        User user = this.userManager.findOrCreate(player.getUniqueId(), player.getName());
 
         // check if generated uuid exists
         UUID plotUUID;

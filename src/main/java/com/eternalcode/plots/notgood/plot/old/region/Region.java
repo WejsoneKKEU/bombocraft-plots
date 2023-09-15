@@ -51,8 +51,8 @@ public class Region {
     void setSize(int size) {
         this.size = size;
         this.range = size / 2;
-        this.posMin = new Position(this.center.getX() - this.range, this.center.getY(), this.center.getZ() - this.range, 0.0f, 0.0f, this.center.getWorld());
-        this.posMax = new Position(this.center.getX() + this.range, this.center.getY(), this.center.getZ() + this.range, 0.0f, 0.0f, this.center.getWorld());
+        this.posMin = new Position(this.center.x() - this.range, this.center.y(), this.center.z() - this.range, 0.0f, 0.0f, this.center.world());
+        this.posMax = new Position(this.center.x() + this.range, this.center.y(), this.center.z() + this.range, 0.0f, 0.0f, this.center.world());
     }
 
     public int getRange() {

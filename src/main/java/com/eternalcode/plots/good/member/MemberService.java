@@ -1,7 +1,7 @@
 package com.eternalcode.plots.good.member;
 
-import com.eternalcode.plots.notgood.plot.Plot;
-import com.eternalcode.plots.notgood.user.User;
+import com.eternalcode.plots.good.plot.Plot;
+import com.eternalcode.plots.good.user.User;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -15,7 +15,7 @@ public class MemberService {
 
 
     public CompletableFuture<Boolean> isMember(Plot plot, User user) {
-        return repository.isMember(plot.plotId(), user.getUuid());
+        return repository.isMember(plot.plotId(), user.uuid());
     }
 
 }

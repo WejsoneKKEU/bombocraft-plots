@@ -3,8 +3,8 @@ package com.eternalcode.plots.notgood.plot.old.protection;
 import com.eternalcode.plots.notgood.configuration.implementation.ProtectionConfiguration;
 import com.eternalcode.plots.notgood.plot.old.PlotManager;
 import com.eternalcode.plots.notgood.plot.old.region.Region;
-import com.eternalcode.plots.notgood.user.User;
-import com.eternalcode.plots.notgood.user.UserManager;
+import com.eternalcode.plots.good.user.User;
+import com.eternalcode.plots.good.user.UserManager;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.bukkit.Location;
@@ -90,7 +90,7 @@ public class ProtectionManager {
     }
 
     public boolean isAllowed(Player player, Location location) {
-        User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
+        User user = this.userManager.findOrCreate(player.getUniqueId(), player.getName());
         Option<Region> regionOpt = this.plotManager.getPlotRegionByLocation(location);
 
         if (regionOpt.isEmpty()) {

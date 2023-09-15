@@ -4,7 +4,7 @@ import com.eternalcode.plots.notgood.configuration.implementation.MessageConfigu
 import com.eternalcode.plots.good.notification.NotificationBroadcaster;
 import com.eternalcode.plots.notgood.plot.old.PlotManager;
 import com.eternalcode.plots.notgood.plot.recoded.member.PlotMemberService;
-import com.eternalcode.plots.notgood.user.User;
+import com.eternalcode.plots.good.user.User;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.amount.Required;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -50,7 +50,7 @@ public class KickCommand {
         }
 
         Formatter formatter = new Formatter()
-            .register("{PLAYER}", kicked.getName())
+            .register("{PLAYER}", kicked.name())
             .register("{PLOT_NAME}", targetPlot.getName());
 
         this.plotManager.removeMember(targetPlot, kicked);

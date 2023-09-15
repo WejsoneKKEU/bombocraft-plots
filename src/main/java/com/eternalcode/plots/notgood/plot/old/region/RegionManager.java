@@ -28,10 +28,10 @@ public class RegionManager {
             return false;
         }
 
-        return x <= region.getPosMax().getX() &&
-            x >= region.getPosMin().getX() &&
-            z <= region.getPosMax().getZ() &&
-            z >= region.getPosMin().getZ() &&
+        return x <= region.getPosMax().x() &&
+            x >= region.getPosMin().x() &&
+            z <= region.getPosMax().z() &&
+            z >= region.getPosMin().z() &&
             world.getName().equalsIgnoreCase(location.getWorld().getName());
     }
 

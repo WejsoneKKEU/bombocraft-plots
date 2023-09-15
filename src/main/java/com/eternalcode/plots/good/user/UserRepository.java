@@ -1,4 +1,4 @@
-package com.eternalcode.plots.notgood.user;
+package com.eternalcode.plots.good.user;
 
 import panda.std.reactive.Completable;
 

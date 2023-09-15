@@ -5,11 +5,11 @@ import com.eternalcode.plots.notgood.configuration.implementation.PluginConfigur
 import com.eternalcode.plots.notgood.feature.create.PlotCreation;
 import com.eternalcode.plots.notgood.feature.limit.PlotsLimit;
 import com.eternalcode.plots.good.notification.NotificationBroadcaster;
+import com.eternalcode.plots.notgood.plot.old.region.RegionManager;
 import com.eternalcode.plots.notgood.plot.old.PlotManager;
 import com.eternalcode.plots.notgood.plot.old.plotblock.old.PlotBlockService;
 import com.eternalcode.plots.notgood.plot.old.region.Region;
-import com.eternalcode.plots.notgood.plot.old.region.RegionManager;
-import com.eternalcode.plots.notgood.user.UserManager;
+import com.eternalcode.plots.good.user.UserManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -87,9 +87,9 @@ public class PlotBlockController implements Listener {
 
         Region region = regionOpt.get();
 
-        if (location.getBlockX() == region.getCenter().getX() &&
-            location.getBlockY() == region.getCenter().getY() &&
-            location.getBlockZ() == region.getCenter().getZ()) {
+        if (location.getBlockX() == region.getCenter().x() &&
+            location.getBlockY() == region.getCenter().y() &&
+            location.getBlockZ() == region.getCenter().z()) {
 
             event.setCancelled(true);
         }

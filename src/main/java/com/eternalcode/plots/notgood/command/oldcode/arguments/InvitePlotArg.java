@@ -2,8 +2,8 @@ package com.eternalcode.plots.notgood.command.oldcode.arguments;
 
 import com.eternalcode.plots.notgood.feature.invite.InviteManager;
 import com.eternalcode.plots.notgood.plot.old.PlotManager;
-import com.eternalcode.plots.notgood.user.User;
-import com.eternalcode.plots.notgood.user.UserManager;
+import com.eternalcode.plots.good.user.User;
+import com.eternalcode.plots.good.user.UserManager;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -35,7 +35,7 @@ public class InvitePlotArg implements OneArgument<Plot> {
             return Result.error("Command only for players");
         }
 
-        User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
+        User user = this.userManager.findOrCreate(player.getUniqueId(), player.getName());
         Option<Plot> plotOpt = this.plotManager.getPlot(argument);
 
         if (plotOpt.isEmpty()) {
@@ -60,7 +60,7 @@ public class InvitePlotArg implements OneArgument<Plot> {
             return new ArrayList<>();
         }
 
-        User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
+        User user = this.userManager.findOrCreate(player.getUniqueId(), player.getName());
 
         return this.inviteManager.getInviters(user)
             .stream()

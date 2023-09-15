@@ -10,8 +10,8 @@ import com.eternalcode.plots.notgood.hook.VaultProvider;
 import com.eternalcode.plots.good.notification.NotificationBroadcaster;
 import com.eternalcode.plots.notgood.plot.old.PlotManager;
 import com.eternalcode.plots.good.position.PositionAdapter;
-import com.eternalcode.plots.notgood.user.User;
-import com.eternalcode.plots.notgood.user.UserManager;
+import com.eternalcode.plots.good.user.User;
+import com.eternalcode.plots.good.user.UserManager;
 import dev.triumphteam.gui.components.GuiAction;
 import dev.triumphteam.gui.guis.GuiItem;
 import io.papermc.lib.PaperLib;
@@ -79,7 +79,7 @@ public class InventoryActions {
         return event -> {
 
             Player player = (Player) event.getWhoClicked();
-            User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
+            User user = this.userManager.findOrCreate(player.getUniqueId(), player.getName());
 
             if (!plot.isOwner(user)) {
                 event.getWhoClicked().sendMessage(ChatColor.RED + "Nie jesteś właścicielem działki");
@@ -155,7 +155,7 @@ public class InventoryActions {
         return event -> {
 
             Player player = (Player) event.getWhoClicked();
-            User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
+            User user = this.userManager.findOrCreate(player.getUniqueId(), player.getName());
 
             if (!plot.isOwner(user)) {
                 event.getWhoClicked().sendMessage(ChatColor.RED + "Nie jesteś właścicielem działki");
@@ -170,7 +170,7 @@ public class InventoryActions {
         return event -> {
 
             Player player = (Player) event.getWhoClicked();
-            User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
+            User user = this.userManager.findOrCreate(player.getUniqueId(), player.getName());
 
             if (!plot.isOwner(user)) {
                 event.getWhoClicked().sendMessage(ChatColor.RED + "Nie jesteś właścicielem działki");
@@ -190,7 +190,7 @@ public class InventoryActions {
         return event -> {
 
             Player player = (Player) event.getWhoClicked();
-            User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
+            User user = this.userManager.findOrCreate(player.getUniqueId(), player.getName());
 
             if (!plot.isOwner(user)) {
                 player.sendMessage(ChatColor.RED + "Nie jesteś właścicielem działki");

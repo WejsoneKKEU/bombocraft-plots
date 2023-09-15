@@ -4,8 +4,8 @@ import com.eternalcode.plots.notgood.configuration.implementation.MessageConfigu
 import com.eternalcode.plots.notgood.feature.invite.InviteManager;
 import com.eternalcode.plots.good.member.MemberService;
 import com.eternalcode.plots.good.notification.NotificationBroadcaster;
-import com.eternalcode.plots.notgood.plot.Plot;
-import com.eternalcode.plots.notgood.user.User;
+import com.eternalcode.plots.good.plot.Plot;
+import com.eternalcode.plots.good.user.User;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.amount.Required;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -51,7 +51,7 @@ public class InviteCommand {
 
         if (this.inviteManager.hasInvite(invitedUser, targetPlot)) {
             Formatter formatter = new Formatter()
-                .register("{PLAYER}", invitedUser.getName())
+                .register("{PLAYER}", invitedUser.name())
                 .register("{PLOT_NAME}", targetPlot.name());
 
             this.notificationBroadcaster.sendMessage(player, formatter.format(this.messageConfiguration.commands.hasAlreadyInvite));
@@ -59,7 +59,7 @@ public class InviteCommand {
         }
 
         Formatter formatter = new Formatter()
-            .register("{PLAYER}", invitedUser.getName())
+            .register("{PLAYER}", invitedUser.name())
             .register("{PLOT_NAME}", targetPlot.name());
 
         this.inviteManager.create(invitedUser, targetPlot);

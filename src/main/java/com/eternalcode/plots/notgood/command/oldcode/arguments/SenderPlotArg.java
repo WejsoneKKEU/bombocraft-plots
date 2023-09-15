@@ -2,8 +2,8 @@ package com.eternalcode.plots.notgood.command.oldcode.arguments;
 
 import com.eternalcode.plots.notgood.plot.old.PlotManager;
 import com.eternalcode.plots.notgood.plot.recoded.member.PlotMemberService;
-import com.eternalcode.plots.notgood.user.User;
-import com.eternalcode.plots.notgood.user.UserManager;
+import com.eternalcode.plots.good.user.User;
+import com.eternalcode.plots.good.user.UserManager;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -31,7 +31,7 @@ public class SenderPlotArg implements OneArgument<Plot> {
     public Result<Plot, Object> parse(LiteInvocation invocation, String argument) {
 
         Player player = (Player) invocation.sender().getHandle();
-        User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
+        User user = this.userManager.findOrCreate(player.getUniqueId(), player.getName());
 
         Option<Plot> plotOpt = this.plotManager.getPlot(argument);
 
@@ -52,7 +52,7 @@ public class SenderPlotArg implements OneArgument<Plot> {
     public List<Suggestion> suggest(LiteInvocation invocation) {
 
         Player player = (Player) invocation.sender().getHandle();
-        User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
+        User user = this.userManager.findOrCreate(player.getUniqueId(), player.getName());
 
         return this.plotManager.getPlots(user)
             .stream()

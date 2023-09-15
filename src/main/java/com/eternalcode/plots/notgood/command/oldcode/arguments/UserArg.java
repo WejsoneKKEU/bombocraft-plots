@@ -1,7 +1,7 @@
 package com.eternalcode.plots.notgood.command.oldcode.arguments;
 
-import com.eternalcode.plots.notgood.user.User;
-import com.eternalcode.plots.notgood.user.UserManager;
+import com.eternalcode.plots.good.user.User;
+import com.eternalcode.plots.good.user.UserManager;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -32,7 +32,7 @@ public class UserArg implements OneArgument<User> {
             return Result.error("Gracz nie jest online");
         }
 
-        return Result.ok(this.userManager.getOrCreate(player.getUniqueId(), player.getName()));
+        return Result.ok(this.userManager.findOrCreate(player.getUniqueId(), player.getName()));
     }
 
     @Override

@@ -6,8 +6,8 @@ import com.eternalcode.plots.notgood.plot.old.protection.FlagType;
 import com.eternalcode.plots.notgood.plot.old.protection.ProtectionManager;
 import com.eternalcode.plots.notgood.plot.old.region.Region;
 import com.eternalcode.plots.good.position.PositionAdapter;
-import com.eternalcode.plots.notgood.user.User;
-import com.eternalcode.plots.notgood.user.UserManager;
+import com.eternalcode.plots.good.user.User;
+import com.eternalcode.plots.good.user.UserManager;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -163,7 +163,7 @@ public class EntityDamageListener implements Listener {
             return;
         }
 
-        User user = this.userManager.getOrCreate(entity.getUniqueId(), entity.getName());
+        User user = this.userManager.findOrCreate(entity.getUniqueId(), entity.getName());
 
         if (plot.isMember(user)) {
             return;

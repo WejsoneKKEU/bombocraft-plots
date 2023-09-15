@@ -1,4 +1,4 @@
-package com.eternalcode.plots.notgood.plot;
+package com.eternalcode.plots.good.plot;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
