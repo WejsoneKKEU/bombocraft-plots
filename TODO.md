@@ -30,3 +30,8 @@
 - [ ] Collaborate with plugins like ItemsAdder. Suggest support for custom model data in configuration
 - [ ] Add support for custom heads using LiteSkullAPI.
 - [ ] Add support for dummy items in inventories, like item for use specific command.
+
+
+## New features
+- [ ] Add hologram support for plot block using  (HologramLib -> https://github.com/unldenis/Hologram-Lib)
+- [ ] Add support to click plot block to open panel.
