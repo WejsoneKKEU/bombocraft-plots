@@ -1,15 +1,6 @@
-package com.eternalcode.plots.notgood;
+package com.eternalcode.plots.good;
 
 import com.eternalcode.plots.good.adventure.LegacyColorProcessor;
-import com.eternalcode.plots.database.recoded.DatabaseManager;
-import com.eternalcode.plots.database.recoded.wrapper.PlotFlagRepositoryOrmLite;
-import com.eternalcode.plots.database.recoded.wrapper.PlotMemberRepositoryOrmLite;
-import com.eternalcode.plots.database.recoded.wrapper.PlotRepositoryOrmLite;
-import com.eternalcode.plots.database.recoded.wrapper.RegionRepositoryOrmLite;
-import com.eternalcode.plots.database.recoded.wrapper.UserRepositoryOrmLite;
-import com.eternalcode.plots.notgood.hook.VaultProvider;
-import com.eternalcode.plots.notgood.plot.recoded.member.PlotMemberService;
-import com.eternalcode.plots.notgood.plot.recoded.member.PlotMembersRepository;
 import com.eternalcode.plots.good.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.plots.good.scheduler.Scheduler;
 import com.google.common.base.Stopwatch;
@@ -28,15 +19,10 @@ public class PlotsPlugin extends JavaPlugin {
     private MiniMessage miniMessage;
     private Scheduler scheduler;
 
-    private VaultProvider vaultProvider;
-
     @Override
     public void onEnable() {
         Stopwatch started = Stopwatch.createStarted();
         Server server = this.getServer();
-
-
-        this.vaultProvider = new VaultProvider(this);
 
         this.audienceProvider = BukkitAudiences.create(this);
         this.miniMessage = MiniMessage.builder()
