@@ -27,4 +27,9 @@ public class MemberRepositoryInMemory implements MemberRepository {
         return CompletableFuture.completedFuture(null);
     }
 
+    @Override
+    public CompletableFuture<Boolean> isMember(UUID plotId, UUID userId) {
+        return null;
+    }
+
 }
