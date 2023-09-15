@@ -9,11 +9,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class UserController implements Listener {
 
     private final UserManager userManager;
-    private final UserRepository userRepository;
 
-    public UserController(UserManager userManager, UserRepository userRepository) {
+    public UserController(UserManager userManager) {
         this.userManager = userManager;
-        this.userRepository = userRepository;
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -26,12 +24,5 @@ public class UserController implements Listener {
             this.userManager.updateName(user, player.getName());
         }
     }
-
-/*    @EventHandler
-    void onPlayerQuit(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-
-        this.userRepository.saveUser(this.userManager.findOrCreate(player.getUniqueId(), player.getName()));
-    }*/
 
 }

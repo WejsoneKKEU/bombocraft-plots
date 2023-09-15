@@ -18,7 +18,7 @@ repositories {
     maven { url = uri("https://jitpack.io") }
 }
 
-version = "1.0.0-BETA"
+version = "1.0.0"
 group = "com.eternalcode"
 
 java {
@@ -79,17 +79,17 @@ bukkit {
     version = "${project.version}"
 
     libraries = listOf(
-            "org.postgresql:postgresql:42.6.0",
-            "com.h2database:h2:2.2.222",
-            "com.j256.ormlite:ormlite-jdbc:6.1",
-            "com.zaxxer:HikariCP:5.0.1",
-            "net.kyori:adventure-platform-bukkit:4.3.0",
-            "net.kyori:adventure-text-minimessage:4.14.0",
-            "org.mariadb.jdbc:mariadb-java-client:3.2.0"
+        "org.postgresql:postgresql:42.6.0",
+        "com.h2database:h2:2.2.222",
+        "com.j256.ormlite:ormlite-jdbc:6.1",
+        "com.zaxxer:HikariCP:5.0.1",
+        "net.kyori:adventure-platform-bukkit:4.3.0",
+        "net.kyori:adventure-text-minimessage:4.14.0",
+        "org.mariadb.jdbc:mariadb-java-client:3.2.0"
     )
 
     depend = listOf(
-            "Vault"
+        "Vault"
     )
 }
 
@@ -114,20 +114,20 @@ tasks {
 
         val prefix = "com.eternalcode.plots.libs"
         listOf(
-                "net.dzikoysk",
-                "dev.rollczi",
-                "org.bstats",
-                "org.panda_lang",
-                "panda",
-                "io.papermc.lib",
-                "eu.okaeri",
-                "org.checkerframework",
-                "org.yaml",
-                "com.github",
-                "net.wesjd",
-                "org.bstats",
-                "dev.triumphteam.gui",
-                "com.google.gson",
+            "net.dzikoysk",
+            "dev.rollczi",
+            "org.bstats",
+            "org.panda_lang",
+            "panda",
+            "io.papermc.lib",
+            "eu.okaeri",
+            "org.checkerframework",
+            "org.yaml",
+            "com.github",
+            "net.wesjd",
+            "org.bstats",
+            "dev.triumphteam.gui",
+            "com.google.gson",
         ).forEach { relocate(it, prefix) }
 
     }

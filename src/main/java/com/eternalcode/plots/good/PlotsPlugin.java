@@ -32,9 +32,10 @@ public class PlotsPlugin extends JavaPlugin {
         this.scheduler = new BukkitSchedulerImpl(this);
 
 
+/*
         Stream.of(
-
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
+*/
 
         new Metrics(this, 19792);
 

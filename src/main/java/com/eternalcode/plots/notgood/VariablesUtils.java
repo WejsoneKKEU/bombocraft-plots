@@ -1,11 +1,14 @@
 package com.eternalcode.plots.notgood;
 
 import com.eternalcode.plots.good.util.InstantFormatUtil;
+import org.jetbrains.annotations.ApiStatus;
 import panda.utilities.text.Formatter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
+@ApiStatus.ScheduledForRemoval
 public final class VariablesUtils {
 
     private VariablesUtils() {
