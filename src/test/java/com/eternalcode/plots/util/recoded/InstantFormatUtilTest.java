@@ -1,7 +1,6 @@
 package com.eternalcode.plots.util.recoded;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import com.eternalcode.plots.good.util.InstantFormatUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
