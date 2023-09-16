@@ -31,7 +31,6 @@ public class PlotService {
         Plot plot = new Plot(regionId, name, createdAt, expireAt);
 
         plots.add(plot);
-        plotRepository.savePlot(plot);
     }
 
     public Plot getPlotForLocation(Location location) {

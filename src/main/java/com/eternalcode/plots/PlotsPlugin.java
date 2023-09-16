@@ -18,6 +18,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
@@ -42,8 +43,8 @@ public class PlotsPlugin extends JavaPlugin {
         this.scheduler = new BukkitSchedulerImpl(this);
 
 
-        RegionService regionService = new RegionService(null, null);
-        PlotService plotService = new PlotService(null, null, null);
+        RegionService regionService = new RegionService(() -> 20, null);
+        PlotService plotService = new PlotService(regionService, () -> Duration.ofHours(1), null);
 
         this.liteCommands = LiteBukkitFactory.builder(server, "eternalplots")
             .contextualBind(Player.class, new BukkitOnlyPlayerContextual<>("this command only for players"))

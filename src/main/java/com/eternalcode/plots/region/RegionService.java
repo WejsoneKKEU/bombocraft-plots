@@ -34,11 +34,4 @@ public class RegionService {
         }
     }
 
-    public void resizeRegion(UUID regionUUID, int newSize) {
-        Region region = getRegion(regionUUID);
-        if (region != null) {
-            region.withSize(newSize);
-        }
-    }
-
 }
