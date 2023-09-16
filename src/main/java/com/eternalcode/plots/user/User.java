@@ -7,20 +7,19 @@ public class User {
     private final UUID uuid;
     private String name;
 
-    public User(UUID uuid, String name) {
-        this.name = name;
+    User(UUID uuid) {
         this.uuid = uuid;
     }
 
     public UUID uuid() {
-        return uuid;
+        return this.uuid;
     }
 
     public String name() {
-        return name;
+        return this.name;
     }
 
-    public void updateName(String name) {
+    void updateName(String name) {
         this.name = name;
     }
 

@@ -37,7 +37,6 @@ class InstantFormatUtilTest {
     @Test
     @DisplayName("Given valid Instant with different timezone, When format, Then return correct format following system's timezone")
     void testFormatDifferentTimezone() {
-        // Given
         ZonedDateTime zdt = ZonedDateTime.of(2023, 2, 1, 10, 15, 0, 0, ZoneId.of("Asia/Tokyo"));
         Instant instant = zdt.toInstant();
 

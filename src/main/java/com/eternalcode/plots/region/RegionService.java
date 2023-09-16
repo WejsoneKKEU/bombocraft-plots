@@ -1,22 +1,30 @@
 package com.eternalcode.plots.region;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class RegionService {
 
-    private final Set<Region> regions = new HashSet<>();
+    private final Map<UUID, Region> regions = new HashMap<>();
+    private final RegionSettings regionSettings;
+    private final RegionRepository regionRepository;
 
-    public UUID createRegion(int size, int x, int z) {
+    public RegionService(RegionSettings regionSettings, RegionRepository regionRepository) {
+        this.regionSettings = regionSettings;
+        this.regionRepository = regionRepository;
+    }
+
+    public UUID createRegion(int x, int z) {
         UUID regionUUID = UUID.randomUUID();
-        Region region = new Region(regionUUID, size, x, z);
-        regions.add(region);
+        Region region = new Region(regionUUID, regionSettings.startSize(), x, z);
+
+        regions.put(regionUUID, region);
         return regionUUID;
     }
 
     public Region getRegion(UUID regionUUID) {
-        return regions.stream().filter(region -> region.getRegionUUID().equals(regionUUID)).findFirst().orElse(null);
+        return regions.values().stream().filter(region -> region.regionUUID().equals(regionUUID)).findFirst().orElse(null);
     }
 
     public void deleteRegion(UUID regionUUID) {
@@ -29,7 +37,7 @@ public class RegionService {
     public void resizeRegion(UUID regionUUID, int newSize) {
         Region region = getRegion(regionUUID);
         if (region != null) {
-            region.setSize(newSize);
+            region.withSize(newSize);
         }
     }
 

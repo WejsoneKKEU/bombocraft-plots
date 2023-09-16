@@ -12,16 +12,26 @@ import java.util.UUID;
 public class PlotService {
 
     private final RegionService regionService;
-    private final Set<Plot> plots = new HashSet<>();
+    private final PlotSettings settings;
 
-    public PlotService(RegionService regionService) {
+    private final Set<Plot> plots = new HashSet<>();
+    private final PlotRepository plotRepository;
+
+    public PlotService(RegionService regionService, PlotSettings settings, PlotRepository plotRepository) {
         this.regionService = regionService;
+        this.settings = settings;
+        this.plotRepository = plotRepository;
     }
 
-    public void createPlot(String name, Instant createdAt, Instant expireAt, int regionSize, int x, int z) {
-        UUID regionId = this.regionService.createRegion(regionSize, x, z);
+    public void createPlot(String name, int x, int z) {
+        Instant createdAt = Instant.now();
+        Instant expireAt = createdAt.plus(settings.getExpire());
+
+        UUID regionId = this.regionService.createRegion(x, z);
         Plot plot = new Plot(regionId, name, createdAt, expireAt);
+
         plots.add(plot);
+        plotRepository.savePlot(plot);
     }
 
     public Plot getPlotForLocation(Location location) {

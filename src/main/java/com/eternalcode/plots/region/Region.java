@@ -4,50 +4,23 @@ import org.bukkit.Location;
 
 import java.util.UUID;
 
-public class Region {
+public record Region(
+    UUID regionUUID,
+    int size,
+    int x,
+    int z
+) {
 
-    private UUID regionUUID;
-    private int size;
-    private int x;
-    private int z;
-
-    public Region(UUID regionUUID, int size, int x, int z) {
-        this.regionUUID = regionUUID;
-        this.size = size;
-        this.x = x;
-        this.z = z;
+    public Region withSize(int size) {
+        return new Region(this.regionUUID, size, this.x, this.z);
     }
 
-    public UUID getRegionUUID() {
-        return regionUUID;
+    public Region withX(int x) {
+        return new Region(this.regionUUID, this.size, x, this.z);
     }
 
-    public void setRegionUUID(UUID regionUUID) {
-        this.regionUUID = regionUUID;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getZ() {
-        return z;
-    }
-
-    public void setZ(int z) {
-        this.z = z;
+    public Region withZ(int z) {
+        return new Region(this.regionUUID, this.size, this.x, z);
     }
 
     public boolean isInRegion(Location location) {
@@ -56,4 +29,5 @@ public class Region {
 
         return coordinateX <= this.size && coordinateZ <= this.size;
     }
+
 }

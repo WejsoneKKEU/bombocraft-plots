@@ -14,7 +14,6 @@ class ItemUtilTest {
     @Test
     @DisplayName("Compute item amount correctly")
     void computeItemAmountCorrectly() {
-        // Given
         ItemStack sampleStack = Mockito.mock(ItemStack.class);
         ItemStack searchedStack = Mockito.mock(ItemStack.class);
 

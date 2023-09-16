@@ -19,16 +19,11 @@ public class TestPlotCommand {
 
     @Execute(route = "create")
     void create(Player player) {
-        // Wpisz wartości wedle potrzeb
         String plotName = "TestPlot";
-        Instant createdAt = Instant.now();
-        Instant expireAt = createdAt.plus(Duration.ofDays(7)); // Na przykład +7 dni do czasu stworzenia
-        int size = 10;
         int x = player.getLocation().getBlockX();
         int z = player.getLocation().getBlockZ();
 
-        this.plotService.createPlot(plotName, createdAt, expireAt, size, x, z);
-
+        this.plotService.createPlot(plotName, x, z);
         player.sendMessage("Stworzono nową działkę o nazwie " + plotName);
     }
 }

@@ -29,7 +29,8 @@ public class MemberRepositoryInMemory implements MemberRepository {
 
     @Override
     public CompletableFuture<Boolean> isMember(UUID plotId, UUID userId) {
-        return null;
+        Set<Member> indexedMembers = this.membersByPlotUUID.computeIfAbsent(plotId, key -> new HashSet<>());
+        
+        return CompletableFuture.completedFuture(indexedMembers.stream().anyMatch(member -> member.userId().equals(userId)));
     }
-
 }

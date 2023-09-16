@@ -34,4 +34,4 @@
 
 ## New features
 - [ ] Add hologram support for plot block using  (HologramLib -> https://github.com/unldenis/Hologram-Lib)
-- [ ] Add support to click plot block to open panel.
+- [ ] Add support to click plot block to an open panel.

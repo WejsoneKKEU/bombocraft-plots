@@ -3,7 +3,6 @@ package com.eternalcode.plots;
 import com.eternalcode.plots.adventure.LegacyColorProcessor;
 import com.eternalcode.plots.command.TestPlotCommand;
 import com.eternalcode.plots.plot.PlotService;
-import com.eternalcode.plots.plot.TestingPlotController;
 import com.eternalcode.plots.region.RegionService;
 import com.eternalcode.plots.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.plots.scheduler.Scheduler;
@@ -43,8 +42,8 @@ public class PlotsPlugin extends JavaPlugin {
         this.scheduler = new BukkitSchedulerImpl(this);
 
 
-        RegionService regionService = new RegionService();
-        PlotService plotService = new PlotService(regionService);
+        RegionService regionService = new RegionService(null, null);
+        PlotService plotService = new PlotService(null, null, null);
 
         this.liteCommands = LiteBukkitFactory.builder(server, "eternalplots")
             .contextualBind(Player.class, new BukkitOnlyPlayerContextual<>("this command only for players"))
@@ -53,9 +52,11 @@ public class PlotsPlugin extends JavaPlugin {
             )
             .register();
 
+/*
         Stream.of(
             new TestingPlotController(plotService)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
+*/
 
         new Metrics(this, 19792);
 

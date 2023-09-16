@@ -6,7 +6,7 @@ public enum RolePermission {
     OWNER,
     KICK_PLAYER,
     MANAGE_PLAYER_PERMISSIONS,
-    OPEN,
+    CHEST_ACCESS,
     BUILD,
     BREAK,
     INTERACT,
