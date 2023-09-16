@@ -54,8 +54,7 @@ public class PlotsPlugin extends JavaPlugin {
             .register();
 
         Stream.of(
-            new TestingPlotController(plotService),
-            new TestingPlotBorderController(plotService)
+            new TestingPlotController(plotService)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
         new Metrics(this, 19792);
