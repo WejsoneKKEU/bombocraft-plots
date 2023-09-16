@@ -15,6 +15,7 @@ public class Region {
     private int extendLevel;
     private Position posMax;
     private Position posMin;
+
     private Position center;
 
     public Region(UUID regionUUID, int size, int extendLevel, Location posMax, Location posMin, Location center) {
