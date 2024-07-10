@@ -1,26 +1,23 @@
-package com.eternalcode.plots.scheduler;
+package com.eternalcode.plots.scheduler
 
-import panda.std.reactive.Completable;
+import panda.std.reactive.Completable
+import java.time.Duration
+import java.util.function.Supplier
 
-import java.time.Duration;
-import java.util.function.Supplier;
+interface Scheduler {
+    fun sync(task: Runnable?): Task
 
-public interface Scheduler {
+    fun async(task: Runnable?): Task
 
-    Task sync(Runnable task);
+    fun laterSync(task: Runnable?, delay: Duration): Task
 
-    Task async(Runnable task);
+    fun laterAsync(task: Runnable?, delay: Duration): Task
 
-    Task laterSync(Runnable task, Duration delay);
+    fun timerSync(task: Runnable?, delay: Duration, period: Duration): Task
 
-    Task laterAsync(Runnable task, Duration delay);
+    fun timerAsync(task: Runnable?, delay: Duration, period: Duration): Task
 
-    Task timerSync(Runnable task, Duration delay, Duration period);
+    fun <T> completeSync(task: Supplier<T>): Completable<T>
 
-    Task timerAsync(Runnable task, Duration delay, Duration period);
-
-    <T> Completable<T> completeSync(Supplier<T> task);
-
-    <T> Completable<T> completeAsync(Supplier<T> task);
-
+    fun <T> completeAsync(task: Supplier<T>): Completable<T>
 }

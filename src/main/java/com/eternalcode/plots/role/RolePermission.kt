@@ -1,7 +1,6 @@
-package com.eternalcode.plots.role;
+package com.eternalcode.plots.role
 
-public enum RolePermission {
-
+enum class RolePermission {
     // TODO: To jest takie poglądowe, trzeba będzie to jeszcze przemyśleć, jakie faktycznie permisje mogą być
     OWNER,
     KICK_PLAYER,
@@ -18,10 +17,7 @@ public enum RolePermission {
     MOVE,
     SLEEP,
     SPAWN,
-    TELEPORT,
-
-
-/*
+    TELEPORT,  /*
 ranks:
   owner:
     permissions: FULL
@@ -35,5 +31,4 @@ ranks:
     permissions: OPEN, INTERACT, SLEEP, PICKUP, DROP
 
  */
-
 }

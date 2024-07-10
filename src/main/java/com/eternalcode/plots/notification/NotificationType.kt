@@ -1,6 +1,6 @@
-package com.eternalcode.plots.notification;
+package com.eternalcode.plots.notification
 
-public enum NotificationType {
+enum class NotificationType {
     ACTION_BAR,
     CHAT,
     TITLE,

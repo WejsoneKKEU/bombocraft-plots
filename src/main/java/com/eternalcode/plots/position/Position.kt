@@ -1,67 +1,67 @@
-package com.eternalcode.plots.position;
+package com.eternalcode.plots.position
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.regex.Pattern
 
 /**
- * Disclaimer - Bukkit {@link org.bukkit.Location} storage may cause a memory leak, because it is a wrapper for
- * coordinates and {@link org.bukkit.World} reference. If you need to store location use {@link Position} and
- * {@link PositionAdapter}.
+ * Disclaimer - Bukkit [org.bukkit.Location] storage may cause a memory leak, because it is a wrapper for
+ * coordinates and [org.bukkit.World] reference. If you need to store location use [Position] and
+ * [PositionAdapter].
  */
-public record Position(double x, double y, double z, float yaw, float pitch, String world) {
+@JvmRecord
+data class Position(val x: Double, val y: Double, val z: Double, val yaw: Float, val pitch: Float, val world: String) {
+    val isNoneWorld: Boolean
+        get() = this.world == NONE_WORLD
 
-    public static final String NONE_WORLD = "__NONE__";
-
-    private static final Pattern PARSE_FORMAT = Pattern.compile("Position\\{x=(?<x>-?[\\d.]+), y=(?<y>-?[\\d.]+), z=(?<z>-?[\\d.]+), yaw=(?<yaw>-?[\\d.]+), pitch=(?<pitch>-?[\\d.]+), world='(?<world>.+)'}");
-
-    public static Position parse(String parse) {
-        Matcher matcher = PARSE_FORMAT.matcher(parse);
-
-        if (!matcher.find()) {
-            throw new IllegalArgumentException("Invalid position format: " + parse);
+    override fun equals(o: Any?): Boolean {
+        if (this === o) {
+            return true
         }
 
-        return new Position(
-            Double.parseDouble(matcher.group("x")),
-            Double.parseDouble(matcher.group("y")),
-            Double.parseDouble(matcher.group("z")),
-            Float.parseFloat(matcher.group("yaw")),
-            Float.parseFloat(matcher.group("pitch")),
-            matcher.group("world")
-        );
-    }
-
-    public boolean isNoneWorld() {
-        return this.world.equals(NONE_WORLD);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
+        if (o == null || javaClass != o.javaClass) {
+            return false
         }
 
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        val position = o as Position
 
-        Position position = (Position) o;
-
-        return Double.compare(position.x, this.x) == 0
-            && Double.compare(position.y, this.y) == 0
-            && Double.compare(position.z, this.z) == 0
-            && this.world.equals(position.world);
+        return (java.lang.Double.compare(
+            position.x,
+            x
+        ) == 0 && java.lang.Double.compare(
+            position.y,
+            y
+        ) == 0 && java.lang.Double.compare(position.z, this.z) == 0) && this.world == position.world
     }
 
-    @Override
-    public String toString() {
+    override fun toString(): String {
         return "Position{" +
-            "x=" + this.x +
-            ", y=" + this.y +
-            ", z=" + this.z +
-            ", yaw=" + this.yaw +
-            ", pitch=" + this.pitch +
-            ", world='" + this.world + '\'' +
-            '}';
+                "x=" + this.x +
+                ", y=" + this.y +
+                ", z=" + this.z +
+                ", yaw=" + this.yaw +
+                ", pitch=" + this.pitch +
+                ", world='" + this.world + '\'' +
+                '}'
+    }
+
+    companion object {
+        const val NONE_WORLD: String = "__NONE__"
+
+        private val PARSE_FORMAT: Pattern =
+            Pattern.compile("Position\\{x=(?<x>-?[\\d.]+), y=(?<y>-?[\\d.]+), z=(?<z>-?[\\d.]+), yaw=(?<yaw>-?[\\d.]+), pitch=(?<pitch>-?[\\d.]+), world='(?<world>.+)'}")
+
+        fun parse(parse: String): Position {
+            val matcher = PARSE_FORMAT.matcher(parse)
+
+            require(matcher.find()) { "Invalid position format: $parse" }
+
+            return Position(
+                matcher.group("x").toDouble(),
+                matcher.group("y").toDouble(),
+                matcher.group("z").toDouble(),
+                matcher.group("yaw").toFloat(),
+                matcher.group("pitch").toFloat(),
+                matcher.group("world")
+            )
+        }
     }
 }

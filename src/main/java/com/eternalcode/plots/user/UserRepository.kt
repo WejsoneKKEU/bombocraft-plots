@@ -1,17 +1,13 @@
-package com.eternalcode.plots.user;
+package com.eternalcode.plots.user
 
-import panda.std.reactive.Completable;
+import panda.std.reactive.Completable
+import java.util.*
+import java.util.concurrent.CompletableFuture
 
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
+interface UserRepository {
+    val users: Completable<List<User?>?>?
 
-public interface UserRepository {
+    fun getUser(uuid: UUID?): CompletableFuture<User?>?
 
-    Completable<List<User>> getUsers();
-
-    CompletableFuture<User> getUser(UUID uuid);
-
-    void saveUser(User user);
-
+    fun saveUser(user: User?)
 }

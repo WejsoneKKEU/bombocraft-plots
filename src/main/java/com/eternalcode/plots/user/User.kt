@@ -1,26 +1,19 @@
-package com.eternalcode.plots.user;
+package com.eternalcode.plots.user
 
-import java.util.UUID;
+import java.util.*
 
-public class User {
+class User internal constructor(private val uuid: UUID) {
+    private var name: String? = null
 
-    private final UUID uuid;
-    private String name;
-
-    User(UUID uuid) {
-        this.uuid = uuid;
+    fun uuid(): UUID {
+        return this.uuid
     }
 
-    public UUID uuid() {
-        return this.uuid;
+    fun name(): String? {
+        return this.name
     }
 
-    public String name() {
-        return this.name;
+    fun updateName(name: String?) {
+        this.name = name
     }
-
-    void updateName(String name) {
-        this.name = name;
-    }
-
 }

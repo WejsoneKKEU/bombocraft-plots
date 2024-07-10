@@ -1,4 +1,3 @@
-package com.eternalcode.plots.flag;
+package com.eternalcode.plots.flag
 
-public class FlagRepository {
-}
+class FlagRepository

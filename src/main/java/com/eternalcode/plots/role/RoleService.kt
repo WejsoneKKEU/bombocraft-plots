@@ -1,43 +1,34 @@
-package com.eternalcode.plots.role;
+package com.eternalcode.plots.role
 
-import com.eternalcode.plots.member.Member;
+import com.eternalcode.plots.member.Member
 
-import java.util.Set;
+class RoleService(
+    private val roleRepository: RoleRepository,
+    private val permissionRepository: RolePermissionRepository
+) {
+    fun hasPermission(member: Member, vararg permissions: RolePermission?): Boolean {
+        val role = this.getRole(member.role)
 
-public class RoleService {
-
-    private final RoleRepository roleRepository;
-    private final RolePermissionRepository permissionRepository;
-
-    public RoleService(RoleRepository roleRepository, RolePermissionRepository permissionRepository) {
-        this.roleRepository = roleRepository;
-        this.permissionRepository = permissionRepository;
-    }
-
-    public boolean hasPermission(Member member, RolePermission... permissions) {
-        Role role = this.getRole(member.role());
-
-        for (RolePermission permission : permissions) {
-            if (!this.permissionRepository.hasRolePermission(role, permission)) {
-                return false;
+        for (permission in permissions) {
+            if (!permissionRepository.hasRolePermission(role, permission)) {
+                return false
             }
         }
 
-        return true;
+        return true
     }
 
-    public Set<RolePermission> getPermissions(Member member) {
-        Role role = this.getRole(member.role());
+    fun getPermissions(member: Member): Set<RolePermission?>? {
+        val role = this.getRole(member.role)
 
-        return this.getPermissions(role);
+        return this.getPermissions(role)
     }
 
-    private Role getRole(String name) {
-        return this.roleRepository.findRoleByName(name).orElse(Role.NONE);
+    private fun getRole(name: String): Role? {
+        return roleRepository.findRoleByName(name).orElse(Role.Companion.NONE)
     }
 
-    private Set<RolePermission> getPermissions(Role role) {
-        return this.permissionRepository.findAllByRank(role);
+    private fun getPermissions(role: Role?): Set<RolePermission?>? {
+        return permissionRepository.findAllByRank(role)
     }
-
 }

@@ -1,7 +1,5 @@
-package com.eternalcode.plots.region;
+package com.eternalcode.plots.region
 
-public interface RegionSettings {
-
-    int startSize();
-
+interface RegionSettings {
+    fun startSize(): Int
 }

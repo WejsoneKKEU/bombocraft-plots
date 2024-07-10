@@ -1,9 +1,7 @@
-package com.eternalcode.plots.plot;
+package com.eternalcode.plots.plot
 
-import java.time.Duration;
+import java.time.Duration
 
-public interface PlotSettings {
-
-    Duration getExpire();
-
+interface PlotSettings {
+    val expire: Duration?
 }

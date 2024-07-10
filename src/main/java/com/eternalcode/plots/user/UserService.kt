@@ -1,31 +1,19 @@
-package com.eternalcode.plots.user;
+package com.eternalcode.plots.user
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*
 
-public class UserService {
+class UserService(private val userRepository: UserRepository) {
+    private val usersByUUID: MutableMap<UUID, User> = HashMap()
 
-    private final Map<UUID, User> usersByUUID = new HashMap<>();
-    private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    fun findOrCreate(uuid: UUID): User {
+        return usersByUUID.computeIfAbsent(uuid) { k: UUID? -> User(uuid) }
     }
 
-    public User findOrCreate(UUID uuid) {
-        return this.usersByUUID.computeIfAbsent(uuid, k -> new User(uuid));
+    fun find(uuid: UUID): Optional<User> {
+        return Optional.ofNullable(usersByUUID[uuid])
     }
 
-    public Optional<User> find(UUID uuid) {
-        return Optional.ofNullable(this.usersByUUID.get(uuid));
+    fun users(): Collection<User> {
+        return Collections.unmodifiableCollection(usersByUUID.values)
     }
-
-    public Collection<User> users() {
-        return Collections.unmodifiableCollection(this.usersByUUID.values());
-    }
-
 }

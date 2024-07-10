@@ -3,6 +3,7 @@ plugins {
     id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("xyz.jpenilla.run-paper") version "2.1.0"
+    kotlin("jvm")
 }
 
 repositories {
@@ -22,8 +23,6 @@ version = "1.0.0"
 group = "com.eternalcode"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
@@ -72,6 +71,7 @@ dependencies {
     testImplementation("net.kyori:adventure-platform-bukkit:4.3.0")
     testImplementation("net.kyori:adventure-platform-facet:4.3.0")
     testImplementation("net.kyori:adventure-text-minimessage:4.14.0")
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 bukkit {
@@ -142,4 +142,7 @@ tasks {
         useJUnitPlatform()
     }
 
+}
+kotlin {
+    jvmToolchain(17)
 }

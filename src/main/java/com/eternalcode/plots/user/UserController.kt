@@ -1,25 +1,16 @@
-package com.eternalcode.plots.user;
+package com.eternalcode.plots.user
 
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
+import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerJoinEvent
 
-public class UserController implements Listener {
-
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
+class UserController(private val userService: UserService) : Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    void onPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
+    fun onPlayerJoin(event: PlayerJoinEvent) {
+        val player = event.player
 
-        User user = this.userService.findOrCreate(player.getUniqueId());
-        user.updateName(player.getName());
+        val user = userService.findOrCreate(player.uniqueId)
+        user.updateName(player.name)
     }
-
 }

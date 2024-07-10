@@ -1,13 +1,11 @@
-package com.eternalcode.plots.region;
+package com.eternalcode.plots.region
 
-import java.util.UUID;
+import java.util.*
 
-public interface RegionRepository {
+interface RegionRepository {
+    fun saveRegion(region: Region?)
 
-    void saveRegion(Region region);
+    fun deleteRegion(region: Region?)
 
-    void deleteRegion(Region region);
-
-    Region getRegion(UUID regionUUID);
-
+    fun getRegion(regionUUID: UUID?): Region?
 }

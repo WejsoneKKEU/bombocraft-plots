@@ -1,14 +1,12 @@
-package com.eternalcode.plots.plot;
+package com.eternalcode.plots.plot
 
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
+import java.util.*
+import java.util.concurrent.CompletableFuture
 
-public interface PlotRepository {
+interface PlotRepository {
+    fun loadPlot(plotUUID: UUID?): CompletableFuture<Plot?>?
 
-    CompletableFuture<Plot> loadPlot(UUID plotUUID);
+    fun savePlot(plot: Plot?)
 
-    void savePlot(Plot plot);
-
-    void deletePlot(Plot plot);
-
+    fun deletePlot(plot: Plot?)
 }

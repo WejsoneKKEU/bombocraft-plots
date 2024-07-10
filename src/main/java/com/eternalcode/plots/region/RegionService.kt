@@ -1,37 +1,27 @@
-package com.eternalcode.plots.region;
+package com.eternalcode.plots.region
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*
 
-public class RegionService {
+class RegionService(private val regionSettings: RegionSettings, private val regionRepository: RegionRepository) {
+    private val regions: MutableMap<UUID, Region?> = HashMap()
 
-    private final Map<UUID, Region> regions = new HashMap<>();
-    private final RegionSettings regionSettings;
-    private final RegionRepository regionRepository;
+    fun createRegion(x: Int, z: Int): UUID {
+        val regionUUID = UUID.randomUUID()
+        val region = Region(regionUUID, regionSettings.startSize(), x, z)
 
-    public RegionService(RegionSettings regionSettings, RegionRepository regionRepository) {
-        this.regionSettings = regionSettings;
-        this.regionRepository = regionRepository;
+        regions[regionUUID] = region
+        return regionUUID
     }
 
-    public UUID createRegion(int x, int z) {
-        UUID regionUUID = UUID.randomUUID();
-        Region region = new Region(regionUUID, regionSettings.startSize(), x, z);
-
-        regions.put(regionUUID, region);
-        return regionUUID;
+    fun getRegion(regionUUID: UUID): Region? {
+        return regions.values.stream().filter { region: Region? -> region!!.regionUUID == regionUUID }
+            .findFirst().orElse(null)
     }
 
-    public Region getRegion(UUID regionUUID) {
-        return regions.values().stream().filter(region -> region.regionUUID().equals(regionUUID)).findFirst().orElse(null);
-    }
-
-    public void deleteRegion(UUID regionUUID) {
-        Region region = getRegion(regionUUID);
+    fun deleteRegion(regionUUID: UUID) {
+        val region = getRegion(regionUUID)
         if (region != null) {
-            regions.remove(region);
+            regions.remove(region)
         }
     }
-
 }

@@ -1,7 +1,6 @@
-package com.eternalcode.plots.flag;
+package com.eternalcode.plots.flag
 
-public enum FlagType {
-
+enum class FlagType {
     // Allows to place blocks
     BLOCK_PLACE,
 
@@ -29,5 +28,4 @@ public enum FlagType {
 
     // Allows to use blocks, eg. open doors, click buttons, etc.
     USE,
-
 }

@@ -1,7 +1,8 @@
-package com.eternalcode.plots.role;
+package com.eternalcode.plots.role
 
-public record Role(String name) {
-
-    public static final Role NONE = new Role("__NONE__");
-
+@JvmRecord
+data class Role(val name: String) {
+    companion object {
+        val NONE: Role = Role("__NONE__")
+    }
 }

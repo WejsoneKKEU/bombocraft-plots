@@ -1,33 +1,32 @@
-package com.eternalcode.plots.region;
+package com.eternalcode.plots.region
 
-import org.bukkit.Location;
+import org.bukkit.Location
+import java.util.*
+import kotlin.math.abs
 
-import java.util.UUID;
-
-public record Region(
-    UUID regionUUID,
-    int size,
-    int x,
-    int z
+@JvmRecord
+data class Region(
+    val regionUUID: UUID,
+    val size: Int,
+    val x: Int,
+    val z: Int
 ) {
-
-    public Region withSize(int size) {
-        return new Region(this.regionUUID, size, this.x, this.z);
+    fun withSize(size: Int): Region {
+        return Region(this.regionUUID, size, this.x, this.z)
     }
 
-    public Region withX(int x) {
-        return new Region(this.regionUUID, this.size, x, this.z);
+    fun withX(x: Int): Region {
+        return Region(this.regionUUID, this.size, x, this.z)
     }
 
-    public Region withZ(int z) {
-        return new Region(this.regionUUID, this.size, this.x, z);
+    fun withZ(z: Int): Region {
+        return Region(this.regionUUID, this.size, this.x, z)
     }
 
-    public boolean isInRegion(Location location) {
-        int coordinateX = Math.abs(location.getBlockX() - this.x);
-        int coordinateZ = Math.abs(location.getBlockZ() - this.z);
+    fun isInRegion(location: Location): Boolean {
+        val coordinateX = abs((location.blockX - this.x).toDouble()).toInt()
+        val coordinateZ = abs((location.blockZ - this.z).toDouble()).toInt()
 
-        return coordinateX <= this.size && coordinateZ <= this.size;
+        return coordinateX <= this.size && coordinateZ <= this.size
     }
-
 }

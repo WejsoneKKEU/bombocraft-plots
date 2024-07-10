@@ -1,6 +1,6 @@
-package com.eternalcode.plots.flag;
+package com.eternalcode.plots.flag
 
-import java.util.UUID;
+import java.util.*
 
-public record Flag(UUID plotId, FlagType flagType, boolean value) {
-}
+@JvmRecord
+data class Flag(val plotId: UUID, val flagType: FlagType, val value: Boolean) 

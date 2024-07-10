@@ -1,11 +1,9 @@
-package com.eternalcode.plots.scheduler;
+package com.eternalcode.plots.scheduler
 
-public interface Task {
+interface Task {
+    fun cancel()
 
-    void cancel();
+    val isCanceled: Boolean
 
-    boolean isCanceled();
-
-    boolean isAsync();
-
+    val isAsync: Boolean
 }

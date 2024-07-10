@@ -1,11 +1,7 @@
-package com.eternalcode.plots.role;
+package com.eternalcode.plots.role
 
-import java.util.Set;
+interface RolePermissionRepository {
+    fun findAllByRank(role: Role?): Set<RolePermission?>?
 
-public interface RolePermissionRepository {
-
-    Set<RolePermission> findAllByRank(Role role);
-
-    boolean hasRolePermission(Role role, RolePermission permission);
-
+    fun hasRolePermission(role: Role?, permission: RolePermission?): Boolean
 }

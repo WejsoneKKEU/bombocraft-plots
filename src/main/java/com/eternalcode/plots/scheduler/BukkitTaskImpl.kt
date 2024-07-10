@@ -1,28 +1,15 @@
-package com.eternalcode.plots.scheduler;
+package com.eternalcode.plots.scheduler
 
-import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scheduler.BukkitTask
 
-class BukkitTaskImpl implements Task {
-
-    private final BukkitTask rootTask;
-
-    BukkitTaskImpl(BukkitTask rootTask) {
-        this.rootTask = rootTask;
+internal class BukkitTaskImpl(private val rootTask: BukkitTask) : Task {
+    override fun cancel() {
+        rootTask.cancel()
     }
 
-    @Override
-    public void cancel() {
-        this.rootTask.cancel();
-    }
+    override val isCanceled: Boolean
+        get() = rootTask.isCancelled
 
-    @Override
-    public boolean isCanceled() {
-        return this.rootTask.isCancelled();
-    }
-
-    @Override
-    public boolean isAsync() {
-        return !this.rootTask.isSync();
-    }
-
+    override val isAsync: Boolean
+        get() = !rootTask.isSync
 }

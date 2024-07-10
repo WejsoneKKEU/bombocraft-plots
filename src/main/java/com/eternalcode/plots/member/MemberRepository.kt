@@ -1,14 +1,12 @@
-package com.eternalcode.plots.member;
+package com.eternalcode.plots.member
 
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
+import java.util.*
+import java.util.concurrent.CompletableFuture
 
-public interface MemberRepository {
+interface MemberRepository {
+    fun saveMember(member: Member): CompletableFuture<Void?>?
 
-    CompletableFuture<Void> saveMember(Member member);
+    fun removeMember(member: Member): CompletableFuture<Void?>?
 
-    CompletableFuture<Void> removeMember(Member member);
-
-    CompletableFuture<Boolean> isMember(UUID plotId, UUID userId);
-
+    fun isMember(plotId: UUID, userId: UUID): CompletableFuture<Boolean>?
 }

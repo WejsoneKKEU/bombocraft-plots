@@ -1,31 +1,28 @@
-package com.eternalcode.plots.position;
+package com.eternalcode.plots.position
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.Bukkit
+import org.bukkit.Location
 
-public final class PositionAdapter {
-
-    private PositionAdapter() {
-        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+class PositionAdapter private constructor() {
+    init {
+        throw UnsupportedOperationException("This is a utility class and cannot be instantiated")
     }
 
-    public static Position convert(Location location) {
-        if (location.getWorld() == null) {
-            throw new IllegalStateException("World is not defined");
+    companion object {
+        fun convert(location: Location): Position {
+            checkNotNull(location.world) { "World is not defined" }
+
+            return Position(
+                location.x, location.y, location.z, location.yaw, location.pitch, location.world!!
+                    .name
+            )
         }
 
-        return new Position(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch(), location.getWorld().getName());
-    }
+        fun convert(position: Position): Location {
+            val world = Bukkit.getWorld(position.world)
+                ?: throw IllegalStateException("World is not defined")
 
-    public static Location convert(Position position) {
-        World world = Bukkit.getWorld(position.world());
-
-        if (world == null) {
-            throw new IllegalStateException("World is not defined");
+            return Location(world, position.x, position.y, position.z, position.yaw, position.pitch)
         }
-
-        return new Location(world, position.x(), position.y(), position.z(), position.yaw(), position.pitch());
     }
-
 }

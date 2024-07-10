@@ -1,6 +1,6 @@
-package com.eternalcode.plots.member;
+package com.eternalcode.plots.member
 
-import java.util.UUID;
+import java.util.*
 
-public record Member(UUID memberId, UUID plotId, UUID userId, String role) {
-}
+@JvmRecord
+data class Member(val memberId: UUID, val plotId: UUID, val userId: UUID, val role: String) 

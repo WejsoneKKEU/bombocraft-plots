@@ -1,4 +1,4 @@
-# EternalCode Plots Plugin - TODO List
+# BomboCraft Plots Plugin - TODO List
 
 ## Core:
 
@@ -13,6 +13,8 @@
 - [ ] Re-code plot name change feature
 - [ ] Re-code configuration from scratch
 
+
+
 ## Commands:
 
 - [ ] /plot - Provide plot help message
@@ -23,7 +25,14 @@
 - [ ] /plot join - Allow joining to plot
 - [ ] /plot leave - Enable plot leaving
 - [ ] /plot reject - Implement plot invite rejection
-
+- [ ] /plot upgrade - Implement plot Upgrade
+- [ ] /plots warp - Show Public Plots Warps
+- [ ] /plots sethome  - Set Plot home 
+- [ ] /plots home 
+## Admin Commands
+- [ ] /plotadmin teleport [nick] - Warp to player plots
+- [ ] /plotadmin upgrade [upgrade-type] [upgrade-level] - Administrative Plots Upgrade
+- [ ] /plotadmin editor 
 ## Inventories:
 
 - [ ] Refactor Inventories system limits its scope

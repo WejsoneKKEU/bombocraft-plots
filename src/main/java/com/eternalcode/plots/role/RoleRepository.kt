@@ -1,12 +1,9 @@
-package com.eternalcode.plots.role;
+package com.eternalcode.plots.role
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*
 
-public interface RoleRepository {
+interface RoleRepository {
+    val role: List<Role?>?
 
-    List<Role> getRole();
-
-    Optional<Role> findRoleByName(String name);
-
+    fun findRoleByName(name: String?): Optional<Role?>
 }

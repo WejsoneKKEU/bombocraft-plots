@@ -1,12 +1,13 @@
-package com.eternalcode.plots.plot;
+package com.eternalcode.plots.plot
 
-import java.time.Instant;
-import java.util.UUID;
+import java.time.Instant
+import java.util.*
 
-public record Plot(
-    UUID plotId,
-    String name,
+@JvmRecord
+data class Plot(
+    @JvmField val plotId: UUID,
+    val name: String,
 
-    Instant createdAt,
-    Instant expireAt) {
-}
+    val createdAt: Instant,
+    val expireAt: Instant
+) 

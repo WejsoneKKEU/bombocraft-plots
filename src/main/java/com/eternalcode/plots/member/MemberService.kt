@@ -1,21 +1,11 @@
-package com.eternalcode.plots.member;
+package com.eternalcode.plots.member
 
-import com.eternalcode.plots.plot.Plot;
-import com.eternalcode.plots.user.User;
+import com.eternalcode.plots.plot.Plot
+import com.eternalcode.plots.user.User
+import java.util.concurrent.CompletableFuture
 
-import java.util.concurrent.CompletableFuture;
-
-public class MemberService {
-
-    private final MemberRepository repository;
-
-    public MemberService(MemberRepository repository) {
-        this.repository = repository;
+class MemberService(private val repository: MemberRepository) {
+    fun isMember(plot: Plot, user: User): CompletableFuture<Boolean?>? {
+        return repository.isMember(plot.plotId, user.uuid())
     }
-
-
-    public CompletableFuture<Boolean> isMember(Plot plot, User user) {
-        return repository.isMember(plot.plotId(), user.uuid());
-    }
-
 }
