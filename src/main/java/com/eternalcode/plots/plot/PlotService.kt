@@ -2,11 +2,12 @@ package com.eternalcode.plots.plot
 
 import com.eternalcode.plots.region.RegionService
 import org.bukkit.Location
+import java.time.Duration
 import java.time.Instant
 
 class PlotService(
     private val regionService: RegionService,
-    private val settings: PlotSettings,
+    private val settings: () -> Duration,
     private val plotRepository: PlotRepository
 ) {
     private val plots: MutableSet<Plot> = HashSet()

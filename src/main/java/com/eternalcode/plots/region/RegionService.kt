@@ -21,7 +21,7 @@ class RegionService(private val regionSettings: RegionSettings, private val regi
     fun deleteRegion(regionUUID: UUID) {
         val region = getRegion(regionUUID)
         if (region != null) {
-            regions.remove(region)
+            regions.remove<Any, Region?>(region)
         }
     }
 }
