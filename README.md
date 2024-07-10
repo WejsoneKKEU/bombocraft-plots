@@ -1,1 +1,2 @@
-Check INFO.MD
+Check (INFO.MD)[INFO.md]
+
